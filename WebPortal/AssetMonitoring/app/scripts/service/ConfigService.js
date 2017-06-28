@@ -15,7 +15,7 @@ angular.module('assetmonitoringApp')
             update: function (data) {
                 console.log("[Info] :: Config Loaded ", data);
                 this.restServer = data.restServer;
-                this.restServerAnalitics = data.restServerAnalitics;
+                this.restServerAnalytics = data.restServerAnalytics;
                 this.b2cApplicationId = data.b2cApplicationId;
                 this.tenantName = data.tenantName;
                 this.signInPolicyName = data.signInPolicyName;
@@ -24,7 +24,7 @@ angular.module('assetmonitoringApp')
                 this.redirect_uri = data.redirect_uri;
 
                 localStorage.setItem("restServer", this.restServer);
-                localStorage.setItem("restServerAnalitics", this.restServerAnalitics);
+                localStorage.setItem("restServerAnalytics", this.restServerAnalytics);
                 localStorage.setItem("b2cApplicationId", this.b2cApplicationId);
                 localStorage.setItem("tenantName", this.tenantName);
                 localStorage.setItem("signInPolicyName", this.signInPolicyName);
@@ -100,7 +100,15 @@ angular.module('assetmonitoringApp')
 
                 }).then(function (response) {
                     if (response.data.tokens) {
-                        data.accesstoken = response.data.tokens.AccessToken;
+                        if (response.data.tokens.AccessToken) {
+                            data.accesstoken = response.data.tokens.AccessToken;
+                        }
+                        else {
+                            console.log("[Error] Please Update Power Bi credentials");
+                        }
+                    }
+                    else {
+                        console.log("[Error] Please Update Power Bi credentials");
                     }
                     callback();
 

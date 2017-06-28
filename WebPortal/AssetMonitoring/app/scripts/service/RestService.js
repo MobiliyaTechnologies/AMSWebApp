@@ -111,7 +111,7 @@ angular.module('assetmonitoringApp')
                 var authResponse = hello('adB2CSignIn').getAuthResponse();
                 if (authResponse != null) {
                     $http({
-                        url: config.restServerAnalitics + urlpath,
+                        url: config.restServerAnalytics + urlpath,
                         dataType: 'json',
                         method: 'POST',
                         data: data,

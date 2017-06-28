@@ -8,7 +8,10 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state) {
+    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state, Token, $location) {
+        $scope.powerbiUrls = {
+            'data': {}
+        }
         $scope.application={
             'logo':''
         }
@@ -57,5 +60,41 @@ angular.module('assetmonitoringApp')
 
 
         }
-      
+
+
+        $scope.updatePowerBiCredentials = function () {
+            $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/PowerBIService.asmx/updatePowerBiCredentials', $scope.powerbi).then(function (data) {
+                console.log("[Info] :: Credentials Updated", data);
+                Token.update(function () { });
+            }).catch(function (data) {
+                console.log('[Error] ::', data);
+            });
+        }
+        
+        $scope.updatePowerBiUrls = function () {
+            var sampleConfig = [];
+            for (var key in $scope.powerbiUrls.data) {
+                var obj = { "Capability": key, "Url": $scope.powerbiUrls.data[key] };
+                sampleConfig.push(obj);
+            }
+            $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/PowerBIService.asmx/SavePowerBIUrl', { data: JSON.stringify(sampleConfig) }).then(function (data) {
+                console.log("[Info] :: Urls Updated", data);
+            }).catch(function (data) {
+                console.log('[Error] ::', data);
+            });
+        }
+        function getPowerBiUrls() {
+            $http.get('powerBI.json')
+                .then(function (data, status, headers) {
+                    $scope.powerBiURl = data.data;
+                    $scope.powerBiURl.forEach(function (obj) {
+                        $scope.powerbiUrls.data[obj.Capability] = obj.Url;                        
+                    });
+                })
+                .catch(function (data, status, headers) {
+                    console.log("[Error]  :: Get Power Bi Urls ", data);
+                });
+        }
+
+        getPowerBiUrls();
     });

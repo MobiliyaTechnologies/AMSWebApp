@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('reportCtrl', function ($scope, Restservice, Token, $filter) {
+    .controller('reportCtrl', function ($scope, Restservice, Token, $filter, $http) {
         $scope.historic = false;
         $scope.loader = "none";
         $scope.sensorGroupList = [{ 'Name': 'Loading Group' }];
@@ -22,16 +22,28 @@ angular.module('assetmonitoringApp')
             { 'Capability': 'Luminescence', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=fa9ec27c-a8ff-49ee-8052-9d8d781f4757' }
         ]
         /* New*/
-        $scope.powerBiURl = [{ 'Capability': 'Temperature', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=c1f90493-e33f-42b3-9a01-67632c6e059f' },
-        { 'Capability': 'Accelerometer', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=b8f254fa-4d81-4ed7-ab86-dd88dcfa66fc' },
-        { 'Capability': 'Humidity', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=f30e9002-6bc6-465d-9dc7-5a2ebb2a6fff' },
-        { 'Capability': 'UVIndex', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=f8f20e4b-4391-49aa-8e42-8b108a1c30c2' },
-        { 'Capability': 'Luminescence', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=7ea991dd-86bd-43c0-a8da-86b05ead5488' }
-        ]
+        //$scope.powerBiURl = [{ 'Capability': 'Temperature', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=c1f90493-e33f-42b3-9a01-67632c6e059f' },
+        //{ 'Capability': 'Accelerometer', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=b8f254fa-4d81-4ed7-ab86-dd88dcfa66fc' },
+        //{ 'Capability': 'Humidity', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=f30e9002-6bc6-465d-9dc7-5a2ebb2a6fff' },
+        //{ 'Capability': 'UVIndex', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=f8f20e4b-4391-49aa-8e42-8b108a1c30c2' },
+        //{ 'Capability': 'Luminescence', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=7ea991dd-86bd-43c0-a8da-86b05ead5488' }
+        //]
         
 
-        $scope.historyUrl = "https://app.powerbi.com/reportEmbed?reportId=cd692a37-cab7-4970-8af4-c844c67298e1&$filter=Sensors/SensorGroupId eq";
+        //$scope.historyUrl = "https://app.powerbi.com/reportEmbed?reportId=cd692a37-cab7-4970-8af4-c844c67298e1&$filter=Sensors/SensorGroupId eq";
         //$scope.historyUrl = "https://app.powerbi.com/reportEmbed?reportId=b8170f6b-9429-4509-b4ee-4fdc10657766&$filter=Sensors/SensorGroupId eq";
+
+
+        function getPowerBiUrls() {
+            $http.get('powerBI.json')
+                .then(function (data, status, headers) {
+                    $scope.powerBiURl = data.data;
+                })
+                .catch(function (data, status, headers) {
+                    console.log("[Error]  :: Get Power Bi Urls ", data);
+                });
+        }
+        getPowerBiUrls();
         $scope.getAllSensorGroup = function () {
             $scope.sensorGroupList = [{ 'Name': 'Loading Group' }];
             Restservice.get('api/SensorGroup', function (err, response) {
@@ -52,7 +64,7 @@ angular.module('assetmonitoringApp')
             $scope.getAllSensor();
             $scope.sensorList = [{ 'Name': 'Loading Sensor' }];
             console.log("Group ", $scope.groupSelected);
-            embedReport($scope.historyUrl+" '" + $scope.groupSelected+"'", 'historic-container')
+            
         }
         $scope.sensorChange = function () {
             $scope.getSensorDetail();
@@ -101,7 +113,16 @@ angular.module('assetmonitoringApp')
                         $scope.loader = "none";
                         $scope.capabilityList = response.Capabilities;
                         sendFilter();
-                        setTimeout(function () { embedDashboards(); }, 1000);
+                        setTimeout(function () {
+                            embedDashboards();
+                            var object_by_id  = $filter('filter')($scope.powerBiURl, { Capability: 'History' })[0];
+                            if (object_by_id) {
+                                embedReport(object_by_id.Url + "&$filter=Sensors/SensorGroupId eq '" + $scope.groupSelected + "'" + " and Sensors/Sensor eq '" + $scope.sensorSelected.Name+"'", 'historic-container');
+                            }
+                            else{
+                                console.log("[Error] :: Please Update Power Bi urls");
+                            }
+                        }, 1000);
 
                     }
                     else {
@@ -114,14 +135,19 @@ angular.module('assetmonitoringApp')
         function embedDashboards() {
             for (var i = 0; i < $scope.capabilityList.length; i++) {
                 var object_by_id = $filter('filter')($scope.powerBiURl, { Capability: $scope.capabilityList[i].Name })[0];
-                embedDashboard(object_by_id.Url, $scope.capabilityList[i].Name +'-container');
-            }
+                if (object_by_id) {
+                    embedDashboard(object_by_id.Url, $scope.capabilityList[i].Name + '-container');
+                }
+                else {
+                    console.log("[Error] :: Please Update Power Bi urls for " + $scope.capabilityList[i].Name);
+                }
+                }
         }
         
         function embedDashboard(embedUrl, containerId) {
             // Read embed application token from textbox
             var txtAccessToken = Token.data.accesstoken;
-            console.log(txtAccessToken);
+            //console.log(txtAccessToken);
             // Get models. models contains enums that can be used.
             var models = window['powerbi-client'].models;
             // Embed configuration used to describe the what and how to embed.

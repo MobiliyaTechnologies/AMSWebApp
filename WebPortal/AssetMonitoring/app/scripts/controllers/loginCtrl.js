@@ -57,7 +57,7 @@ angular.module('assetmonitoringApp')
             $scope.showLogin = true;
             if (config.restServer == "" || config.restServer == undefined) {
                 $scope.showLogin = false;
-                
+                console.log("[Error] :: COnfig not loaded");
 
             }
             else {

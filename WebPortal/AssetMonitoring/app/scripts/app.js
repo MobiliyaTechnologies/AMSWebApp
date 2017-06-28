@@ -89,18 +89,18 @@ angular
     
     })
     .run(function ($http, $rootScope, config, $location, Token, $interval, Alertify) {
-        //$http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/PowerBIService.asmx/updateConfig', null).then(function (data) {
-        //    $http.get('config.json')
-        //        .then(function (data, status, headers) {
-        //            config.update(data.data);
+        $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/PowerBIService.asmx/updateConfig', null).then(function (data) {
+            $http.get('config.json')
+                .then(function (data, status, headers) {
+                    config.update(data.data);
 
-        //        })
-        //        .catch(function (data, status, headers) {
-        //            console.log("[Error]:: Updating config", data);
-        //        });
-        //}).catch(function (data) {
-        //    console.log("[Error]:: Updating config", data);
-        //});
+                })
+                .catch(function (data, status, headers) {
+                    console.log("[Error]:: Updating config", data);
+                });
+        }).catch(function (data) {
+            console.log("[Error]:: Updating config", data);
+        });
         updateAccessToken();
         /**
         * Function to update Access Token 
@@ -117,26 +117,26 @@ angular
        
 
         
-        var data = {
-            'restServer': 'https://assetmonitoring.azurewebsites.net/',
-            //'restServer': '   http://ajit-pc/AssetMonitoring/',
-            'restServerAnalitics':'https://assetmonitoringanalytics.azurewebsites.net/',
-            'b2cApplicationId': 'a2ecd455-5f2a-4329-adae-fe8eb438f53e',
-            'tenantName': "AssetMonitoringB2C.onmicrosoft.com",
-            'signInPolicyName': "B2C_1_SiUpIn",
-            'redirect_uri':"https://assetmonitoringwebapp.azurewebsites.net/"
-        }
+        //var data = {
+        //    'restServer': 'https://assetmonitoring.azurewebsites.net/',
+        //    //'restServer': '   http://ajit-pc/AssetMonitoring/',
+        //    'restServerAnalitics':'https://assetmonitoringanalytics.azurewebsites.net/',
+        //    'b2cApplicationId': 'a2ecd455-5f2a-4329-adae-fe8eb438f53e',
+        //    'tenantName': "AssetMonitoringB2C.onmicrosoft.com",
+        //    'signInPolicyName': "B2C_1_SiUpIn",
+        //    'redirect_uri':"https://assetmonitoringwebapp.azurewebsites.net/"
+        //}
 
-        var data = {
-            'restServer': 'https://assetdeployrestapi.azurewebsites.net/',
-            //'restServer': '   http://ajit-pc/AssetMonitoring/',
-            'restServerAnalitics': 'https://assetdeployanalyticsapi.azurewebsites.net/',
-            'b2cApplicationId': 'bbb0712c-d475-42d3-bdcd-be974f64821f',
-            'tenantName': "AssetMonitoringB2C.onmicrosoft.com",
-            'signInPolicyName': "B2C_1_SiUpIn",
-            'redirect_uri': "https://assetdeploywebapp.azurewebsites.net/"
-        }
+        //var data = {
+        //    'restServer': 'https://assetdeployrestapi.azurewebsites.net/',
+        //    //'restServer': '   http://ajit-pc/AssetMonitoring/',
+        //    'restServerAnalitics': 'https://assetdeployanalyticsapi.azurewebsites.net/',
+        //    'b2cApplicationId': 'bbb0712c-d475-42d3-bdcd-be974f64821f',
+        //    'tenantName': "AssetMonitoringB2C.onmicrosoft.com",
+        //    'signInPolicyName': "B2C_1_SiUpIn",
+        //    'redirect_uri': "https://assetdeploywebapp.azurewebsites.net/"
+        //}
         
-        config.update(data)
+        //config.update(data)
 
     })
