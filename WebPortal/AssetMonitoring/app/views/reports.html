@@ -1,0 +1,81 @@
+﻿<section class="content-header" style="margin-top: 1%;"> </section>
+<section class="content" style=" padding: 0px 4% !important; !important">
+    <!-- Small boxes (Stat box) -->
+
+    <div class="row">
+        <div class="col-lg-12" style="height: 2.5em;border-bottom:1px solid #DFDFDF; font-size: 22px;   ">
+            Reports
+
+        </div>
+    </div>
+        <br>
+        <div class="col-lg-12" id="grouplist" style=" padding: 0px 1% !important; !important;text-align: center;border-bottom:1px solid #DFDFDF;display: table;">
+            <div>
+                <div style=" float: left;font-size: 18px;display:table-cell;margin-top:5px;">Select Group &nbsp; </div>
+                <select class="form-control" id="shipment" name="shipment" style="float: left;display:table-cell;width: 126px; height: 41px;margin-bottom:10px;margin-right:20px;" ng-model="groupSelected" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList" ng-change="groupChange()">Loading Groups</select>
+                <div style="float: left;font-size: 18px;display:table-cell;margin-right:20px;margin-top:5px;">Select Sensor  &nbsp;</div>
+                <select class="form-control" id="shipment" name="shipment" style="float: left;display:table-cell;width: 126px; height: 41px;margin-bottom:10px;" ng-model="sensorSelected" ng-options="sensor as sensor.Name for sensor in sensorList" ng-change="sensorChange()"></select>
+                <button type="button" class="btn btn-box-tool" style="float:right;font-size:20px;" ng-click="toggleHistory()">
+                    <i class="fa fa-h-square"></i>
+                </button>
+            </div>
+            <br>
+        </div>
+        <div class="row" ng-show="!historic">
+
+            <div ng-repeat="capability in capabilityList" class="col-md-10" style="margin-left:70px;margin-top:20px;">
+                <!-- USERS LIST -->
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{capability.Name}}</h3>
+                        <div class="box-tools pull-right">
+                            <!--<span class="label label-danger">8 New Members</span>-->
+
+                            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                <i class="fa fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div ng-if="capability.Name!='Accelerometer'" class="box-body no-padding" style="height:200px;">
+                        <!-- /.users-list -->
+
+                        <div id="{{capability.Name}}-container" style="height:100%;width:100%;"></div>
+                    </div>
+                    <div ng-if="capability.Name=='Accelerometer'" class="box-body no-padding" style="height:600px;">
+                        <!-- /.users-list -->
+
+                        <div id="{{capability.Name}}-container" style="height:100%;width:100%;"></div>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+                <!--/.box -->
+            </div>
+        </div>
+        <div class="row" ng-show="historic">
+
+            <div class="box box-danger col-md-10" style="margin-left:70px;margin-top:20px;">
+                <div class="box-header with-border">
+                    <h3 class="box-title">History   Report</h3>
+                    <div class="box-tools pull-right">
+                        <!--<span class="label label-danger">8 New Members</span>-->
+
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding" style="height:600px;">
+                    <!-- /.users-list -->
+
+                    <iframe id="historic-container" src="" class="iframe-class-report-page" frameborder="1" seamless style="height:100%;width:100%;"></iframe>
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+        </div>
+        <div class="loading style-2 ng-scope" style="display:{{loader}};">
+            <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+        </div>
+    </section>

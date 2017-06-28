@@ -1,0 +1,572 @@
+﻿<div>
+  <!-- Content Header (Page header) -->
+  <section class="content-header" style="margin-top: 1%;"> </section>
+
+  <!-- Main content -->
+  <section class="content" style=" padding: 0px 4% !important; !important">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-12" style="height: 2em;border-bottom:1px solid #DFDFDF; font-size: 22px; ">
+        Inventory
+      </div>
+
+    </div> 
+    <!--<div class="row" style="height:152px">
+      <div class="col-lg-12" style="border:1px solid #c3c3c3; font-size:20px;height:inherit;background-color: #efefef;">
+        <div class="col-lg-1" style="border-right:1px solid #c3c3c3; height:inherit">
+          <img src="/img/Shipment.svg" style=" transform: translateY(89%);" />
+        </div>
+          <div class="col-lg-11" style="font-size: 13pt;left: -3%;">
+              <br>
+              <div class="col-lg-offset-1 col-lg-3" style="color:#48417e;">Origin to Destination</div> 
+              <div class="col-lg-8" style="color:#252525;">Seattle, Washington, USA to Linn County, Oregon, USA </div>
+              <br><br>
+              <div class="col-lg-offset-1 col-lg-3" style="color:#48417e;    display: table;">Current Location</div> 
+              <div class="col-lg-8" style="color:#252525;    display: table;width: -41px;">Sacramento, CA, USA </div>
+          
+          </div>
+
+    </div>
+
+</div>-->
+<div class="row">
+  <div class="col-lg-5 col-xs-5 newboxstyle" style="width: 50%;">
+    <div class="col-lg-10 col-xs-6" style="height:inherit">
+      <div style="display:inline-flex;  width: inherit;">
+        <img src="/img/Sensor.svg" class="iconimage" />&nbsp;&nbsp;
+        <div style="width: inherit;margin-top:5%">
+          <span class="tiletitle">{{sensorCount}} </span>
+          <div class="tilteconteheading">Total Sensor Count</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-xs-6 ">
+      <div class="btn btn-success" id="addSensor" style="transform: translateY(148%);float: right;" ng-click="addSensor()">+ Add New </div>
+
+    </div>
+
+  </div>
+  <div class="col-lg-2 col-xs-2" style="width: 0px;">
+  </div>
+
+  <div class="col-lg-5 col-xs-5 newboxstyle" style="width: 47%;">
+    <div class="col-lg-10 col-xs-6" style="height:inherit">
+      <div style="display:inline-flex;    width: 100%;">
+        <img src="/img/Gateway.svg" class="iconimage" />&nbsp;&nbsp;
+        <div style="width: inherit;margin-top:5%;margin-left:5%">
+          <span class="tiletitle">{{gatewayCount}} </span>
+          <div class="tilteconteheading">Total Gateway Count</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-xs-6">
+      <div class="btn btn-success" id="addGateway" style="transform: translateY(148%);float: right;" ng-click="addGateway()">+ Add New</div>
+    </div>
+
+  </div>
+
+
+</div>
+<br>
+<div class="row">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-target="#tab_1" data-toggle="tab">REGISTERED SENSORS</a></li>
+      <li><a data-target="#tab_2" data-toggle="tab">REGISTERED GATEWAYS</a></li>
+      <li><a data-target="#tab_3" data-toggle="tab">GROUPS</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab_1">
+        <table  id="entry-grid" ass="table table-striped table-bordered table-condensed " datatable="ng" width="100%" dt-options="dtOptions">
+          <thead class="table-blue-border">
+            <tr>
+              <th style="font-weight:100;width:15%;">Sensor Name</th>
+              <th style="font-weight:100;width:15%">Sensor Group</th>
+              <th style="font-weight:100;width:15%">View Details</th>
+              <th style="font-weight:100;width:15%">Edit</th>
+              <th style="font-weight:100;width:15%">Delete</th>
+            </tr>
+          </thead>
+          
+          <tbody>
+            <tr ng-repeat="sensor in sensorList">
+              <td style="width:15%;">{{sensor.Name}}</td>
+              <td style="width:15%;">{{sensor.SensorGroupName}}</td>
+              <td style="width:15%;"><a ng-click="viewSensorDetail(sensor)" title="view Details"><i class="fa fa-eye"></i></a></td>
+              <td style="width:15%;"><a ng-click="editSensor(sensor)" title="Edit Details"><i class="fa fa-edit"></i></a></td>
+              <td style="width:15%;"><a ng-click="deleteSensor(sensor)" title="Edit Details"><i class="fa fa-trash"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tab_2" style="width:100%;">
+        <div class="table-responsive">
+          <table id="entry-grid1" datatable="ng" width="100%" dt-options="dtOptions" style="width: 100%" >
+            <thead class="table-blue-border">
+              <tr>
+                <th style="font-weight:100;width:15%;">Gateway Name</th>
+                <th style="font-weight:100;width:15%;">Gateway Serial No</th>
+                <th style="font-weight:100;width:15%">View Details</th>
+                <th style="font-weight:100;width:15%">Edit</th>
+                <th style="font-weight:100;width:15%;">Delete</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr ng-repeat="gateway in gatewayList">
+                <td style="width:15%;">{{gateway.Name}}</td>
+                <td style="width:15%;">{{gateway.GatewayKey}}</td>
+                <td style="width:15%;"><a ng-click="viewGatewayDetail(gateway)" title="view Details"><i class="fa fa-eye"></i></a></td>
+                <td style="width:15%;"><a ng-click="editGateway(gateway)" title="Edit Details"><i class="fa fa-edit"></i></a></td>
+                <td style="width:15%;"><a ng-click="deleteGateway(gateway)" title="Edit Details"><i class="fa fa-trash"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tab_3" style="width:100%;">        
+        <div class="table-responsive">
+          <table id="entry-grid2" datatable="ng" width="100%" dt-options="dtOptions" style="width: 100%">
+            <thead class="table-blue-border">
+              <tr>
+                <th style="font-weight:100;width:15%;">Group Name</th>
+                <!--<th>Add Sensor</th>-->
+                <th style="font-weight:100;width:15%;">Detach Sensor</th>
+                <th style="font-weight:100;width:15%;">Delete</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="group in groupList">
+                <td style="width:15%;">{{group.Name}}</td>
+                <!--<td><a ng-click="addSensorToGroupPopUp(group)" title="Add Sensor"><i class="fa fa-plus"></i></a></td>
+                <td><a ng-click="removeSensorToGroupPopUp(group)" title="Remove Sensor"><i class="fa fa-close"></i></a></td>-->
+                <td style="width:15%;"><a ng-click="detachSensorGroup(group)" title="Detached Sensor"><i class="fa fa-remove"></i></a></td>
+                <td style="width:15%;"><a ng-click="deleteGroup(group)" title="Delete Group"><i class="fa fa-trash"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- /.tab-content -->
+  </div>
+  <!-- nav-tabs-custom -->
+</div>
+      <div class="loading style-2 ng-scope" style="display:{{loader}};">
+          <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+      </div>
+
+
+<script type="text/ng-template" id="GatewayModal.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+    Add Gateway
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true" ng-click="cancel()">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div class="form-group">
+          <label for="Name">Name *</label>
+          <input type="text" class="form-control" id="gname" placeholder="Enter Gateway Name" required ng-model="gateway.Name" />
+        </div>
+        <div class="form-group">
+          <label for="Serial">Serial No. *</label>
+          <input type="text" class="form-control" id="gserialno" placeholder="Enter Gateway Serial No." required ng-model="gateway.GatewayKey" />
+        </div>
+
+        <div class="form-group">
+          <label for="Description">Description *</label>
+          <input type="textarea" class="form-control" id="gdesc" placeholder="Enter Gateway Description" required ng-model="gateway.Description" />
+        </div>
+        <div class="form-group" style="font-style: italic;">
+          <div> <span style="color:red;">*</span> Mandatory Fields </div>
+        </div>
+        <div class="box-footer">
+          <div id="gatewaySubmit" class="btn btn-success" ng-click="ok()">Submit</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <div class="loading style-2 ng-scope" style="display:{{loader}};">
+        <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+    </div>
+
+
+</script>
+<script type="text/ng-template" id="editGateway.html">
+          <div class="modal-header" style="color: white;    background-color: #008D4C ;    font-weight: 300;    font-size: 15px;">
+              Edit Gateway
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" ng-click="cancel()">×</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="  ">
+
+                  <!-- /.box-header -->
+                  <!-- form start -->
+                  <form role="form" style="color:black">
+                      <div class="form-group">
+                          <label for="Name">Gateway Key *</label>
+                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="gateway.GatewayKey" />
+                      </div>
+                      <div class="form-group">
+                          <label for="Name">Name *</label>
+                          <input type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="gateway.Name" />
+                      </div>
+                      <div class="form-group">
+                          <label for="Name">Description *</label>
+                          <input type="text" class="form-control" id="Sname" placeholder="Enter Sensor Description" required ng-model="gateway.Description" />
+                      </div>
+
+
+                      <div class="box-footer">
+                          <div id="sensorSubmit" class="btn btn-success" ng-click="ok()">Submit</div>
+                          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+          <div class="loading style-2 ng-scope" style="display:{{loader}};">
+              <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+          </div>
+          <!-- /.modal-dialog -->
+          <!-- /.modal -->
+      </script>
+<script type="text/ng-template" id="viewGatewayDetail.html">
+          <div class="modal-header" style="color: white;    background-color: #008D4C ;    font-weight: 300;    font-size: 15px;">
+              Gateway Details
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" ng-click="cancel()">×</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="  ">
+
+                  <!-- /.box-header -->
+                  <!-- form start -->
+                  <form role="form" style="color:black">
+                      <div class="form-group">
+                          <label for="Name">Gateway Key *</label>
+                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Gateway Name" required ng-model="gateway.GatewayKey" />
+                      </div>
+                      <div class="form-group">
+                          <label for="Name">Name *</label>
+                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Gateway Name" required ng-model="gateway.Name" />
+                      </div>
+                      <div class="form-group">
+                          <label for="Name">Description *</label>
+                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Gateway Description" required ng-model="gateway.Description" />
+                      </div>
+
+
+                      <div class="box-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+          <div class="loading style-2 ng-scope" style="display:{{loader}};">
+              <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+          </div>
+          <!-- /.modal-dialog -->
+          <!-- /.modal -->
+      </script>
+
+<script type="text/ng-template" id="SensorModal.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C ;    font-weight: 300;    font-size: 15px;">
+    Add Sensor
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true" ng-click="cancel()">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div class="form-group">
+          <label for="Name">Name *</label>
+          <input type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required  ng-model="sensor.Name"/>
+        </div>
+        <div class="form-group">
+          <label for="Serial">Serial No. *</label>
+          <input type="text" class="form-control" id="Sserialno" placeholder="Enter Sensor Serial No." required ng-model="sensor.SensorKey"/>
+        </div>
+        <div class="form-group">
+          <label for="Serial" style=" color: black;">Sensor Type *</label>
+          <select class="form-control" id="parameter" name="serialParameter" ng-model="sensor.SensorTypeId" ng-options="sensorType.Id as sensorType.Name for sensorType in sensorTypeList"></select>
+        </div>
+          <div class="form-group">
+              <label for="Serial" style=" color: black;">Description *</label>
+              <input type="text" class="form-control"  placeholder="Enter Sensor Description." required ng-model="sensor.Description" />
+          </div>
+        <!--<div class="form-group">
+          <label for="Serial" style=" color: black;">Sensor Group *</label>
+          <select class="form-control" id="parameter" name="serialParameter" ng-model="sensor.SensorGroupId" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList"></select>
+        </div>-->
+        <div class="form-group popup-link">
+          <a ng-click="addNewSensorTypePopup()">Add New Sensor Type</a>
+        </div>
+        <div class="form-group" style="font-style: italic;">
+          <div> <span style="color:red;">*</span> Mandatory Fields </div>
+        </div>
+        <div class="box-footer">
+          <div id="sensorSubmit" class="btn btn-success" ng-click="ok()">Submit</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+    <div class="loading style-2 ng-scope" style="display:{{loader}};">
+        <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+    </div>
+  <!-- /.modal-dialog -->
+  <!-- /.modal -->
+</script>
+<script type="text/ng-template" id="editSensor.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C ;    font-weight: 300;    font-size: 15px;">
+    Edit Sensor
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true" ng-click="cancel()">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div  class="form-group">
+              <label for="Name">Sensor Key *</label>
+              <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.SensorKey" />
+        </div>  
+        <div class="form-group">
+          <label for="Name">Name *</label>
+          <input type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.Name" />
+        </div>      
+        <div class="form-group">
+          <label for="Name">Description *</label>
+          <input type="text" class="form-control" id="Sname" placeholder="Enter Sensor Description" required ng-model="sensor.Description" />
+        </div>  
+        
+               
+        <div class="box-footer">
+          <div id="sensorSubmit" class="btn btn-success" ng-click="ok()">Submit</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+    <div class="loading style-2 ng-scope" style="display:{{loader}};">
+        <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+    </div>
+  <!-- /.modal-dialog -->
+  <!-- /.modal -->
+</script>
+
+<script type="text/ng-template" id="viewSensorDetail.html">
+          <div class="modal-header" style="color: white;    background-color: #008D4C ;    font-weight: 300;    font-size: 15px;">
+               Sensor Details
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" ng-click="cancel()">×</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="  ">
+
+                  <!-- /.box-header -->
+                  <!-- form start -->
+                  <form role="form" style="color:black">
+                      <div class="form-group">
+                          <label for="Name">Sensor Key *</label>
+                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.SensorKey" />
+                      </div>
+                      <div class="form-group">
+                          <label for="Name">Name *</label>
+                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.Name" />
+                      </div>
+                      <div class="form-group">
+                          <label for="Name">Description *</label>
+                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Description" required ng-model="sensor.Description" />
+                      </div>
+
+
+                      <div class="box-footer">                          
+                          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+          <div class="loading style-2 ng-scope" style="display:{{loader}};">
+              <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+          </div>
+          <!-- /.modal-dialog -->
+          <!-- /.modal -->
+      </script>
+
+<script type="text/ng-template" id="AddNewSensorTypeModal.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+    Add Sensor Type
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true" ng-click="cancel()">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div class="form-group">
+          <label for="Name">Name *</label>
+          <input type="text" class="form-control" id="gname" placeholder="Enter Sensor Type Name" required ng-model="sensortype.Name" />
+        </div>
+
+        <div class="form-group">
+          <label for="Description">Description *</label>
+          <input type="textarea" class="form-control" id="gdesc" placeholder="Enter Sensor Type Description" required ng-model="sensortype.Description" />
+        </div>
+        <div class="form-group">
+          <label for="Serial" style=" color: black;">Capbilities *</label>
+          <select multiple="true" class="form-control" id="parameter" name="serialParameter" ng-model="capabilities.selected" ng-options="capability.Id as capability.Name for capability in capabilityList"></select>
+
+        </div>
+        <!--<div class="form-group popup-link">
+          <a ng-click="addNewCapabilityPopup()">Add New Capibility</a>
+        </div>-->
+        <div class="form-group" style="font-style: italic;">
+          <div> <span style="color:red;">*</span> Mandatory Fields </div>
+        </div>
+        <div class="box-footer">
+          <div id="gatewaySubmit" class="btn btn-success" ng-click="ok()">Submit</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <div class="loading style-2 ng-scope" style="display:{{loader}};">
+        <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+    </div>
+
+
+</script>
+<script type="text/ng-template" id="AddNewCapabilityModal.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+    Add Capability
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div class="form-group">
+          <label for="Name">Name *</label>
+          <input type="text" class="form-control" id="gname" placeholder="Enter Capability Name" required ng-model="capability.Name" />
+        </div>
+
+        <div class="form-group">
+          <label for="Description">Description *</label>
+          <input type="textarea" class="form-control" id="gdesc" placeholder="Enter Capability Description" required ng-model="capability.Description" />
+        </div>
+        <div class="form-group" style="font-style: italic;">
+          <div> <span style="color:red;">*</span> Mandatory Fields </div>
+        </div>
+        <div class="box-footer">
+          <div id="gatewaySubmit" class="btn btn-success" ng-click="ok()">Submit</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</script>
+
+
+
+<script type="text/ng-template" id="addSensorToGroupModal.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+    Add Sensor to Group
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div class="form-group">
+          <label for="Name">Name : </label>
+          {{group.Name}}
+        </div>
+
+
+        
+        <div class="form-group">
+          <label for="Serial" style=" color: black;">Sensor  *</label>
+          <select multiple="true" class="form-control" id="parameter" name="serialParameter" ng-model="group.addSensorList" ng-options="sensor.Id as sensor.Name for sensor in unmappedSensors"></select>
+        </div>
+        <div class="form-group" style="font-style: italic;">
+          <div> <span style="color:red;">*</span> Mandatory Fields </div>
+        </div>
+        <div class="box-footer">
+          <div id="gatewaySubmit" class="btn btn-success" ng-click="ok()">Add</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</script>
+
+
+<script type="text/ng-template" id="removeSensorToGroupModal.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+    Remove Sensor to Group
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div class="form-group">
+          <label for="Name">Name : </label>
+          {{group.Name}}
+        </div>
+        <div class="form-group">
+          <label for="Serial" style=" color: black;">Sensor  *</label>
+          <select  multiple="true" class="form-control" id="parameter" name="serialParameter" ng-model="group.removeSensorList" ng-options="sensor.Id as sensor.Name for sensor in group.sensorList"></select>
+        </div>
+        <div class="form-group" style="font-style: italic;">
+          <div> <span style="color:red;">*</span> Mandatory Fields </div>
+        </div>
+        <div class="box-footer">
+          <div id="gatewaySubmit" class="btn btn-success" ng-click="ok()">Remove</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</script>

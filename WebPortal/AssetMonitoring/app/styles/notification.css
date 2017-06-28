@@ -1,0 +1,124 @@
+table {
+    width: 100%;
+}
+
+thead, tbody, tr, td, th {
+    display: block;
+}
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 30px;
+    /*background: linear-gradient(#777, #444);*/
+    /*text-align: left;*/
+}
+
+tbody {
+    height: 500px;
+    overflow-y: auto;
+}
+
+thead {
+    /* fallback */
+}
+
+tbody td, thead th {
+    width: 19.2%;
+    float: left;
+}
+
+
+/*.map-iew {
+    position: absolute;
+    top: 50px;
+    right: 50%;
+    left: 60%;
+    bottom: 0;
+}*/
+
+.map-container {
+    width: auto;
+    height: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    background: white;
+    position: fixed;
+    top: 0;
+}
+
+.content {
+    max-height: calc(100% - 120px);
+    overflow-y: scroll;
+    padding: 0px 10% !important;
+    margin-top: 30px !important;
+}
+
+.footer {
+    width: 100%;
+    height: 40px;
+    background: grey;
+    position: fixed;
+    bottom: 0;
+}
+
+.tag {
+    font-size: 14px;
+    padding: .3em .4em .4em;
+    margin: 0 .1em;
+}
+
+h4 {
+    background: grey;
+    shape-outside: initial;
+    border-radius: 25px;
+    border: black;
+    padding: 9px;
+    width: 100%;
+}
+
+.glyphicon {
+    font-size: 15px !important;
+}
+
+.reactive-table tbody tr {
+    cursor: pointer;
+}
+
+.map-marker-label {
+    position: absolute;
+    color: blue;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-left: -60px;
+}
+
+.reactive-table-filter .input-group {
+    right: -2.5% !important
+}
+
+.custumclassgatewayId {
+    width: 93px !important
+}
+
+.custumclasssensortype {
+    width: 93px !important
+}
+
+.custumclassdescdrip{
+    width: 93px !important
+}
+
+.custumclasssserilano {
+    width: 93px !important
+}
