@@ -1,0 +1,31 @@
+﻿<section class="content-header" style="margin-top: 1%;"> </section>
+<section class="content" style=" padding: 0px 4% !important; !important">
+    <!-- Small boxes (Stat box) -->
+
+    <div class="row">
+        <div class="col-lg-12" style="height: 2.5em;border-bottom:1px solid #DFDFDF; font-size: 22px;   ">
+            Configuration
+
+        </div>
+    </div>
+    <br><br>
+    <div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapseone" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Logo Configuration</h3>
+
+        </div>
+        <div id="collapseone" class="panel-collapse collapse out">
+            <div class="panel-body">
+                
+                <input id="application_logo" type="file" accept="image/*" style="margin-top:20px;text-align:center;margin-left:40%;" />
+                <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="addApplicationLogo()">Add</div>
+                <br /><br/>
+                <label>Note : Please Upload logo of size 117 x 30</label>
+            </div>
+        </div>
+
+    </div>
+    <div class="loading style-2 ng-scope" style="display:{{loader}};">
+        <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+    </div>
+    </section>

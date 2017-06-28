@@ -1,0 +1,50 @@
+﻿  <!-- Content Wrapper. Contains page content -->
+  <div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header" style="margin-top: 1%;"></section>
+
+    <!-- Main content -->
+    <section class="content" style="    padding: 0px 4% !important; !important">
+      <div class="row">
+        <div class="col-lg-12" style="height: 2.5em;border-bottom:2px solid #DFDFDF; font-size: 22px;  ">
+          Alerts          
+        </div>
+
+      </div><br>
+      <div class="col-xs-12">
+        <div class="box" style="padding:0px;left: -3%; width: 106%;">
+          <!-- <div class="box-header">
+            <h3 class="box-title">All Notifications</h3>
+          </div> -->
+          <!-- /.box-header -->
+
+          <div class="box-body">
+              <table id="entry-grid" ass="table table-striped table-bordered table-condensed" datatable="ng" width="100%" dt-options="dtOptions">
+                  <thead class="table-blue-border">
+                      <tr>
+                          <th style="font-weight:100;width:15%;">Group</th>
+                          <th style="font-weight:100;width:15%;">Value</th>
+                          <th style="font-weight:100;width:15%;">Capability</th>
+                          <th style="font-weight:100;width:15%;">CapabilityFilter</th>
+                          <th style="font-weight:100;width:15%;">Timestamp</th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      <tr ng-repeat="alert in alertList">
+                          <td style="width:15%;">{{alert.GroupName}}</td>
+                          <td style="width:15%;">{{alert.Value}}</td>
+                          <td style="width:15%;">{{alert.Capability}}</td>
+                          <td style="width:15%;">{{alert.CapabilityFilter}}</td>
+                          <td style="width:15%;">{{alert.Timestamp}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <!-- /.box-body -->
+
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>

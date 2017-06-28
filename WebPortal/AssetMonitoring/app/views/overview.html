@@ -1,0 +1,234 @@
+﻿<div >
+  <!-- Content Header (Page header) -->
+  <section class="content-header" style="margin-top: 1%;"></section>
+
+  <!-- Main content -->
+  <section class="content" style="    padding: 0px 4% !important; !important">
+    <div class="row">
+      <div class="col-lg-12" style="height: 2em;border-bottom:1px solid #DFDFDF; font-size: 22px;  ">
+        Dashboard               
+      </div>
+
+    </div>
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-5 col-xs-5 newboxstyle" style="width: 50%;">
+        <div class="col-lg-8 col-xs-6" style="height:inherit">
+          <div style="display:inline-flex;height:100%;">
+            <img src="/img/Sensor.svg" class="iconimage" style="height:100%;"/>&nbsp;&nbsp;
+            <div style=" margin-top:  30px;margin-left: 1%;">
+              <span class="tiletitle">{{getonboardsensorcount}} </span>
+              <div class="tilteconteheading" style="cursor:pointer" id="assetliveview">Assets</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-xs-6 damagedblox" id="damgeboxid" style="cursor:pointer">
+          <!--<div style="margin-top:90%;display:inline-flex;font-size:14pt; position: relative; left: 34%;">
+            <span class="tiletitle">0</span>&nbsp; 
+            <div> Damaged</div></div>-->
+            <div style="display:inline-flex;height:100%;">
+                &nbsp;&nbsp;
+                <div style="margin-top: 32px;margin-left: 1%;">
+                    <span class="tiletitle">{{damageassetcount}}</span>
+                    <div class="tilteconteheading" style="cursor:pointer" id="assetliveview">Damaged</div>
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+      <div class="col-lg-2 col-xs-2" style="width: 0px;">
+      </div>
+
+      <div class="col-lg-5 col-xs-5 newboxstyle" style="width: 47%;">
+        <div class="col-lg-8 col-xs-6" style="height:inherit">
+          <div style="display:inline-flex">
+            <img src="/img/Gateway.svg" class="iconimage" />&nbsp;&nbsp;
+            <div style=" margin-top: 30px;margin-left: 13%;">
+              <span class="tiletitle">{{gatewayCount}} </span>
+              <div class="tilteconteheading">Gateways</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-xs-6 damagedblox">
+          <div style="display:inline-flex;font-size:14pt;position: relative; left: 53%;">
+            <!--<span style="font-size:14pt;color:#252525;font-weight:bold;  ">1 </span>&nbsp; <div> Online</div>-->
+              <div style=" margin-top: 32px;margin-left: 13%;">
+                  <span class="tiletitle">{{onlinegatewaycount}}</span>
+                  <div class="tilteconteheading">Online</div>
+              </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div class="row" style="height:20px">
+    </div>
+    <div class="row" style="1px solid #dfdfdf">
+      <!-- Left col -->
+      <section class="connectedSortable ui-sortable">
+        <!-- Custom tabs (Charts with tabs)-->
+
+        <div class=" col-lg-12 box box-success" style="height:60vh;">
+          <div class="box-header with-border ui-sortable-handle" style="display:flex;border-bottom: 1px solid #DFDFDF">
+            <div class="box-title" style="   font-weight: BOLD;    font-size: 12pt;">SHIPMENT LIVE POSITION</div>
+            <!--<ul class="nav  mapView" style="margin-left: 68%;display: inline-flex; border:1px solid #3EB494">
+              <li class="active" style="cursor:pointer"><a href="" id="mapviewicon" data-toggle="tab" style="color:#8e9094"><i class="fa fa-map-marker mapicon" aria-hidden="true"></i></a></li>
+              <li style="cursor:pointer"><a href="" id="trackviewm" data-toggle="tab" style="color:#8e9094"><i class="fa fa-list mapicon" aria-hidden="true"></i></a></li>
+            </ul>-->
+          </div><br>
+          <div class="col-md-8 col-sm-8" style="padding: 0px;height:100%;">
+                <div class="box-body no-padding" style="height:100%;">
+                  <div class="row" style="height:100%;">
+
+                    <div style="height:100%;">
+                      <!-- <div class="btn btn-success" id="showlivedata" style="margin-top:-3%">Sensor Live Status</div> -->
+                      <div class="map-container" map-lazy-load="https://maps.google.com/maps/api/js" style="height:100%;">                 
+
+                        <ng-map zoom="14" class="map-container" center="47.6147628,-122.475989">
+                          <directions draggable="true"
+                                      panel="directions-panel"
+                                      travel-mode="DRIVING"
+                                      origin="47.6147628,-122.475989"
+                                      destination="44.4961185,-122.8069872">
+                          </directions>
+                                                
+                        </ng-map>
+                      </div>
+                    </div>
+
+                   
+              </div>
+
+              
+            </div>
+          </div>
+            <div class="col-md-4 col-sm-4" style="background-color: #F6F6F6;height:100%;margin-top: 0%;right:-1.5%">
+              <div id="mapView" class="col-md-12">
+                
+
+                <div class="shipmentblock">
+
+                  <div class="shipmentTitle">Origin</div>
+                  <div class="shipmentinnerdetail">
+                      Seattle, Washington, USA
+                  </div>
+                </div>
+                <div class="shipmentblock">
+                  <div class="shipmentTitle">Destination</div>
+                  <div class="shipmentinnerdetail">
+                      Linn County, Oregon, USA
+                  </div>
+                </div>
+                <div class="shipmentblock">
+                  <div class="shipmentTitle">Start Date</div>
+                  <div class="shipmentinnerdetail">
+                    {{startd}}
+                  </div>
+                </div>
+                <div class="shipmentblock">
+                  <div class="shipmentTitle">End Date</div>
+                  <div class="shipmentinnerdetail">
+                    {{endd}}
+                  </div>
+                </div>
+                <div>
+                  <div class="shipmentTitle">Current Location </div>
+                  <div class="shipmentinnerdetail">Vancouver, USA</div>
+                </div>
+              </div>
+
+
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <!-- /.row -->
+
+  </section>
+  <!-- /.content -->
+</div>
+
+<div class="modal fade" id="damagedlist">
+
+  <div class="modal-dialog" style=" width: 900px;">
+    <div class="modal-content">
+      <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+        Damaged Asset List                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body" style="height:250px;overflow:auto">
+        <!--<div class="  ">
+
+          {{#if checkfordamageview getdamagesensr}}
+          <div class="col-md-12" style="background: #c3c3c3">
+
+            <div class="col-md-4">Sensor Type</div>
+            <div class="col-md-3">Message</div>
+            <div class="col-md-3">Threshold Crossed</div>
+            <div class="col-md-2">Time stamp</div>
+          </div>
+          <div class="col-md-12" style="border :1px solid #c3c3c3 ">
+            {{#each  getdamagesensr}}
+            <div>
+              <div class="col-md-4"><span style="font-weight:bold">{{data.sserialno}} | </span>{{data.datatype}}</div>
+              <div class="col-md-3">
+                {{message}}
+              </div>
+              {{#if checkcondition data.data}}
+              <div class="col-md-3"><span style="font-weight:bold">{{evaluateexpresion data.data}}</span></div>
+              {{else}}
+              <div class="col-md-3">{{data.data}}</div>
+
+              {{/if}}
+              <div class="col-md-2">{{data.timestamp}}</div>
+
+            </div>
+            {{/each}}
+          </div>
+
+
+
+          {{else}}
+          <div class="col-md-12" style="background: #c3c3c3">No Record Found</div>
+          {{/if}}
+        </div>-->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="chartdivfullscreen">
+
+  <div class="modal-dialog" style=" width: 1000px;">
+    <div class="modal-content">
+      <!--<div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+      Damaged Asset List                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span></button>
+                        </div>-->
+      <div class="modal-body" style="height:700px;overflow:auto;width:1000px">
+
+        <div class="  ">
+          <!-- <div style="float:right;font-weight: bold" ><div>On-Board Sensorlist &nbsp; </div>
+                  <select  class="form-control"  id="sensorRealtimetrack" name="sensorRealtimetrack" style="width: auto;float: right; height: 34px;">
+                   {{#each getonboardsensorlist}}
+                   <option value="{{sensorId}}" data-id={{_id}}>{{sensorId}} {{sname}}</option>
+                  {{/each}}
+                  </select>
+          </div> -->
+          <!--{{> popupView}}-->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

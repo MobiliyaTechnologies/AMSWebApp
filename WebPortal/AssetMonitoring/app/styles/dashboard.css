@@ -1,0 +1,309 @@
+﻿/*For Navigation bar*/
+.navbar-custom {
+  background: #2C3E50;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 200;
+  border: none;
+}
+.navbar-custom a:focus {
+  outline: none;
+}
+.navbar-custom .navbar-brand {
+  color: white;
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus,
+.navbar-custom .navbar-brand:active,
+.navbar-custom .navbar-brand.active {
+  color: white;
+}
+.navbar-custom .navbar-nav {
+  letter-spacing: 1px;
+}
+.navbar-custom .navbar-nav li a {
+  color: white;
+}
+.navbar-custom .navbar-nav li a:hover {
+  color: #18BC9C;
+  outline: none;
+}
+.navbar-custom .navbar-nav li a:focus,
+.navbar-custom .navbar-nav li a:active {
+  color: white;
+}
+.navbar-custom .navbar-nav li.active a {
+  color: white;
+  background: #18BC9C;
+}
+.navbar-custom .navbar-nav li.active a:hover,
+.navbar-custom .navbar-nav li.active a:focus,
+.navbar-custom .navbar-nav li.active a:active {
+  color: white;
+  background: #18BC9C;
+}
+.navbar-custom .navbar-toggle {
+  color: white;
+  text-transform: uppercase;
+  font-size: 10px;
+  border-color: white;
+}
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+  background-color: #18BC9C;
+  color: white;
+  border-color: #18BC9C;
+}
+@media (min-width: 768px) {
+  .navbar-custom {
+    padding: 5px 0;
+    -webkit-transition: padding 0.3s;
+    -moz-transition: padding 0.3s;
+    transition: padding 0.3s;
+  }
+  .navbar-custom .navbar-brand {
+    font-size: 2em;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  .navbar-custom.affix {
+    padding: 10px 0;
+  }
+  .navbar-custom.affix .navbar-brand {
+    font-size: 1.5em;
+  }
+}
+
+.navbar .badge {
+      background-color: red;
+}
+/*.notification-container {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    top: 15px;
+    left: 15px;
+}
+
+.notification-counter {
+    position: absolute;
+    top: -2px;
+    left: 12px;
+    background-color: rgba(212, 19, 13, 1);
+    color: #fff;
+    border-radius: 3px;
+    padding: 1px 3px;
+    font: 8px Verdana;
+}*/
+/*
+#navbar ul {
+    width: 100%;
+    height: 50px;
+}
+
+#navbar ul, #navbar li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: -21%;
+}*/
+
+
+/*//background: linear-gradient(#777, #444);*/
+#exTab3 .nav-pills > li > a {
+border-radius: 4px 4px 0 0 ;
+}
+#exTab3 .tab-content {
+  /*color : white;*/
+/*background-color: grey;*/
+  padding : 5px 15px;
+}
+.sideimage{
+  width: 20px
+}
+.sidetitle{
+  font-size: 12pt;
+  /*font-family: lato;*/
+  color: #9DA3B3
+}
+
+.sidebar-menu > li{
+    /*background-color: none !important;*/
+    border: 1px solid #424958;
+    /*background-color: transparent !important;*/
+
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: #424958 !important;
+    border-bottom-width:1px !important*/
+}
+.sidebar-menu > li:hover{
+    /*background-color: none !important;*/
+    /*border: 3px solid ;*/
+    /*background-color: transparent !important;*/
+
+     /*border-left: 3px solid #42B191;*/
+      /*border-right-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: #fffff !important;
+    border-bottom-width:3px !important*/
+}
+.sidebar-menu >li>a:hover{
+  /*border: 0px solid #42B191;*/
+  /*background: #1e282c;*/
+  /*background-color: transparent !important;*/
+
+  border-left: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-bottom-width: transparent !important
+}
+.iconimage{
+  margin-top: -3%;
+  margin-left: 2%;
+  width: 76px;
+  color: #DFDFDF
+}
+.tiletitle{
+  /*font-family: lato ;*/
+  color: #726ab4;
+  font-size: 28pt;
+  font-weight: bold;
+
+}
+.newboxstyle{
+  background-color:white;
+  border: 1px solid #b8c7ce;
+  height:128px;
+}
+.damagedblox{
+  border: 1px solid #b8c7ce;
+border-bottom: transparent;
+
+border-right: transparent;
+border-top: transparent;
+height: inherit;
+}
+.logo-img path {
+  fill: red;
+}
+  .mapView>li.active>a, .mapView>li.active>a:hover {
+    /*background-color: none !important;*/
+    /*background-color: transparent !important;*/
+    /*border: none;*/
+    /*//border: 5px solid #3EB494*/
+    /*border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-bottom-width:transparent;*/
+    background:#3EB494;
+    color:white
+    /*/border-radius: 15%;*/
+}
+.mapicon{
+  color: black;
+  font-size: 11pt
+}
+.shipmentTitle{
+  font-style: leto normal;
+  color: #726ab4;
+  font-size: 14pt;
+
+}
+.shipmentblock {
+    border-bottom: 1px solid #DFDFDF;
+    height: 70px;
+    padding: 10px;
+}
+.shipmentinnerdetail{
+  font-style: leto normal;
+  color: #525252;
+  font-size: 12pt;
+}
+.detailshipdetail{
+  height: 70px;
+  border-bottom: 1px solid #DFDFDF;
+  border-left: 1px solid #DFDFDF
+}
+.listshiplemttitle{
+  font-weight: bold;
+  font-size: 16px;
+ /*font-style: lato ;*/
+ margin-left: 38px;
+ transform: translateY(84%);
+}
+.listshipcontent{
+  font-size: 13px;
+  font-weight: normal;
+  display: inline;
+ float: right;
+}
+.box.box-success {
+    border-top-color: rebeccapurple !important;
+}
+.tilteconteheading{
+  /*font-family: lato  ;*/
+  color: #252525;
+  font-size: 14pt;
+  margin-top: -12%
+  display: inline-block;
+}
+.selectedmenu{
+  /*font-family: lato  ;*/
+  background-color: #242834 !important;
+  border-left: 3px solid #42B191 !important;
+
+}
+.btn-success {
+  background-color: #42B191 !important;
+  border-color: #42B191 !important
+  }
+  .map-container{
+    box-shadow: none !important
+  }
+   .reactive-table-filter .input-group{
+    right: -2.5% !important
+  }
+.content-wrapper{
+  background-color: #f9f9f9 !important
+}
+.content{
+      overflow: hidden !important
+}
+.modal-header{
+  background-color: #42B191 !important;
+}
+.sidebar{
+  text-decoration: none;
+}
+.loading {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.5);
+  z-index: 1100;
+  display: none;
+}
+/** Loader **/
+
+.loader {
+  position: absolute;
+  left:55%;
+  top:40%;
+
+}
+.table-blue-border {
+    border-top: 1px solid #726ab4;
+    border-bottom: 1px solid #ddd;
+}
+    .table-blue-border th {
+        color: #726ab4;
+    }

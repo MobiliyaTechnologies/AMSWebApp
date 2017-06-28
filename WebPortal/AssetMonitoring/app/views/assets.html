@@ -1,0 +1,148 @@
+﻿  <div >
+    <!-- Content Header (Page header) -->
+      <section class="content-header" style="margin-top: 1%;"></section>
+    
+
+    <!-- Main content -->
+    <section class="content" style=" padding: 0px 4% !important; !important">
+      <!-- Small boxes (Stat box) -->
+
+        <div class="row">
+            <div class="col-lg-12" style="height: 2.5em;border-bottom:1px solid #DFDFDF; font-size: 22px;   ">
+                Assets
+
+            </div>
+
+        </div> <br>
+        <!--<div class="col-lg-12" style="border-bottom:1px solid #DFDFDF; font-size: 22px;">Assets</div>-->
+      <div class="row" style=" margin-top: 3%;">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="table-responsive">
+              <table id="entry-grid" datatable="ng" width="100%" dt-options="dtOptions">
+                <thead class="table-blue-border">
+                <th style="font-weight:100;width:13%;">Select</th>
+                <th style="font-weight:100;width:13%;">Asset Id</th>
+                <th style="font-weight:100;width:13%;">Asset Barcode</thstyle="width:70px;">
+                <th style="font-weight:100;width:13%;">Group Name</th>
+                <th style="font-weight:100;width:13%;">Sensor Key</th>
+                <th style="font-weight:100;width:13%;">Detach</th>
+                </thead>
+                <tbody style="height:280px;" >
+                   <tr ng-repeat="asset in assetList" >
+                     <td style="width:13%;"><input type="checkbox" ng-model="asset.selected" ng-click="select(asset)"/></td>
+                     <td style="width:13%;">{{asset.AssetId}}</td>
+                     <td style="width:13%;">{{asset.AssetBarcode}}</td>
+                     <td style="width:13%;">{{asset.GroupName}}</td>
+                     <td style="width:13%;">{{asset.SensorKey}}</td>
+                     <td style="width:13%;"><a ng-click="detachSensor(asset)" title="Edit Details"><i class="fa fa-trash"></i></a></td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+            </div>
+
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+      <!-- /.box -->
+      <div ng-if="selectlength>0" class="btn btn-success" id="addSensorGroup"  ng-click="addSensorGroup()">+ Add Group </div>
+    </section>
+  </div>
+
+  <div class="modal fade" id="confirmboradingModal" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog" style="width:275px">
+      <div class="modal-content">
+        <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+          Confirmation
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="  ">
+
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class=" ">
+                <div class="form-group">
+                  <label for="Sensor" style=" color: black;">Are you sure for off-boarding ?</label>
+
+                </div>
+
+
+              </div>
+
+              <div class="box-footer">
+                <div id="confirmdelete" class="btn btn-success">Yes</div>
+                <div id="falsedelete" type="button" class="btn btn-danger" data-dismiss="modal">No</div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline">Save changes</button>
+        </div> -->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    <!-- /.modal -->
+  </div>
+
+<script type="text/ng-template" id="SensorGroupModal.html">
+  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+    Add Assets to Group
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="  ">
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form role="form" style="color:black">
+        <div class="form-group">
+          <label for="Name">Create New :&nbsp;<input type="radio" name="creategroup" ng-model="check.createNew" value="true" /></label>
+          &nbsp;&nbsp;<label for="Name">Assign Existing :&nbsp;<input type="radio" name="creategroup" ng-model="check.createNew"  value="false"/></label>
+
+        </div>
+        {{createNew}}
+        <div class="form-group">
+          <label for="Name">Name *</label>
+          <input ng-disabled="check.createNew=='false'"  type="text" class="form-control" id="gname" placeholder="Enter Sensor Group Name" required ng-model="sensorGroup.Name" />
+        </div>
+
+
+        <div  class="form-group">
+          <label for="Description">Description *</label>
+          <input  ng-disabled="check.createNew=='false'" type="textarea" class="form-control" id="gdesc" placeholder="Enter Sensor Group Description" required ng-model="sensorGroup.Description" />
+        </div>
+        <div class="form-group">
+          <label for="Serial" style=" color: black;">Group  *</label>
+          <select  ng-disabled="check.createNew=='true'" class="form-control" id="parameter" name="serialParameter" ng-model="selected.SensorGroupId" ng-options="group.Id as group.Name for group in groupList"></select>
+        </div>
+        <div class="form-group" style="font-style: italic;">
+          <div> <span style="color:red;">*</span> Mandatory Fields </div>
+        </div>
+        <div class="box-footer">
+          <div id="gatewaySubmit" class="btn btn-success" ng-click="ok()">Submit</div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="loading style-2 ng-scope" style="display:{{loader}};">
+    <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+  </div>
+</script>
+
+
+<div class="loading style-2 ng-scope" style="display:{{loader}};">
+  <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+</div>

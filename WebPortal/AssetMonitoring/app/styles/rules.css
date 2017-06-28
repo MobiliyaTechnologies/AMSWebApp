@@ -1,0 +1,369 @@
+﻿#page-wrap {
+  width: 700px;
+  margin: 25px auto;
+}
+
+.ui-tabs {
+  zoom: 1;
+}
+
+  .ui-tabs .ui-tabs-nav {
+    list-style: none;
+    position: relative;
+    padding: 2px 2px 0;
+    overflow: hidden;
+    top: 1px;
+    z-index: 1000;
+  }
+
+    .ui-tabs .ui-tabs-nav li {
+      position: relative;
+      float: left;
+      border: 1px solid #ccc;
+      border-bottom-width: 0 !important;
+      margin: 0 -2px 0 -3px;
+      background: #F8F8F8;
+      width: 234px;
+      height: 60px
+    }
+
+      .ui-tabs .ui-tabs-nav li a {
+        float: left;
+        text-decoration: none;
+        padding: 5px 10px;
+        color: black;
+      }
+
+      .ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+        padding-bottom: 1px;
+        border-bottom-width: 0;
+        background: white;
+      }
+
+        .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
+          cursor: text;
+        }
+
+      .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+        cursor: pointer;
+      }
+
+
+  /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+
+  .ui-tabs .ui-tabs-panel {
+    padding: 20px;
+    display: block;
+    border-width: 0;
+    background: none;
+    border: 1px solid #ccc;
+    position: relative;
+    min-height: 380px;
+  }
+
+  .ui-tabs .ui-tabs-hide {
+    display: none !important;
+  }
+
+a.mover {
+  /*background: #900;*/
+  padding: 6px 12px;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.next-tab {
+  bottom: 0;
+  right: 0;
+  /*-moz-border-radius-topleft: 10px;
+    -webkit-border-top-left-radius: 10px;*/
+}
+
+.prev-tab {
+  bottom: 0;
+  left: 0;
+  /*-moz-border-radius-topright: 10px;
+    -webkit-border-top-right-radius: 10px;*/
+}
+
+
+/*.breadcrumb li a:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 30px;
+  top: 100px;
+  border: 25px solid;
+  border-color: #666 transparent transparent #666;
+}
+.breadcrumb li a:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 38px;
+  top: 100px;
+  border: 15px solid;
+  border-color: #fff transparent transparent #fff;
+}*/
+
+.breadcrumb .fa-check-circle {
+  font-size: 46px;
+  color: #726AB5;
+  margin-left: -7%
+}
+
+.breadcrumb .rtitletab {
+  float: right;
+  margin-top: 12%;
+}
+
+.breadcrumb li.ui-tabs-selected .rtitlelogo {
+  margin-top: 2%;
+  font-size: 25px;
+  background: #3DB393;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: white;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 5px;
+  text-align: center;
+  width: 1.6em;
+}
+
+.breadcrumb .rtitlelogo {
+  margin-top: 2%;
+  font-size: 25px;
+  background: white;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #726AB5;
+  display: inline-block;
+  /*font-weight: bold;*/
+  line-height: 1.6em;
+  margin-right: 5px;
+  text-align: center;
+  width: 1.6em;
+}
+
+.breadcrumb .rtitlel {
+  content: "1";
+  background-color: #3DB393;
+  color: white;
+  border-radius: 23%;
+  font-size: 46px;
+}
+
+.newruleicon {
+  cursor: pointer;
+  border: 1px solid #d3d3d3;
+  width: 22%;
+  height: 153px;
+  display: inline-block;
+  margin: 10px 10px;
+  text-align: center;
+}
+
+; .newruleimage {
+  margin-top: 13%;
+  margin: 18px 33% 10%;
+}
+
+.newrulesubtitle {
+  text-align: center;
+  font-size: 18px;
+  padding: 13px;
+}
+
+.newruleicon:hover {
+  border: 2px solid #3BB594;
+}
+
+.selectedruleicon {
+  border: 2px solid #3BB594;
+}
+
+.connewruleicon {
+  cursor: pointer;
+  border: 1px solid #d3d3d3;
+  width: 22%;
+  height: 123px;
+  display: inline-block;
+  margin: 10px 10px;
+}
+
+  .connewruleicon:hover {
+    border: 2px solid #3BB594;
+  }
+
+.connewruleiconselected {
+  border: 2px solid #3BB594;
+}
+
+.disabledbutton {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+
+/*-------------------------*/
+
+
+
+/*------------------------------------------------------*/
+
+#rparameter .newruleslider {
+  height: 70px;
+  margin-left: 47%
+}
+
+#rparameter .newinputforslider {
+  width: 80px;
+  color: #42B191;
+  font-weight: bold;
+  margin: 2px 43px 12px;
+  text-align: center;
+  border: none;
+  background: transparent;
+}
+
+
+/*-----------------------------------------------------------*/
+
+#sensorlist .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+  #sensorlist .switch input {
+    display: none;
+  }
+
+input[type='radio'] {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid darkgray;
+  border-radius: 50%;
+  outline: none;
+  box-shadow: 0 0 5px 0px gray inset;
+}
+
+  input[type='radio']:before {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 60%;
+    margin: 20% auto;
+    border-radius: 50%;
+  }
+
+  input[type='radio']:checked:before {
+    background: #3EB494;
+  }
+
+#sensorlist .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+  #sensorlist .slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 26px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+#sensorlist input:checked + .slider {
+  background-color: #42B191;
+}
+
+#sensorlist input:focus + .slider {
+  box-shadow: 0 0 1px #42B191;
+}
+
+#sensorlist input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+
+#sensorlist .slider.round {
+  border-radius: 34px;
+}
+
+  #sensorlist .slider.round:before {
+    border-radius: 50%;
+  }
+
+.background-img {
+  background-size: 120px;
+  background-repeat: no-repeat;
+  background-position: right;
+  background-position-x: 130%;
+  background-position-y: 160%;
+}
+
+#Temperature {
+  background-image: url(/img/Temperature.svg);
+}
+
+#Humidity {
+  background-image: url(/img/Humidity.svg);
+}
+
+#Pressure {
+  background-image: url(/img/Pressure.svg);
+}
+
+#Accelerometer {
+  background-image: url(/img/Accelerometer.svg);
+}
+
+#Gyrometer {
+  background-image: url(/img/Gyroscope.svg);
+}
+
+#Magnetometer {
+  background-image: url(/img/Magnetometer.svg);
+}
+
+#Luminescence {
+  background-image: url(/img/Luxometer.svg);
+}
+/*-------------------------------------*/
+
+.ui-slider-vertical .ui-slider-range {
+  background-color: #42B191
+}
+
+
+.sensorlistwrapper {
+  padding: 40px;
+  border: 1px solid #DFDFDF;
+  border-top: 2px solid rebeccapurple !important;
+}
