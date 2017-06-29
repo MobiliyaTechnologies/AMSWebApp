@@ -25,6 +25,77 @@
         </div>
 
     </div>
+
+    <div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapsetwo" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Power Bi Credentials</h3>
+
+        </div>
+        <div id="collapsetwo" class="panel-collapse collapse out">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="Name">Client Id</label>
+                    <input type="text" class="form-control" id="gname" placeholder="Enter ClientId" required ng-model="powerbi.ClientId" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Client Secret</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter ClientSecret" required ng-model="powerbi.ClientSecret" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Username</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Username" required ng-model="powerbi.Username" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Password</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Password" required ng-model="powerbi.Password" />
+                </div>
+                <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="updatePowerBiCredentials()">Submit</div>
+                <br /><br />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapsethree" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Power Bi Urls's</h3>
+
+        </div>
+        
+
+        <div id="collapsethree" class="panel-collapse collapse out">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="Name">Accelerometer</label>
+                    <input type="text" class="form-control" id="gname" placeholder="Enter Accelerometer Url" required ng-model="powerbiUrls.data.Accelerometer" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Temperature</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Temperature Url" required ng-model="powerbiUrls.data.Temperature" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Humidity</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Humidity Url" required ng-model="powerbiUrls.data.Humidity" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">UVIndex</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter UVIndex Url" required ng-model="powerbiUrls.data.UVIndex" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Luminescence</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Luminescence Url" required ng-model="powerbiUrls.data.Luminescence" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">History</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter History Report Url" required ng-model="powerbiUrls.data.History" />
+                </div>
+                <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="updatePowerBiUrls()">Submit</div>
+                <br/><br/>
+            </div>
+        </div>
+
+    </div>
+
     <div class="loading style-2 ng-scope" style="display:{{loader}};">
         <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
     </div>
