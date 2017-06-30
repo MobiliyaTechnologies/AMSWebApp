@@ -14,80 +14,90 @@
     <div class="col-lg-offset-1 col-lg-11" id="rparameter" name="parameter" >
       <div class="col-lg-12">
         <div ng-repeat="capability in capabilityList">
-          <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img disabledbutton" >
-            <input type="text" id="{{capability.Name}}value" readonly class="newinputforslider">
-            <div class="col-lg-12" style="display:-webkit-inline-box;" ng-if="capability.Filters.length>1">
-              <div ng-repeat="filter in capability.Filters">
-                <div id="{{filter.Name}}-slider-range" class="newruleslider"  style="margin-left:50px;"></div>
-              </div>
+            <div ng-if="capability.Name!='Gateway'">
+                <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img disabledbutton">
+                    <input type="text" id="{{capability.Name}}value" readonly class="newinputforslider"> <label style="color:#3eb493;">{{capability.Filters[0].FilterDataType}}</label>
+                    <div class="col-lg-12" style="display:-webkit-inline-box;" ng-if="capability.Filters.length>1">
+                        <div ng-repeat="filter in capability.Filters">
+                            <div id="{{filter.Name}}-slider-range" class="newruleslider" style="margin-left:50px;"></div>
+                        </div>
+                    </div>
+                    <div ng-if="capability.Filters.length<2">
+                        <div ng-repeat="filter in capability.Filters">
+                            <div id="{{filter.Name}}-slider-range" class="newruleslider"></div>
+                        </div>
+                    </div>
+                    <div ng-if="capability.Filters.length>1">
+                        <div class="newrulesubtitle" style="margin-top:73px;">{{capability.Name}}</div>
+                    </div>
+                    <div ng-if="capability.Filters.length<2">
+                        <div class="newrulesubtitle">{{capability.Name}}</div>
+                    </div>
+                </div>
             </div>
-            <div  ng-if="capability.Filters.length<2">
-              <div ng-repeat="filter in capability.Filters">
-                <div id="{{filter.Name}}-slider-range" class="newruleslider"></div>
-              </div>
+            <div ng-if="capability.Name=='Gateway'">
+                <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img ">                   
+
+                    <select class="form-control" id="shipment" name="shipment" style="width: 126px; height: 41px;margin-top:20%;margin-left:25%" ng-model="gatewaySelected" ng-options="gateway.Id as gateway.Name for gateway in gatewayList" ng-change="groupChange()"></select>
+                   
+                </div>
             </div>
-            <div ng-if="capability.Filters.length>1">
-              <div class="newrulesubtitle" style="margin-top:73px;">{{capability.Name}}</div>
             </div>
-            <div ng-if="capability.Filters.length<2">
-              <div class="newrulesubtitle" >{{capability.Name}}</div>
-            </div>
-          </div>
-          <!--<div id="Temperature" value="Temperature" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Temperature != true}" >
-        <input type="text" id="Tvalue" readonly class="newinputforslider">
-        <div id="T-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Temperature</div>
-      </div>
-
-
-      <div id="Humidity" value="Humidity" disable class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Humidity != true}">
-        <input type="text" id="Hvalue" readonly class="newinputforslider">
-        <div id="H-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Humidity</div>
-      </div>
-      <div id="Pressure" value="Pressure" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Pressure != true}">
-        <input type="text" id="Pvalue" readonly class="newinputforslider">
-        <div id="P-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Pressure</div>
-      </div>
-      <div id="Accelerometer" value="Accelerometer" class="col-lg-3 newruleicon  background-img" ng-class="{'disabledbutton': Accelerometer != true}">
-        <input type="text" id="Avalue" readonly class="newinputforslider"> 
-
-        <div class="col-lg-12" style="display:-webkit-inline-box;">
-
-          <div id="Ax-slider-range" class="newruleslider" style="margin-left:30%;"><span>X</span></div>
-          <div id="Ay-slider-range" class="newruleslider" style="margin-left:10%;"><span>Y</span></div>
-          <div id="Az-slider-range" class="newruleslider"style="margin-left:10%;"><span>Z</span></div>
-
-        </div>
-
-        <div class="newrulesubtitle" style="margin-top:73px;">Accelerometer</div>
-      </div>
-      <div id="Magnetometer" value="Magnetometer" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Magnetometer != true}">
-        <input type="text" id="Mvalue" readonly class="newinputforslider">
-        <div id="M-slider-range" class="newruleslider"></div> <div class="newrulesubtitle">Magnetometer</div>
-      </div>
-      <div id="Luminescence" value="Luxometer Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Luxometer != true}">
-            <input type="text" id="Lvalue" readonly class="newinputforslider">
-            <div id="L-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Luxometer</div>
+                <!--<div id="Temperature" value="Temperature" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Temperature != true}" >
+            <input type="text" id="Tvalue" readonly class="newinputforslider">
+            <div id="T-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Temperature</div>
           </div>
 
-      <div id="UVIndex" value="UVIndex Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': UVIndex != true}">
-        <input type="text" id="UVvalue" readonly class="newinputforslider">
-        <div id="UV-slider-range" class="newruleslider"></div><div class="newrulesubtitle">UVIndex</div>
-      </div>
-      <div id="Light" value="Light Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Light != true}">
-        <input type="text" id="Lightvalue" readonly class="newinputforslider">
-        <div id="Light-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Light</div>
-      </div>
-      <div id="AmbientLight" value="AmbientLight Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': AmbientLight != true}">
-        <input type="text" id="AmbientLightvalue" readonly class="newinputforslider">
-        <div id="AmbientLight-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Ambient Light</div>
-      </div>
-      <div id="NoiseLevel" value="NoiseLevel Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': NoiseLevel != true}">
-        <input type="text" id="NoiseLevelvalue" readonly class="newinputforslider">
-        <div id="NoiseLevel-slider-range" class="newruleslider"></div><div class="newrulesubtitle">NoiseLevel</div>
-      </div>
-    </div>-->
-          
-        </div>
+
+          <div id="Humidity" value="Humidity" disable class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Humidity != true}">
+            <input type="text" id="Hvalue" readonly class="newinputforslider">
+            <div id="H-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Humidity</div>
+          </div>
+          <div id="Pressure" value="Pressure" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Pressure != true}">
+            <input type="text" id="Pvalue" readonly class="newinputforslider">
+            <div id="P-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Pressure</div>
+          </div>
+          <div id="Accelerometer" value="Accelerometer" class="col-lg-3 newruleicon  background-img" ng-class="{'disabledbutton': Accelerometer != true}">
+            <input type="text" id="Avalue" readonly class="newinputforslider">
+
+            <div class="col-lg-12" style="display:-webkit-inline-box;">
+
+              <div id="Ax-slider-range" class="newruleslider" style="margin-left:30%;"><span>X</span></div>
+              <div id="Ay-slider-range" class="newruleslider" style="margin-left:10%;"><span>Y</span></div>
+              <div id="Az-slider-range" class="newruleslider"style="margin-left:10%;"><span>Z</span></div>
+
+            </div>
+
+            <div class="newrulesubtitle" style="margin-top:73px;">Accelerometer</div>
+          </div>
+          <div id="Magnetometer" value="Magnetometer" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Magnetometer != true}">
+            <input type="text" id="Mvalue" readonly class="newinputforslider">
+            <div id="M-slider-range" class="newruleslider"></div> <div class="newrulesubtitle">Magnetometer</div>
+          </div>
+          <div id="Luminescence" value="Luxometer Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Luxometer != true}">
+                <input type="text" id="Lvalue" readonly class="newinputforslider">
+                <div id="L-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Luxometer</div>
+              </div>
+
+          <div id="UVIndex" value="UVIndex Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': UVIndex != true}">
+            <input type="text" id="UVvalue" readonly class="newinputforslider">
+            <div id="UV-slider-range" class="newruleslider"></div><div class="newrulesubtitle">UVIndex</div>
+          </div>
+          <div id="Light" value="Light Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Light != true}">
+            <input type="text" id="Lightvalue" readonly class="newinputforslider">
+            <div id="Light-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Light</div>
+          </div>
+          <div id="AmbientLight" value="AmbientLight Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': AmbientLight != true}">
+            <input type="text" id="AmbientLightvalue" readonly class="newinputforslider">
+            <div id="AmbientLight-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Ambient Light</div>
+          </div>
+          <div id="NoiseLevel" value="NoiseLevel Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': NoiseLevel != true}">
+            <input type="text" id="NoiseLevelvalue" readonly class="newinputforslider">
+            <div id="NoiseLevel-slider-range" class="newruleslider"></div><div class="newrulesubtitle">NoiseLevel</div>
+          </div>
+        </div>-->
+
+            </div>
    
     <!-- </div> -->
     <!-- <div id="fragment-3" class="ui-tabs-panel ui-tabs-hide">
