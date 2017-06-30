@@ -122,10 +122,11 @@ border-radius: 4px 4px 0 0 ;
 .sideimage{
   width: 20px
 }
-.sidetitle{
-  font-size: 12pt;
-  /*font-family: lato;*/
-  color: #9DA3B3
+.sidetitle {
+    font-size: 12pt;
+    color: #ffffff;
+    font-family: Lato;
+   
 }
 
 .sidebar-menu > li{
@@ -168,10 +169,11 @@ border-radius: 4px 4px 0 0 ;
   color: #DFDFDF
 }
 .tiletitle{
-  /*font-family: lato ;*/
+  font-family: lato ;
   color: #726ab4;
-  font-size: 28pt;
+  font-size: 26pt;
   font-weight: bold;
+
 
 }
 .newboxstyle{
@@ -208,21 +210,20 @@ height: inherit;
   color: black;
   font-size: 11pt
 }
-.shipmentTitle{
-  font-style: leto normal;
-  color: #726ab4;
-  font-size: 14pt;
-
+.shipmentTitle {
+    font-family: lato;
+    color: #726ab4;
+    font-size: 14pt;
 }
 .shipmentblock {
     border-bottom: 1px solid #DFDFDF;
     height: 70px;
     padding: 10px;
 }
-.shipmentinnerdetail{
-  font-style: leto normal;
-  color: #525252;
-  font-size: 12pt;
+.shipmentinnerdetail {
+    font-family: lato;
+    color: #525252;
+    font-size: 12pt;
 }
 .detailshipdetail{
   height: 70px;
@@ -232,7 +233,7 @@ height: inherit;
 .listshiplemttitle{
   font-weight: bold;
   font-size: 16px;
- /*font-style: lato ;*/
+ font-style: lato ;
  margin-left: 38px;
  transform: translateY(84%);
 }
@@ -246,7 +247,7 @@ height: inherit;
     border-top-color: rebeccapurple !important;
 }
 .tilteconteheading{
-  /*font-family: lato  ;*/
+  font-family: lato;
   color: #252525;
   font-size: 14pt;
   margin-top: -12%
@@ -274,8 +275,12 @@ height: inherit;
 .content{
       overflow: hidden !important
 }
-.modal-header{
-  background-color: #42B191 !important;
+.modal-header {
+    border-top:solid 3px #726ab4;
+    font-family: lato;
+    /*font-size:16pt;*/
+    font-weight:bold;
+    color: #252525;
 }
 .sidebar{
   text-decoration: none;
@@ -307,3 +312,38 @@ height: inherit;
     .table-blue-border th {
         color: #726ab4;
     }
+.sidebar-tab-green {
+    left: 1px;
+    text-decoration: none;
+    height: 100%;
+}
+.skin-green .sidebar-menu > li:hover > a, .skin-green .sidebar-menu > li.active > a {
+    color: #fff;
+    background: #242834;
+    border-left-color: #3eb493;
+    font-size:12pt;
+}
+.skin-green .wrapper, .skin-green .main-sidebar, .skin-green .left-side {
+    background-color:#333947;
+}
+.skin-green .sidebar-menu > li > a {
+    border-left: 3px solid transparent;
+    height: 100%;
+    left: 1px;
+    text-decoration: none;
+
+}
+.nav-tabs-custom > .nav-tabs > li.active {
+    border-top-color: #726ab4;
+    font-family: lato;
+    font-weight: bold;
+    color:#252525;
+    /*font-size:14pt;*/
+}
+.nav-tabs-custom > .nav-tabs > li > a {
+    font-family: lato;
+    font-weight: bold;
+    color: #7a7a7a;
+    /*font-size:14pt;*/
+}
+

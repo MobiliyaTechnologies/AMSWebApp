@@ -32,6 +32,19 @@ angular.module('assetmonitoringApp')
             console.log($scope.groupSelected);
             $scope.getGroupCapablities($scope.groupSelected);
         }
+        $scope.getAllGateway = function () {
+            Restservice.get('api/Gateway', function (err, response) {
+                if (!err) {
+                    console.log("[Info]:: Get Gateway list response ", response);
+                    $scope.gatewayList = response;
+                    $scope.gatewayCount = $scope.gatewayList.length;
+                }
+                else {
+                    console.log("[Error]:: Get Gateway list response ", err);
+                }
+            });
+        }
+        $scope.getAllGateway();
         $scope.getGroupCapablities = function (groupId) {
             Restservice.get('api/SensorGroup/' + groupId, function (err, response) {
                 if (!err) {
