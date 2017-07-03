@@ -12,6 +12,7 @@ angular.module('assetmonitoringApp')
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
+        
         $scope.getshipmentdetail = {
             shipmentId: 10,
             origin: 'Seattle, Washington, USA',
@@ -123,17 +124,30 @@ angular.module('assetmonitoringApp')
 
 
         $scope.addGateway = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'GatewayModal.html',
-                controller: 'GatewayModalCtrl',
-            }).result.then(function (result) {
-                //$scope.getAllGateway();
-                if (result) {
-                    $scope.gatewayList.push(result);
-                    $scope.gatewayCount = $scope.gatewayList.length;
-                }
-                    }, function () {
-            });
+            //if ($scope.gatewayCount > 0) {
+           //     var modalInstance = $modal.open({
+           //         templateUrl: 'GatewayModal.html',
+           //         controller: 'GatewayModalCtrl',
+           //     }).result.then(function (result) {
+           //         //$scope.getAllGateway();
+           //         if (result) {
+           //             $scope.gatewayList.push(result);
+           //             $scope.gatewayCount = $scope.gatewayList.length;
+           //         }
+           //     }, function () {
+           //     });
+           //// }
+            //else if ($scope.gatewayCount == 0) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'configureUnitModal.html',
+                    controller: 'configureUnitModalCtrl'
+                   
+                }).result.then(function (result) {
+                }, function () {
+                    // Cancel
+                });
+
+            //}
         }
         $scope.editGateway = function (gateway) {
             var modalInstance = $modal.open({
@@ -626,6 +640,8 @@ angular.module('assetmonitoringApp').controller('addSensorToGroupModalCtrl', fun
 
 });
 
+
+
 angular.module('assetmonitoringApp').controller('removeSensorToGroupModalCtrl', function ($scope, DTOptionsBuilder, $modalInstance, $http, $modal, Restservice, group) {
     $scope.group = group;
     $scope.group.SensorIds = [];
@@ -664,6 +680,30 @@ angular.module('assetmonitoringApp').controller('removeSensorToGroupModalCtrl', 
         else {
             console.log("[Info] :: Please Select the Sensors ", response);
         }
+
+    };
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+
+});
+
+angular.module('assetmonitoringApp').controller('configureUnitModalCtrl', function ($scope, DTOptionsBuilder, $modalInstance, $http, $modal, Restservice) {
+    $scope.getCapibility = function () {
+        Restservice.get('api/Capability', function (err, response) {
+            if (!err) {
+                console.log("[Info]:: Get Capability Detail response ", response);
+                $scope.capabilityList = response.Sensors;
+            }
+            else {
+                console.log("[Error]:: Get Capability Detail response ", err);
+            }
+        });
+    }
+    $scope.getCapibility();
+    $scope.ok = function () {
+
 
     };
     $scope.cancel = function () {

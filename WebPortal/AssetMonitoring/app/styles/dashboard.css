@@ -362,3 +362,11 @@ height: inherit;
 .dataTables_wrapper {
     border: 1px solid #eaeaea;
 }
+
+svg path {
+    fill: green !important;
+}
+
+ svg text {
+    fill: green !important;
+}

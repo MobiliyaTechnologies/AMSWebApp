@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+
 
 namespace AssetMonitoring
 {
@@ -21,7 +23,7 @@ namespace AssetMonitoring
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
+    [System.Web.Script.Services.ScriptService]
     public class PowerBIService : System.Web.Services.WebService
     {
 
@@ -30,75 +32,73 @@ namespace AssetMonitoring
 
         public void GetAccessToken()
         {
-            //HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
-            //var isSuccess = Security.AuthenticateUser();
-            //if (!isSuccess)
-            //{
-            //    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            //    this.Context.Response.ContentType = "application/json; charset=utf-8";
-            //    this.Context.Response.Write(serializer.Serialize(new { tokens = "" }));
-            //}        
-            //else
-            //{
-            //    PowerBIToken token = new PowerBIToken()
-            //    {
-            //        AccessToken = ConfigurationSettings.AppSettings["Access_Token"],
-            //        RefreshToken = ConfigurationSettings.AppSettings["Refresh_Token"]
-            //    };
-
-            //    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-            //    this.Context.Response.ContentType = "application/json; charset=utf-8";
-            //    this.Context.Response.Write(serializer.Serialize(new { tokens = token }));
-            //}
-            //return new JavaScriptSerializer().Serialize(token);
             var token = GetToken();
 
             System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
             this.Context.Response.ContentType = "application/json; charset=utf-8";
             this.Context.Response.Write(serializer.Serialize(new { tokens = token.Result }));
-            //return tokenRes.AccessToken;
         }
 
         public async Task<PowerBIToken> GetToken()
         {
-            string pBiUser = ConfigurationManager.AppSettings["Username"];
-            string pBiPwd = ConfigurationManager.AppSettings["Password"];
-            string pBiClientId = ConfigurationManager.AppSettings["ClientId"];
-            string pBiSecret = ConfigurationManager.AppSettings["ClientSecret"];
-
-            if (string.IsNullOrEmpty(pBiUser) || string.IsNullOrEmpty(pBiPwd) || string.IsNullOrEmpty(pBiClientId) || string.IsNullOrEmpty(pBiSecret))
+            try
             {
-                return null;
-            }
-            string tokenEndpointUri = "https://login.microsoftonline.com/common/oauth2/token";
-
-            var content = new FormUrlEncodedContent(new[]
+                string pBiUser = ConfigurationManager.AppSettings["Username"];
+                string pBiPwd = ConfigurationManager.AppSettings["Password"];
+                string pBiClientId = ConfigurationManager.AppSettings["ClientId"];
+                string pBiSecret = ConfigurationManager.AppSettings["ClientSecret"];
+                if (string.IsNullOrEmpty(pBiUser) || string.IsNullOrEmpty(pBiPwd) || string.IsNullOrEmpty(pBiClientId) || string.IsNullOrEmpty(pBiSecret))
                 {
-                        new KeyValuePair<string, string>("grant_type", "password"),
-                        new KeyValuePair<string, string>("username", pBiUser),
-                        new KeyValuePair<string, string>("password", pBiPwd),
-                        new KeyValuePair<string, string>("client_id", pBiClientId),
-                        new KeyValuePair<string, string>("client_secret", pBiSecret),
-                        new KeyValuePair<string, string>("resource", "https://analysis.windows.net/powerbi/api")
-            });
-            AzureResponse tokenRes = new AzureResponse();
-            using (var client = new HttpClient())
-            {
-                HttpResponseMessage res = client.PostAsync(tokenEndpointUri, content).Result;
+                    return new PowerBIToken()
+                    {
+                        AccessToken = null,
+                        RefreshToken = null,
+                        StatusCode = HttpStatusCode.BadRequest.ToString(),
+                        Message = "Authentication Credentials missing"
+                    };
+                }
+                string tokenEndpointUri = "https://login.microsoftonline.com/common/oauth2/token";
 
-                string json = await res.Content.ReadAsStringAsync();
-
-                tokenRes = JsonConvert.DeserializeObject<AzureResponse>(json);
-
+                var content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("grant_type", "password"),
+                    new KeyValuePair<string, string>("username", pBiUser),
+                    new KeyValuePair<string, string>("password", pBiPwd),
+                    new KeyValuePair<string, string>("client_id", pBiClientId),
+                    new KeyValuePair<string, string>("client_secret", pBiSecret),
+                    new KeyValuePair<string, string>("resource", "https://analysis.windows.net/powerbi/api")
+                });
+                AzureResponse tokenRes = new AzureResponse();
+                HttpStatusCode statusCode;
+                string message;
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage res = client.PostAsync(tokenEndpointUri, content).Result;
+                    statusCode = res.StatusCode;
+                    message = res.IsSuccessStatusCode == true ? "Success" : "failure";
+                    string json = await res.Content.ReadAsStringAsync();
+                    tokenRes = JsonConvert.DeserializeObject<AzureResponse>(json);
+                }
                 PowerBIToken token = new PowerBIToken()
                 {
                     AccessToken = tokenRes.access_token,
-                    RefreshToken = tokenRes.refresh_token
+                    RefreshToken = tokenRes.refresh_token,
+                    StatusCode = statusCode.ToString(),
+                    Message = message
                 };
 
                 return token;
+            }
+            catch (Exception ex)
+            {
+                return new PowerBIToken()
+                {
+                    AccessToken = null,
+                    RefreshToken = null,
+                    StatusCode = HttpStatusCode.InternalServerError.ToString(),
+                    Message = ex.Message
+                };
             }
         }
 
@@ -119,79 +119,85 @@ namespace AssetMonitoring
         [WebMethod]
         public string updateConfig()
         {
-            var configs = LoadAllConfig();
-            var json = JsonConvert.SerializeObject(configs);
-            File.WriteAllText(HttpContext.Current.Server.MapPath("~\\config.json"), json);
-            return "Updated";
+            try
+            {
+                var configs = LoadAllConfig();
+                var json = JsonConvert.SerializeObject(configs);
+                File.WriteAllText(HttpContext.Current.Server.MapPath("~\\config.json"), json);
+                return "Updated General Config";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         [WebMethod]
         public string updateFirebaseConfig(FirebaseConfig config)
         {
-            var json = JsonConvert.SerializeObject(config);
-            File.WriteAllText(HttpContext.Current.Server.MapPath("~\\firebaseConfig.json"), json);
-            return "Updated";
+            try
+            {
+                var json = JsonConvert.SerializeObject(config);
+                File.WriteAllText(HttpContext.Current.Server.MapPath("~\\firebaseConfig.json"), json);
+                return "Updated Firebase Config";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         [WebMethod]
-        public string updatePowerBiCredentials(String ClientId, String ClientSecret)
+        public string updatePowerBiCredentials(String ClientId, String ClientSecret, String Username, String Password)
         {
-            Configuration objConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
-            AppSettingsSection objAppsettings = (AppSettingsSection)objConfig.GetSection("appSettings");
-            if (objAppsettings != null)
+            try
             {
-                objAppsettings.Settings["ClientId"].Value = ClientId;
-                objAppsettings.Settings["ClientSecret"].Value = ClientSecret;
-                objConfig.Save();
+                Configuration objConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+                AppSettingsSection objAppsettings = (AppSettingsSection)objConfig.GetSection("appSettings");
+                if (objAppsettings != null)
+                {
+                    objAppsettings.Settings["ClientId"].Value = ClientId;
+                    objAppsettings.Settings["ClientSecret"].Value = ClientSecret;
+                    objAppsettings.Settings["Username"].Value = Username;
+                    objAppsettings.Settings["Password"].Value = Password;
+                    objConfig.Save();
+                    return "Power BI Credentials updated";
+                }
+                else
+                    return "App settings section not found";
             }
-
-            //System.Configuration.ConfigurationManager.AppSettings["ClientId"] = ClientId;
-            //System.Configuration.ConfigurationManager.AppSettings["ClientSecret"] = ClientSecret;
-
-            return "updated";
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         Dictionary<string, string> LoadAllConfig()
         {
             Dictionary<string, string> configs = new Dictionary<string, string>();
             configs.Add("restServer", System.Configuration.ConfigurationManager.AppSettings["restServer"]);
+            configs.Add("restServerAnalytics", System.Configuration.ConfigurationManager.AppSettings["restServerAnalytics"]);
             configs.Add("b2cApplicationId", System.Configuration.ConfigurationManager.AppSettings["b2cApplicationId"]);
             configs.Add("tenantName", System.Configuration.ConfigurationManager.AppSettings["tenantName"]);
             configs.Add("signInPolicyName", System.Configuration.ConfigurationManager.AppSettings["signInPolicyName"]);
-            configs.Add("signInSignUpPolicyName", System.Configuration.ConfigurationManager.AppSettings["signInSignUpPolicyName"]);
-            configs.Add("editProfilePolicyName", System.Configuration.ConfigurationManager.AppSettings["editProfilePolicyName"]);
             configs.Add("redirect_uri", System.Configuration.ConfigurationManager.AppSettings["redirect_uri"]);
-            configs.Add("adB2CSignIn", System.Configuration.ConfigurationManager.AppSettings["adB2CSignIn"]);
-            configs.Add("adB2CSignInSignUp", System.Configuration.ConfigurationManager.AppSettings["adB2CSignInSignUp"]);
-
             return configs;
         }
-
+        
         [WebMethod]
-        public string SaveUrl(RequestUrlModel requestParams)
+        public string SavePowerBIUrl(string data)
         {
-            var fileData = GetData();
-            ResponseUrlModel response = new ResponseUrlModel(null, null, null, null);
-            switch (requestParams.Type)
+            try
             {
-                case "university":
-                    response = new ResponseUrlModel(requestParams.Values, fileData.campus, fileData.building, fileData.feedback);
-                    break;
-                case "campus":
-                    response = new ResponseUrlModel(fileData.university, requestParams.Values, fileData.building, fileData.feedback);
-                    break;
-                case "building":
-                    response = new ResponseUrlModel(fileData.university, fileData.campus, requestParams.Values, fileData.feedback);
-                    break;
-                case "feedback":
-                    response = new ResponseUrlModel(fileData.university, fileData.campus, fileData.building, requestParams.Values);
-                    break;
-
+                File.WriteAllText(HttpContext.Current.Server.MapPath("~\\powerBI.json"), data);
+                return "Power BI URLs saved successfully";
             }
-            string json = JsonConvert.SerializeObject(response);
-            File.WriteAllText(HttpContext.Current.Server.MapPath("~\\powerBI.json"), json);
-            return "success";
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
+
 
         public ResponseUrlModel GetData()
         {

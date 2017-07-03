@@ -570,3 +570,31 @@
     </div>
   </div>
 </script>
+
+<script type="text/ng-template" id="configureUnitModal.html">
+          <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+              Configure Units
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="  ">
+
+                  <!-- /.box-header -->
+                  <!-- form start -->
+                  <form role="form" style="color:black">
+                      <div class="form-group">
+                          <label for="Name">Name : </label>
+                          {{group.Name}}
+                      </div>
+
+                      <div class="box-footer">
+                          <div id="gatewaySubmit" class="btn btn-success" ng-click="ok()">Update</div>
+                          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                      </div>
+                    
+                  </form>
+              </div>
+          </div>
+      </script>
