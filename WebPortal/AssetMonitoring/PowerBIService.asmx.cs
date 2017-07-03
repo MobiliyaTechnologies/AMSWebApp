@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 
+
 namespace AssetMonitoring
 {
     /// <summary>
@@ -21,7 +22,7 @@ namespace AssetMonitoring
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
+    [System.Web.Script.Services.ScriptService]
     public class PowerBIService : System.Web.Services.WebService
     {
 
@@ -134,7 +135,7 @@ namespace AssetMonitoring
         }
 
         [WebMethod]
-        public string updatePowerBiCredentials(String ClientId, String ClientSecret)
+        public string updatePowerBiCredentials(String ClientId, String ClientSecret, String Username, String Password)
         {
             Configuration objConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
             AppSettingsSection objAppsettings = (AppSettingsSection)objConfig.GetSection("appSettings");
@@ -142,6 +143,8 @@ namespace AssetMonitoring
             {
                 objAppsettings.Settings["ClientId"].Value = ClientId;
                 objAppsettings.Settings["ClientSecret"].Value = ClientSecret;
+                objAppsettings.Settings["Username"].Value = Username;
+                objAppsettings.Settings["Password"].Value = Password;
                 objConfig.Save();
             }
 
@@ -155,15 +158,11 @@ namespace AssetMonitoring
         {
             Dictionary<string, string> configs = new Dictionary<string, string>();
             configs.Add("restServer", System.Configuration.ConfigurationManager.AppSettings["restServer"]);
+            configs.Add("restServerAnalytics", System.Configuration.ConfigurationManager.AppSettings["restServerAnalytics"]);
             configs.Add("b2cApplicationId", System.Configuration.ConfigurationManager.AppSettings["b2cApplicationId"]);
             configs.Add("tenantName", System.Configuration.ConfigurationManager.AppSettings["tenantName"]);
             configs.Add("signInPolicyName", System.Configuration.ConfigurationManager.AppSettings["signInPolicyName"]);
-            configs.Add("signInSignUpPolicyName", System.Configuration.ConfigurationManager.AppSettings["signInSignUpPolicyName"]);
-            configs.Add("editProfilePolicyName", System.Configuration.ConfigurationManager.AppSettings["editProfilePolicyName"]);
             configs.Add("redirect_uri", System.Configuration.ConfigurationManager.AppSettings["redirect_uri"]);
-            configs.Add("adB2CSignIn", System.Configuration.ConfigurationManager.AppSettings["adB2CSignIn"]);
-            configs.Add("adB2CSignInSignUp", System.Configuration.ConfigurationManager.AppSettings["adB2CSignInSignUp"]);
-
             return configs;
         }
 
@@ -192,6 +191,33 @@ namespace AssetMonitoring
             File.WriteAllText(HttpContext.Current.Server.MapPath("~\\powerBI.json"), json);
             return "success";
         }
+
+        [WebMethod]
+        public string SavePowerBIUrl(string data)
+        {
+            //var fileData = GetData();
+            //ResponseUrlModel response = new ResponseUrlModel(null, null, null, null);
+            //switch (requestParams.Type)
+            //{
+            //    case "organization":
+            //        response = new ResponseUrlModel(requestParams.Values, fileData.premise, fileData.building, fileData.feedback);
+            //        break;
+            //    case "premise":
+            //        response = new ResponseUrlModel(fileData.organization, requestParams.Values, fileData.building, fileData.feedback);
+            //        break;
+            //    case "building":
+            //        response = new ResponseUrlModel(fileData.organization, fileData.premise, requestParams.Values, fileData.feedback);
+            //        break;
+            //    case "feedback":
+            //        response = new ResponseUrlModel(fileData.organization, fileData.premise, fileData.building, requestParams.Values);
+            //        break;
+
+            //}
+            //string json = JsonConvert.SerializeObject(response);
+            File.WriteAllText(HttpContext.Current.Server.MapPath("~\\powerBI.json"), data);
+            return "success";
+        }
+
 
         public ResponseUrlModel GetData()
         {

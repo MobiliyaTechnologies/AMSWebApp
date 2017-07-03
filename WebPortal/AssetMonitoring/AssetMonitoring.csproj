@@ -241,11 +241,13 @@
     <Content Include="img\Back.svg" />
     <Content Include="img\bg-footer.svg" />
     <Content Include="img\BG-Image.jpg" />
+    <Content Include="img\Configuration.svg" />
     <Content Include="img\Damage Alert.svg" />
     <Content Include="img\Dashboard.svg" />
     <Content Include="img\Delete_Close.svg" />
     <Content Include="img\Departure.svg" />
     <Content Include="img\dsh_logo.png" />
+    <Content Include="img\ExpandAccordion.svg" />
     <Content Include="img\Gateway.svg" />
     <Content Include="img\Greater_than.svg" />
     <Content Include="img\Gyroscope.svg" />
@@ -260,6 +262,7 @@
     <Content Include="img\Magnetometer.svg" />
     <Content Include="img\MapView.svg" />
     <Content Include="img\Pressure.svg" />
+    <Content Include="img\Reports.svg" />
     <Content Include="img\Rules.svg" />
     <Content Include="img\Search.svg" />
     <Content Include="img\Sensor.svg" />
