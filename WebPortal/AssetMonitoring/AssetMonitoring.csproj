@@ -150,7 +150,6 @@
     <Content Include="app\views\dashboard.html" />
     <Content Include="app\views\inventory.html" />
     <Content Include="app\views\login.html" />
-    <Content Include="app\views\main.html" />
     <Content Include="app\views\overview.html" />
     <Content Include="app\views\reports.html" />
     <Content Include="app\views\rules.html" />
@@ -303,6 +302,7 @@
   <ItemGroup>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>

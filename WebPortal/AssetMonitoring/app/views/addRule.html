@@ -1,13 +1,13 @@
 ﻿<section class="content-header" style="margin-top: 4%;"> </section>
-  <div class="col-lg-12" style="border-bottom:1px solid #DFDFDF; font-size: 22px;">Create Rule</div>
+  <div class="col-lg-12 page-title" style="border-bottom:1px solid #DFDFDF; font-size: 22px;margin-left:10px;">Create Rule</div>
   <br><br>
 
   <div id="rtabs">
   
     <div class="col-lg-12" id="grouplist" style=" text-align: center;border-bottom:1px solid #DFDFDF;">
       <div >
-        <div style=" float: left;display: inline;font-size: 14px;">Select Group &nbsp; </div> 
-        <select class="form-control" id="shipment" name="shipment" style="width: 126px; height: 41px;margin-bottom:10px;" ng-model="groupSelected" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList" ng-change="groupChange()">          
+        <div style=" float: left;display: inline;font-size: 14px;margin-top:10px;">Select Group &nbsp; </div> 
+        <select class="form-control" id="shipment" name="shipment" style="width: 126px; height: 41px;margin-bottom:10px;margin-top:5px;" ng-model="groupSelected" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList" ng-change="groupChange()">          
         </select>
       </div>
     </div>
@@ -36,10 +36,10 @@
                 </div>
             </div>
             <div ng-if="capability.Name=='Gateway'">
-                <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img ">                   
+                <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img disabledbutton ">                   
 
-                    <select class="form-control" id="shipment" name="shipment" style="width: 126px; height: 41px;margin-top:20%;margin-left:25%" ng-model="gatewaySelected" ng-options="gateway.Id as gateway.Name for gateway in gatewayList" ng-change="groupChange()"></select>
-                   
+                    <select class="form-control"  style="width: 126px; height: 41px;margin-top:20%;margin-left:25%" ng-model="selectedGateway" ng-options="gateway.Id as gateway.Name for gateway in gatewayList" ng-change="gatewayChange(selectedGateway)"></select>
+                    <div class="newrulesubtitle">{{capability.Name}}</div>
                 </div>
             </div>
             </div>

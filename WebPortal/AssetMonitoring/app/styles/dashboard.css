@@ -217,13 +217,16 @@ height: inherit;
 }
 .shipmentblock {
     border-bottom: 1px solid #DFDFDF;
-    height: 70px;
-    padding: 10px;
+    height: 80px;
+    padding: 15px;
+    margin-left:-30px;
+    
 }
 .shipmentinnerdetail {
     font-family: lato;
-    color: #525252;
+    color: #252525;
     font-size: 12pt;
+    margin-top: 5px;
 }
 .detailshipdetail{
   height: 70px;
@@ -244,7 +247,7 @@ height: inherit;
  float: right;
 }
 .box.box-success {
-    border-top-color: rebeccapurple !important;
+    border-top: solid 2px rebeccapurple !important;
 }
 .tilteconteheading{
   font-family: lato;
@@ -321,7 +324,7 @@ height: inherit;
     color: #fff;
     background: #242834;
     border-left-color: #3eb493;
-    font-size:12pt;
+    font-size:10pt;
 }
 .skin-green .wrapper, .skin-green .main-sidebar, .skin-green .left-side {
     background-color:#333947;
@@ -346,4 +349,16 @@ height: inherit;
     color: #7a7a7a;
     /*font-size:14pt;*/
 }
-
+.page-title {
+    height: 2em;
+    font-size: 22px;
+    font-family:lato;
+    margin-top:5px;
+    margin-left:-16px;
+}
+.nav-tabs-custom > .nav-tabs {
+    border-bottom-color: #eaeaea;
+}
+.dataTables_wrapper {
+    border: 1px solid #eaeaea;
+}

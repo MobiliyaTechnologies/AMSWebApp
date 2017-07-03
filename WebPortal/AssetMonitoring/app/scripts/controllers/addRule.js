@@ -11,7 +11,9 @@ angular.module('assetmonitoringApp')
     .controller('addRuleCtrl', function ($scope, Restservice, $state, Alertify) {
         $scope.Temperature = true;
         $scope.check = {};
-        
+        $scope.selected = {
+            'gateway':''
+        }
         $scope.getAllSensor = function () {
             Restservice.get('api/SensorGroup', function (err, response) {
                 if (!err) {
@@ -46,6 +48,9 @@ angular.module('assetmonitoringApp')
         }
         $scope.getAllGateway();
         $scope.getGroupCapablities = function (groupId) {
+            for (var i = 0; i < $scope.capabilityList.length; i++) {
+                $("#" + $scope.capabilityList[i].Name).addClass("disabledbutton");
+            }
             Restservice.get('api/SensorGroup/' + groupId, function (err, response) {
                 if (!err) {
                     console.log("[Info]:: Get Group Capability response ", response);
@@ -74,7 +79,7 @@ angular.module('assetmonitoringApp')
         $scope.createSlider=function() {
             for (var i = 0; i < $scope.capabilityList.length; i++) {
                 for (var j = 0; j < $scope.capabilityList[i].Filters.length; j++){
-                    console.log("$scope.capabilityList[i].Filters[j].Name",$scope.capabilityList[i].Filters[j].Name);
+                    console.log("$scope.capabilityList[i].Filters[j]",$scope.capabilityList[i].Filters[j]);
                     $("#" + $scope.capabilityList[i].Filters[j].Name+"-slider-range").slider({
                     orientation: "vertical",
                     range: true,
@@ -82,7 +87,10 @@ angular.module('assetmonitoringApp')
                     values: [0, 67],
                     slide: function (event, ui) {
 
-                        var name=event.target.id.substring(0, event.target.id.indexOf("-"));
+                        var name = event.target.id.substring(0, event.target.id.indexOf("-"));
+                        if (name == 'X' || name == 'Y' || name == 'Z') {
+                            name = 'Accelerometer';
+                        }
                         $("#" + name+"value").val(" " + ui.values[0] + " - " + ui.values[1]);
                     }
                 });
@@ -119,27 +127,46 @@ angular.module('assetmonitoringApp')
         }
         function recursiveCreateRule(i, j) {
 
-            if ($scope.capabilityList&&i < $scope.capabilityList.length) {
-                if (j < $scope.capabilityList[i].Filters.length) {
-                    var val = $("#" + $scope.capabilityList[i].Filters[j].Name + "-slider-range").slider("option", "values");
-                    if (val[0] != 0 || val[1] != 67) {
-
+            if ($scope.capabilityList && i < $scope.capabilityList.length) {
+                if ($scope.capabilityList[i].Name != 'Gateway') {
+                    if (j < $scope.capabilityList[i].Filters.length) {
+                        var val = $("#" + $scope.capabilityList[i].Filters[j].Name + "-slider-range").slider("option", "values");
+                        if (val[0] != 0 || val[1] != 67) {
+                            console.log("$scope.capabilityList[i]", $scope.capabilityList[i]);
+                            var obj = {
+                                'MinThreshold': val[0],
+                                'MaxThreshold': val[1],
+                                'Operator': 'range',
+                                'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
+                            }
+                            console.log("obj", obj);
+                            console.log("$scope.capabilityList[i].Name.Filters[j].Name", $scope.capabilityList[i].Name.Filters[j].Name);
+                            reqobj.push(obj);
+                            recursiveCreateRule(i, j + 1);
+                        }
+                        else {
+                            recursiveCreateRule(i, j + 1);
+                        }
+                    }
+                    else {
+                        recursiveCreateRule(i + 1, 0);
+                    }
+                }
+                else {
+                    console.log("$scope.gatewaySelected", $scope.selectedGateway  );
+                    if ($scope.selectedGateway != '' && $scope.selectedGateway   ) {
+                       
                         var obj = {
-                            'MinThreshold': val[0],
-                            'MaxThreshold': val[1],
+                            'MinThreshold': $scope.selectedGateway   ,                            
                             'Operator': 'range',
                             'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
                         }
-                        console.log("obj", obj);
+
+                        console.log(obj);
                         reqobj.push(obj);
-                        recursiveCreateRule(i, j + 1);
                     }
-                    else {
-                        recursiveCreateRule(i, j + 1);
-                    }
-                }
-                else{
-                        recursiveCreateRule(i+1, 0);
+                    recursiveCreateRule(i + 1, 0);
+                    
                 }
 
             }
@@ -169,5 +196,10 @@ angular.module('assetmonitoringApp')
             else {
                 Alertify.error("Please Create Rule");
             }
+        }
+        $scope.gatewayChange = function (selectedGateway) {
+            
+            $scope.selectedGateway = selectedGateway;
+            console.log($scope.selectedGateway );
         }
     });
