@@ -30,4 +30,16 @@ angular.module('assetmonitoringApp')
             });
         }
         $scope.geturl();
+        $scope.getUser = function () {
+            Restservice.get('api/User', function (err, response) {
+                if (!err) {
+                    console.log("[Info]:: Get User Details ", response);
+                    $scope.username = response.Name;
+                }
+                else {
+                    console.log("[Error]:: Get User Details ", err);
+                }
+            });
+        }
+        $scope.getUser();
     });

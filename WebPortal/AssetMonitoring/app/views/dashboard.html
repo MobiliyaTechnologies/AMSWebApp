@@ -1,7 +1,7 @@
 ﻿
 <div class="sidebar-mini skin-green" style="height: 540px;">
   <div class="wrapper" style="height: auto;">
-    <header class="main-header" style="position: fixed;width: 100%;background-color:white">
+    <header class="main-header" style="position: fixed;width: 100%;background-color:white;height:60px;border-bottom:1px solid #eaeaea">
       <!-- Logo -->
       <a  target="_blank" class="logo" style="background-color:white">
         <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -21,8 +21,8 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu open">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="    background-color: white;">
-                <i class="fa fa-user-circle-o" aria-hidden="true" style=" color: black; font-size: 27px;"></i>
-                <span class="hidden-xs" style="color: black;">{{getUserName}}</span>
+                  <i class="fa fa-user-circle-o fa-1x"></i>
+                <span class="hidden-xs" style="color: black;">{{username}}</span>
               </a>
 
             </li>
@@ -35,7 +35,7 @@
 
       </nav>
     </header>
-    <aside class="main-sidebar" style="position: fixed;">
+    <aside class="main-sidebar" style="position: fixed;margin-top:10px;">
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar" style="height: auto;">
         <!-- Sidebar user panel -->
@@ -96,4 +96,4 @@
     </aside>
     
   </div>
-  <div class="content-wrapper"  ui-view ></div
+  <div class="content-wrapper"  ui-view ></div>
