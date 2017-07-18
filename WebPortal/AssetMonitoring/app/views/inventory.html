@@ -94,7 +94,7 @@
               <td style="width:15%;">{{sensor.SensorGroupName}}</td>
               <td style="width:15%;"><a ng-click="viewSensorDetail(sensor)" title="view Details"><i class="fa fa-eye"></i></a></td>
               <td style="width:15%;"><a ng-click="editSensor(sensor)" title="Edit Details"><i class="fa fa-edit"></i></a></td>
-              <td style="width:15%;"><a ng-click="deleteSensor(sensor)" title="Edit Details"><i class="fa fa-trash"></i></a></td>
+              <td style="width:15%;"><a ng-click="deleteSensor(sensor)" title="Delete Sensor"><i class="fa fa-trash"></i></a></td>
             </tr>
           </tbody>
         </table>
@@ -119,7 +119,7 @@
                 <td style="width:15%;">{{gateway.GatewayKey}}</td>
                 <td style="width:15%;"><a ng-click="viewGatewayDetail(gateway)" title="view Details"><i class="fa fa-eye"></i></a></td>
                 <td style="width:15%;"><a ng-click="editGateway(gateway)" title="Edit Details"><i class="fa fa-edit"></i></a></td>
-                <td style="width:15%;"><a ng-click="deleteGateway(gateway)" title="Edit Details"><i class="fa fa-trash"></i></a></td>
+                <td style="width:15%;"><a ng-click="deleteGateway(gateway)" title="Delete Gateway"><i class="fa fa-trash"></i></a></td>
               </tr>
             </tbody>
           </table>
@@ -464,7 +464,7 @@
 
 </script>
 <script type="text/ng-template" id="AddNewCapabilityModal.html">
-  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+  <div class="modal-header" >
     Add Capability
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">×</span>
@@ -539,7 +539,7 @@
 
 
 <script type="text/ng-template" id="removeSensorToGroupModal.html">
-  <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+  <div class="modal-header" >
     Remove Sensor to Group
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">×</span>
@@ -572,21 +572,20 @@
 </script>
 
 <script type="text/ng-template" id="configureUnitModal.html">
-          <div class="modal-header" style="color: white;    background-color: #008D4C;    font-weight: 300;    font-size: 15px;">
+          <div class="modal-header" >
               Configure Units
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
               </button>
           </div>
           <div class="modal-body">
-              <div class="  ">
+              <div class="">
 
                   <!-- /.box-header -->
                   <!-- form start -->
                   <form role="form" style="color:black">
-                      <div class="form-group">
-                          <label for="Name">Name : </label>
-                          {{group.Name}}
+                      <div ng-repeat="capability in capabilityList" class="form-group col-lg-offset-2">
+                          <label style="width:150px;">{{capability.Name}} </label>&nbsp;&nbsp;<select class="form-control"  style="width:150px;display: inline;"id="parameter" name="serialParameter" ng-model="capability.Unit" ng-options="supportedUnit for supportedUnit in capability.SupportedUnits"></select>
                       </div>
 
                       <div class="box-footer">

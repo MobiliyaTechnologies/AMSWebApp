@@ -23,7 +23,7 @@
                   <thead class="table-blue-border">
                       <tr>
                           <th style="font-weight:100;width:15%;">Group</th>
-                          <th style="font-weight:100;width:15%;">Value</th>
+                          <th style="font-weight:100;width:17%;">Value</th>
                           <th style="font-weight:100;width:15%;">Capability</th>
                           <th style="font-weight:100;width:15%;">CapabilityFilter</th>
                           <th style="font-weight:100;width:15%;">Timestamp</th>
@@ -31,9 +31,9 @@
                   </thead>
 
                   <tbody>
-                      <tr ng-repeat="alert in alertList">
+                      <tr ng-repeat="alert in alertList | orderBy : 'Timestamp'">
                           <td style="width:15%;">{{alert.GroupName}}</td>
-                          <td style="width:15%;">{{alert.Value}}</td>
+                          <td style="width:17%;overflow:hidden;">{{alert.Value}}</td>
                           <td style="width:15%;">{{alert.Capability}}</td>
                           <td style="width:15%;">{{alert.CapabilityFilter}}</td>
                           <td style="width:15%;">{{alert.Timestamp}}</td>

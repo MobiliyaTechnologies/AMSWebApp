@@ -14,6 +14,7 @@ angular.module('assetmonitoringApp')
         $scope.sensorGroupList = [{ 'Name': 'Loading Group' }];
         $scope.sensorList = [{ 'Name': 'No Group Selected' }];
         $scope.sensorSelected = $scope.sensorList[0];
+        $scope.loadingsensor = true;
         /*
         $scope.powerBiURl = [{ 'Capability': 'Temperature', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=ff107836-abac-470e-b55c-405319da2dc1' },
             { 'Capability': 'Accelerometer', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=82f39ebd-0b84-4652-a24f-c55c7a16989a' },
@@ -63,7 +64,10 @@ angular.module('assetmonitoringApp')
         $scope.groupChange = function () {
             $scope.getAllSensor();
             $scope.sensorList = [{ 'Name': 'Loading Sensor' }];
-            console.log("Group ", $scope.groupSelected);
+            $scope.sensorSelected = $scope.sensorList[0];
+            $scope.sensorList = [];
+            $scope.sensorList = [{ 'Name': 'Loading Sensor'}];
+            $scope.sensorSelected = $scope.sensorList[0];
             
         }
         $scope.sensorChange = function () {
@@ -76,6 +80,7 @@ angular.module('assetmonitoringApp')
                     if (!err) {
                         console.log("[Info]:: Get  Sensor Group Detail ", response);
                         $scope.sensorList = response.Sensors;
+                        $scope.loadingsensor = false;
                         if ($scope.sensorList.length == 0) {
                             $scope.sensorList = [{ 'Name': 'No Sensor available' }];
                         }
@@ -86,7 +91,11 @@ angular.module('assetmonitoringApp')
                 });
         }
         function sendFilter() {
-            
+           
+            var object_by_id = $filter('filter')($scope.capabilityList, { Name: 'Gateway' })[0];
+            var index = $scope.capabilityList.indexOf(object_by_id);
+            $scope.capabilityList.splice(index);
+            console.log("Capi", $scope.capabilityList);
             var obj = {
                 'SensorKey': $scope.sensorSelected.SensorKey,
                 'Capabilities': $scope.capabilityList
@@ -104,9 +113,10 @@ angular.module('assetmonitoringApp')
            
         }
         $scope.getSensorDetail = function () {
-           
+            
             if ($scope.sensorSelected) {
                 $scope.loader = "block";
+
                 Restservice.get('api/SensorType/' + $scope.sensorSelected.SensorTypeId, function (err, response) {
                     if (!err) {
                         console.log("[Info]:: Get  Sensor Type Detail ", response);
@@ -117,7 +127,7 @@ angular.module('assetmonitoringApp')
                             embedDashboards();
                             var object_by_id  = $filter('filter')($scope.powerBiURl, { Capability: 'History' })[0];
                             if (object_by_id) {
-                                embedReport(object_by_id.Url + "&$filter=Sensors/SensorGroupId eq '" + $scope.groupSelected + "'" + " and Sensors/Sensor eq '" + $scope.sensorSelected.Name+"'", 'historic-container');
+                                embedReport(object_by_id.Url + "&$filter=Sensors/Sensor eq '" + $scope.sensorSelected.Name+"'", 'historic-container');
                             }
                             else{
                                 console.log("[Error] :: Please Update Power Bi urls");

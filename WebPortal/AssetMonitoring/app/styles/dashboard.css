@@ -227,6 +227,9 @@ height: inherit;
     color: #252525;
     font-size: 12pt;
     margin-top: 5px;
+    font-size:15px;
+    overflow:hidden;
+    height:20px;
 }
 .detailshipdetail{
   height: 70px;

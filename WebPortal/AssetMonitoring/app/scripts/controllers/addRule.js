@@ -130,34 +130,56 @@ angular.module('assetmonitoringApp')
             if ($scope.capabilityList && i < $scope.capabilityList.length) {
                 if ($scope.capabilityList[i].Name != 'Gateway') {
                     if (j < $scope.capabilityList[i].Filters.length) {
-                        var val = $("#" + $scope.capabilityList[i].Filters[j].Name + "-slider-range").slider("option", "values");
-                        if (val[0] != 0 || val[1] != 67) {
-                            console.log("$scope.capabilityList[i]", $scope.capabilityList[i]);
-                            var obj = {
-                                'MinThreshold': val[0],
-                                'MaxThreshold': val[1],
-                                'Operator': 'range',
-                                'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
+                        if ($scope.capabilityList[i].Filters.length > 1) {
+                            if ($scope.capabilityList[i].Filters[j].check) {
+                                console.log("$scope.capabilityList[i]", $scope.capabilityList[i]);
+                                var obj = {
+                                    'MinThreshold': 0,
+                                    'MaxThreshold': 0,
+                                    'Operator': 'slope',
+                                    'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
+                                }
+                                console.log("obj", obj);
+                                reqobj.push(obj);
+                                recursiveCreateRule(i, j + 1);
                             }
-                            console.log("obj", obj);
-                            console.log("$scope.capabilityList[i].Name.Filters[j].Name", $scope.capabilityList[i].Name.Filters[j].Name);
-                            reqobj.push(obj);
-                            recursiveCreateRule(i, j + 1);
+                            else {
+                                recursiveCreateRule(i, j + 1);
+                            }
                         }
                         else {
-                            recursiveCreateRule(i, j + 1);
+                            var val = $("#" + $scope.capabilityList[i].Filters[j].Name + "-slider-range").slider("option", "values");
+                            if (val[0] != 0 || val[1] != 67) {
+                                console.log("$scope.capabilityList[i]", $scope.capabilityList[i]);
+                                var obj = {
+                                    'MinThreshold': val[0],
+                                    'MaxThreshold': val[1],
+                                    'Operator': 'range',
+                                    'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
+                                }
+                                console.log("obj", obj);
+                                reqobj.push(obj);
+                                recursiveCreateRule(i, j + 1);
+                            }
+                            else {
+                                recursiveCreateRule(i, j + 1);
+                            }
+
                         }
                     }
                     else {
                         recursiveCreateRule(i + 1, 0);
                     }
+                    
+
+
                 }
                 else {
-                    console.log("$scope.gatewaySelected", $scope.selectedGateway  );
-                    if ($scope.selectedGateway != '' && $scope.selectedGateway   ) {
+                    console.log("$scope.selectedGatewayRule", $scope.selectedGatewayRule);
+                    if ($scope.selectedGatewayRule != '' && $scope.selectedGatewayRule   ) {
                        
                         var obj = {
-                            'MinThreshold': $scope.selectedGateway   ,                            
+                            'MinThreshold': $scope.selectedGatewayRule   ,                            
                             'Operator': 'range',
                             'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
                         }
@@ -197,9 +219,9 @@ angular.module('assetmonitoringApp')
                 Alertify.error("Please Create Rule");
             }
         }
-        $scope.gatewayChange = function (selectedGateway) {
+        $scope.gatewayChange = function (selectedGatewayRule) {
             
-            $scope.selectedGateway = selectedGateway;
-            console.log($scope.selectedGateway );
+            $scope.selectedGatewayRule = selectedGatewayRule;
+            console.log($scope.selectedGatewayRule );
         }
     });
