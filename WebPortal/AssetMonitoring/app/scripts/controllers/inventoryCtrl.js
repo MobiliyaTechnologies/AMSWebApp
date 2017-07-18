@@ -37,6 +37,7 @@ angular.module('assetmonitoringApp')
                     console.log("[Info]:: Get Gateway list response ", response);
                     $scope.gatewayList = response;
                     $scope.gatewayCount = $scope.gatewayList.length;
+                    //$scope.gatewayCount = 0;
                 }
                 else {
                     console.log("[Error]:: Get Gateway list response ", err);
@@ -124,30 +125,42 @@ angular.module('assetmonitoringApp')
 
 
         $scope.addGateway = function () {
-            //if ($scope.gatewayCount > 0) {
-           //     var modalInstance = $modal.open({
-           //         templateUrl: 'GatewayModal.html',
-           //         controller: 'GatewayModalCtrl',
-           //     }).result.then(function (result) {
-           //         //$scope.getAllGateway();
-           //         if (result) {
-           //             $scope.gatewayList.push(result);
-           //             $scope.gatewayCount = $scope.gatewayList.length;
-           //         }
-           //     }, function () {
-           //     });
-           //// }
-            //else if ($scope.gatewayCount == 0) {
+            if ($scope.gatewayCount > 0) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'GatewayModal.html',
+                    controller: 'GatewayModalCtrl',
+                }).result.then(function (result) {
+                    //$scope.getAllGateway();
+                    if (result) {
+                        $scope.gatewayList.push(result);
+                        $scope.gatewayCount = $scope.gatewayList.length;
+                    }
+                }, function () {
+                });
+            }
+            else if ($scope.gatewayCount == 0) {
                 var modalInstance = $modal.open({
                     templateUrl: 'configureUnitModal.html',
                     controller: 'configureUnitModalCtrl'
                    
-                }).result.then(function (result) {
+                }).result.then(function () {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'GatewayModal.html',
+                        controller: 'GatewayModalCtrl',
+                    }).result.then(function (result) {
+                        //$scope.getAllGateway();
+                        if (result) {
+                            $scope.gatewayList.push(result);
+                            $scope.gatewayCount = $scope.gatewayList.length;
+                        }
+                    }, function () {
+                    });
+
                 }, function () {
                     // Cancel
                 });
 
-            //}
+            }
         }
         $scope.editGateway = function (gateway) {
             var modalInstance = $modal.open({
@@ -346,7 +359,13 @@ angular.module('assetmonitoringApp').controller('SensorModalCtrl', function ($sc
                 }
                 else {
                     console.log("[Error] :: Add Sensor ", err);
-                    Alertify.error("Error in adding sensor");
+                    if (err.data){
+                        Alertify.error(err.data.Message);
+                    }
+                    else {
+                        Alertify.error("Error in adding sensor");
+                    }
+                    
                     $modalInstance.close();
                 }
                 $scope.loader = "none";
@@ -431,6 +450,7 @@ angular.module('assetmonitoringApp').controller('GatewayModalCtrl', function ($s
         if ($scope.gateway.GatewayKey && $scope.gateway.Name) {
             $scope.loader = "block";
             Restservice.post('api/Gateway', $scope.gateway, function (err, response) {
+                $scope.loader = "none";
                 if (!err) {
                     console.log("[Info] :: Add Gateway ", response);
                     Alertify.success("Gateway added");
@@ -438,12 +458,20 @@ angular.module('assetmonitoringApp').controller('GatewayModalCtrl', function ($s
                 }
                 else {
                     console.log("[Error] :: Add Gateway ", err);
-                    Alertify.error(" Error in adding gateway");
+                    
+
+                    if (err.data) {
+                        Alertify.error(err.data.Message);
+                    }
+                    else {
+                        Alertify.error(" Error in adding gateway");
+                    }
+
                     $modalInstance.close();
                 }
                 
             });
-            $scope.loader = "none";
+            
         }
         else {
             console.log("[Error] :: Enter All Gateway Information ");
@@ -689,12 +717,13 @@ angular.module('assetmonitoringApp').controller('removeSensorToGroupModalCtrl', 
 
 });
 
-angular.module('assetmonitoringApp').controller('configureUnitModalCtrl', function ($scope, DTOptionsBuilder, $modalInstance, $http, $modal, Restservice) {
+angular.module('assetmonitoringApp').controller('configureUnitModalCtrl', function ($scope, DTOptionsBuilder, $modalInstance, $http, $modal, Restservice, Alertify) {
     $scope.getCapibility = function () {
         Restservice.get('api/Capability', function (err, response) {
             if (!err) {
                 console.log("[Info]:: Get Capability Detail response ", response);
-                $scope.capabilityList = response.Sensors;
+                $scope.capabilityList = response;
+
             }
             else {
                 console.log("[Error]:: Get Capability Detail response ", err);
@@ -703,7 +732,20 @@ angular.module('assetmonitoringApp').controller('configureUnitModalCtrl', functi
     }
     $scope.getCapibility();
     $scope.ok = function () {
-
+        console.log("$scope.capabilityList", $scope.capabilityList);
+        Restservice.put('api/Capability', $scope.capabilityList, function (err, response) {
+            $scope.loader = "none";
+            if (!err) {
+                Alertify.success("Unit Configure Successfully");
+                console.log("[Info]::Unit Configure Successfully", response);
+                $modalInstance.close();
+            }
+            else {
+                console.log("[Error]:: Units not Configured ", err);
+                Alertify.error("Units not Configured");
+                $modalInstance.dismiss('cancel');
+            }
+        });
 
     };
     $scope.cancel = function () {

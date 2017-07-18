@@ -8,15 +8,26 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state, Token, $location) {
+    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state, Token, $location, Restservice ) {
         $scope.powerbiUrls = {
-            'data': {}
+            'data': []
         }
         $scope.application={
             'logo':''
         }
+        $scope.getAllCapabilities = function () {
+            Restservice.get('api/Capability', function (err, response) {
+                if (!err) {
+                    console.log("[Info]:: Get Capability list response ", response);
+                    $scope.capabilityList = response;
+                }
+                else {
+                    console.log("[Error]:: Get Capability list response ", err);
+                }
+            });
+        }
+        $scope.getAllCapabilities();
         $scope.addApplicationLogo = function () {
-            console.log("Here");
             var authResponse = hello('adB2CSignIn').getAuthResponse();
 
             $scope.application.logo = document.getElementById('application_logo').files[0];
@@ -48,7 +59,7 @@ angular.module('assetmonitoringApp')
                     })
                     .catch(function (error) {
                         console.log("[Error] :: Add Application Logo ", error);
-                        Alertify.success("Error in uploading logo ");
+                        Alertify.error("Error in uploading logo ");
                     });
             }
             else {
@@ -65,9 +76,11 @@ angular.module('assetmonitoringApp')
         $scope.updatePowerBiCredentials = function () {
             $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/PowerBIService.asmx/updatePowerBiCredentials', $scope.powerbi).then(function (data) {
                 console.log("[Info] :: Credentials Updated", data);
+                Alertify.success("Credentials Updated ");
                 Token.update(function () { });
             }).catch(function (data) {
-                console.log('[Error] ::', data);
+                console.log('[Error] :: Credentials Updated', data);
+                Alertify.error("Credentials Not Updated ");
             });
         }
         
@@ -78,9 +91,13 @@ angular.module('assetmonitoringApp')
                 sampleConfig.push(obj);
             }
             $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/PowerBIService.asmx/SavePowerBIUrl', { data: JSON.stringify(sampleConfig) }).then(function (data) {
+                Alertify.success("Urls Updated ");
                 console.log("[Info] :: Urls Updated", data);
+                
             }).catch(function (data) {
                 console.log('[Error] ::', data);
+                Alertify.error("Urls Not Updated ");
+
             });
         }
         function getPowerBiUrls() {

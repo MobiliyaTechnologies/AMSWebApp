@@ -17,9 +17,9 @@
             <div ng-if="capability.Name!='Gateway'">
                 <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img disabledbutton">
                     <input type="text" id="{{capability.Name}}value" readonly class="newinputforslider"> <label style="color:#3eb493;">{{capability.Filters[0].FilterDataType}}</label>
-                    <div class="col-lg-12" style="display:-webkit-inline-box;" ng-if="capability.Filters.length>1">
+                    <div class="col-lg-12"  ng-if="capability.Filters.length>1">
                         <div ng-repeat="filter in capability.Filters">
-                            <div id="{{filter.Name}}-slider-range" class="newruleslider" style="margin-left:50px;"></div>
+                            <input type="checkbox" ng-model="filter.check" ng-checked="all">&nbsp; Sudden change in {{filter.Name}}<br>
                         </div>
                     </div>
                     <div ng-if="capability.Filters.length<2">
@@ -38,7 +38,7 @@
             <div ng-if="capability.Name=='Gateway'">
                 <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img disabledbutton ">                   
 
-                    <select class="form-control"  style="width: 126px; height: 41px;margin-top:20%;margin-left:25%" ng-model="selectedGateway" ng-options="gateway.Id as gateway.Name for gateway in gatewayList" ng-change="gatewayChange(selectedGateway)"></select>
+                    <select class="form-control"  style="width: 126px; height: 41px;margin-top:20%;margin-left:25%" ng-model="selectedGatewayRule" ng-options="gateway.GatewayKey as gateway.Name for gateway in gatewayList" ng-change="gatewayChange(selectedGatewayRule)"></select>
                     <div class="newrulesubtitle">{{capability.Name}}</div>
                 </div>
             </div>

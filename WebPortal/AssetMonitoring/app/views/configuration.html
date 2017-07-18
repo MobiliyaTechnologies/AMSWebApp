@@ -12,7 +12,7 @@
     <div class="col-lg-offset-1 col-lg-10 box box-success">
         <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapseone" style="cursor: pointer; background-color: {{checkUser}}">
             <h3 class="box-title">Logo Configuration</h3>
-
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
         </div>
         <div id="collapseone" class="panel-collapse collapse out">
             <div class="panel-body">
@@ -20,7 +20,7 @@
                 <input id="application_logo" type="file" accept="image/*" style="margin-top:20px;text-align:center;margin-left:40%;" />
                 <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="addApplicationLogo()">Add</div>
                 <br /><br/>
-                <label>Note : Please Upload logo of size 117 x 30</label>
+                <label>Note : Please upload logo of size 117 x 30</label>
             </div>
         </div>
 
@@ -28,8 +28,8 @@
 
     <div class="col-lg-offset-1 col-lg-10 box box-success">
         <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapsetwo" style="cursor: pointer; background-color: {{checkUser}}">
-            <h3 class="box-title">Power Bi Credentials</h3>
-
+            <h3 class="box-title">Power BI Credentials</h3>
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
         </div>
         <div id="collapsetwo" class="panel-collapse collapse out">
             <div class="panel-body">
@@ -58,14 +58,24 @@
 
     <div class="col-lg-offset-1 col-lg-10 box box-success">
         <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapsethree" style="cursor: pointer; background-color: {{checkUser}}">
-            <h3 class="box-title">Power Bi Urls's</h3>
-
+            <h3 class="box-title">Power BI Urls</h3>
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
         </div>
         
 
         <div id="collapsethree" class="panel-collapse collapse out">
             <div class="panel-body">
+                <div class="form-group" ng-repeat="capability in capabilityList">
+                    <div ng-if="capability.Name!='Gateway'">
+                        <label for="Name">{{capability.Name}}</label>
+                        <input type="text" class="form-control" id="gname" placeholder="Enter {{capability.Name}} Url" required ng-model="powerbiUrls.data[capability.Name]" />
+                    </div>
+                 </div>
                 <div class="form-group">
+                    <label for="Serial">History</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter History Report Url" required ng-model="powerbiUrls.data.History" />
+                </div>
+                <!--<div class="form-group">
                     <label for="Name">Accelerometer</label>
                     <input type="text" class="form-control" id="gname" placeholder="Enter Accelerometer Url" required ng-model="powerbiUrls.data.Accelerometer" />
                 </div>
@@ -88,7 +98,7 @@
                 <div class="form-group">
                     <label for="Serial">History</label>
                     <input type="text" class="form-control" id="gserialno" placeholder="Enter History Report Url" required ng-model="powerbiUrls.data.History" />
-                </div>
+                </div>-->
                 <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="updatePowerBiUrls()">Submit</div>
                 <br/><br/>
             </div>

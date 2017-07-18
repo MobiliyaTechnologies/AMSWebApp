@@ -22,17 +22,17 @@ angular.module('assetmonitoringApp')
                     $scope.assetList = [];
                     $scope.assetObj = response;
                     for (var i = 0; i < $scope.assetObj.length; i++) {
-                        for (var j = 0; j < $scope.assetObj[i].SensorKeys.length;j++){
+                        //for (var j = 0; j < $scope.assetObj[i].SensorKeys.length;j++){
                            // $scope.assetObj[i].sensorKey = $scope.assetObj[i].SensorKeys[j];
                             var obj = {
                                 'AssetId': $scope.assetObj[i].AssetId,
                                 'AssetBarcode': $scope.assetObj[i].AssetBarcode,
                                 'GroupName': $scope.assetObj[i].GroupName,
-                                'SensorKey': $scope.assetObj[i].SensorKeys[j],
+                           //     'SensorKey': $scope.assetObj[i].SensorKeys[j],
                                 'selected':false
                             }
                            $scope.assetList.push(obj);
-                        }
+                       // }
                     }
 
                 }
