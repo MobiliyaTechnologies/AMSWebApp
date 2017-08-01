@@ -42,15 +42,19 @@
       <!-- build:css(.tmp) styles/main.css -->
       <link rel="stylesheet" href="./app/styles/main.css">
       <link href="app/styles/login.css" rel="stylesheet" />
+      <link href="./bower_components/ng-alertify/dist/ng-alertify.css" rel="stylesheet" />
       <link href="app/styles/dashboard.css" rel="stylesheet" />
       <link href="app/styles/rules.css" rel="stylesheet" />
       <link href="app/styles/assetview.css" rel="stylesheet" />
       <link href="app/styles/notification.css" rel="stylesheet" />
       <link href="app/styles/device.css" rel="stylesheet" />
       <link href="./app/styles/jquery.dataTables.min.css" rel="stylesheet" />
-      <link href="./bower_components/ng-alertify/dist/ng-alertify.css" rel="stylesheet" />
+     
 
       <link href="https://cdn.bootcss.com/angular-datatables/0.6.2/css/angular-datatables.css" rel="stylesheet" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js" type="text/javascript" charset="utf-8"></script>
+
+      <script src="app/scripts/Chart.min.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -104,12 +108,14 @@
     <script src="./bower_components/ng-onload/release/ng-onload.min.js"></script>
     <!--<script src="https://maps.google.com/maps/api/js?key=AIzaSyCUnSZWYTnbJU_fTD7RpDc48FkGVzLneLc"></script>-->
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&key=AIzaSyCUnSZWYTnbJU_fTD7RpDc48FkGVzLneLc"></script>
-    <script type="text/javascript" src="https://www.geocodezip.com/scripts/v3_epoly.js"></script>
+      <script src="./app/scripts/v3_epoly.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!--<script src="./bower_components/powerbi-client/dist/powerbi.js"></script>-->
       <script src="./app/powerbi.min.js"></script>
       <script src="bower_components/ng-alertify/dist/ng-alertify.js"></script>
+      <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+
     <!-- endbower -->
     <!-- endbuild -->
 

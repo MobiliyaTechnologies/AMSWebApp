@@ -17,22 +17,24 @@
             <div ng-if="capability.Name!='Gateway'">
                 <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img disabledbutton">
                     <input type="text" id="{{capability.Name}}value" readonly class="newinputforslider"> <label style="color:#3eb493;">{{capability.Filters[0].FilterDataType}}</label>
-                    <div class="col-lg-12"  ng-if="capability.Filters.length>1">
+                    <div class="col-lg-12"  ng-if="capability.Name=='Accelerometer'||capability.Name=='Magnetometer'||capability.Name=='Gyroscope'"">
                         <div ng-repeat="filter in capability.Filters">
-                            <input type="checkbox" ng-model="filter.check" ng-checked="all">&nbsp; Sudden change in {{filter.Name}}<br>
+                            <input type="checkbox" ng-model="filter.check" ng-checked="all">&nbsp; &nbsp;{{filter.Name}}<br>
                         </div>
+                        <div class="newrulesubtitle" style="margin-top:{{50-capability.Filters.length*10}}px">{{capability.Name}}</div>
                     </div>
-                    <div ng-if="capability.Filters.length<2">
+                    <div ng-if="capability.Name!='Accelerometer'&&capability.Name!='Magnetometer'&&capability.Name!='Gyroscope'">
                         <div ng-repeat="filter in capability.Filters">
                             <div id="{{filter.Name}}-slider-range" class="newruleslider"></div>
                         </div>
-                    </div>
-                    <div ng-if="capability.Filters.length>1">
-                        <div class="newrulesubtitle" style="margin-top:73px;">{{capability.Name}}</div>
-                    </div>
-                    <div ng-if="capability.Filters.length<2">
                         <div class="newrulesubtitle">{{capability.Name}}</div>
                     </div>
+                    <!--<div ng-if="capability.Filters.length>1">
+                        
+                    </div>
+                    <div ng-if="capability.Filters.length<2">-->
+                       
+                    <!--</div>-->
                 </div>
             </div>
             <div ng-if="capability.Name=='Gateway'">
@@ -129,6 +131,6 @@
       <div id="submitRule" class="btn btn-success" ng-click="createRule()">Done</div>
     </div>
  </div>
-      <div class="loading style-2 ng-scope" style="display:{{loader}};">
+      <!--<div class="loading style-2 ng-scope" style="display:{{loader}};">
           <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
-      </div>
+      </div>-->

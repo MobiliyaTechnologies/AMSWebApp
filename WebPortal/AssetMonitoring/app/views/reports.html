@@ -25,27 +25,41 @@
 
             <div ng-repeat="capability in capabilityList" class="col-md-10" style="margin-left:70px;margin-top:20px;width:68vw;">
                 <!-- USERS LIST -->
-                <div class="box box-danger">
+                <div ng-if="capability.Name!='Gateway'">
+                <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{capability.Name}}</h3>
                         <div class="box-tools pull-right">
                             <!--<span class="label label-danger">8 New Members</span>-->
 
-                            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <!--<button type="button" class="btn btn-box-tool" data-widget="remove">
                                 <i class="fa fa-expand"></i>
-                            </button>
+                            </button>-->
                         </div>
                     </div>
                     <!-- /.box-header -->
-                    <div ng-if="capability.Name!='Accelerometer'&&capability.Name!='Magnetometer'&&capability.Name!='Gyroscope'" class="box-body no-padding" style="height:200px;">
-                        <!-- /.users-list -->
-
+                    <!--<div ng-if="capability.Name!='Accelerometer'&&capability.Name!='Magnetometer'&&capability.Name!='Gyroscope'" class="box-body no-padding" style="height:200px;">
                         <div id="{{capability.Name}}-container" style="height:100%;width:100%;"></div>
                     </div>
                     <div ng-if="capability.Name=='Accelerometer'||capability.Name=='Magnetometer'||capability.Name=='Gyroscope'" class="box-body no-padding" style="height:600px;">
-                        <!-- /.users-list -->
-
                         <div id="{{capability.Name}}-container" style="height:100%;width:100%;"></div>
+                    </div>-->
+                    <div class="box-body no-padding" style="height:400px;"  >
+                        <div class="col-lg-9">
+                            <canvas id="{{capability.Name}}-Chart" ></canvas>
+                        </div>
+                        <div ng-if="capability.Name!='Accelerometer'&&capability.Name!='Magnetometer'&&capability.Name!='Gyroscope'" class="col-lg-2 report-value" style="border:solid 1px;height:200px;margin-top:100px;">
+                            <label class="report-value-label">{{capibilityValue[capability.Id]}}</label>
+                        </div>
+                        <div ng-if="capability.Name=='Accelerometer'||capability.Name=='Magnetometer'||capability.Name=='Gyroscope'" class="col-lg-2 report-value" style="border:solid 1px;height:200px;margin-top:85px;">
+                            <!--<label class="report-value--xyz-label" >X : {{capibilityXYZValue[capability.Id].x}}343</label>
+                            <label class="report-value--xyz-label" >Y : {{capibilityXYZValue[capability.Id].y}}343</label>
+                            <label class="report-value--xyz-label">Z : {{capibilityXYZValue[capability.Id].z}}343</label>-->
+                 
+                            <p class="report-value--xyz-label" >X : {{capibilityXYZValue[capability.Id].x}}</p>
+                            <p class="report-value--xyz-label" >Y : {{capibilityXYZValue[capability.Id].y}}</p>
+                            <p class="report-value--xyz-label" >Z : {{capibilityXYZValue[capability.Id].z}}</p>
+                        </div>
                     </div>
                     <!-- /.box-body -->
 
@@ -53,9 +67,10 @@
                 <!--/.box -->
             </div>
         </div>
+            </div>
         <div class="row" ng-show="historic">
 
-            <div class="box box-danger col-md-10" style="margin-left:70px;margin-top:20px;">
+            <div class="box box-success col-md-10" style="margin-left:70px;margin-top:20px;">
                 <div class="box-header with-border">
                     <h3 class="box-title">History   Report</h3>
                     <div class="box-tools pull-right">
@@ -79,3 +94,4 @@
             <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
         </div>
     </section>
+

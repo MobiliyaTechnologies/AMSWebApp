@@ -83,8 +83,8 @@ angular.module('assetmonitoringApp')
                     $("#" + $scope.capabilityList[i].Filters[j].Name+"-slider-range").slider({
                     orientation: "vertical",
                     range: true,
-                    max: 400,
-                    values: [0, 67],
+                    max: 200,
+                    values: [0, 33],
                     slide: function (event, ui) {
 
                         var name = event.target.id.substring(0, event.target.id.indexOf("-"));
@@ -130,16 +130,17 @@ angular.module('assetmonitoringApp')
             if ($scope.capabilityList && i < $scope.capabilityList.length) {
                 if ($scope.capabilityList[i].Name != 'Gateway') {
                     if (j < $scope.capabilityList[i].Filters.length) {
-                        if ($scope.capabilityList[i].Filters.length > 1) {
+                       // if ($scope.capabilityList[i].Filters.length > 1) {
+                        console.log("$scope.capabilityList[i].Filters[j].Name", $scope.capabilityList[i].Filters[j].Name);
+                        if ($scope.capabilityList[i].Name == 'Accelerometer' || $scope.capabilityList[i].Name == 'Magnetometer' || $scope.capabilityList[i].Name == 'Gyroscope') {
+                            console.log("$scope.capabilityList[i].Filters[j].check", $scope.capabilityList[i].Filters[j].check);
                             if ($scope.capabilityList[i].Filters[j].check) {
-                                console.log("$scope.capabilityList[i]", $scope.capabilityList[i]);
                                 var obj = {
                                     'MinThreshold': 0,
                                     'MaxThreshold': 0,
-                                    'Operator': 'slope',
+                                    'Operator': $scope.capabilityList[i].Filters[j].Name =='Vibration'?'slope':'',
                                     'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
                                 }
-                                console.log("obj", obj);
                                 reqobj.push(obj);
                                 recursiveCreateRule(i, j + 1);
                             }
@@ -149,7 +150,7 @@ angular.module('assetmonitoringApp')
                         }
                         else {
                             var val = $("#" + $scope.capabilityList[i].Filters[j].Name + "-slider-range").slider("option", "values");
-                            if (val[0] != 0 || val[1] != 67) {
+                            if (val[0] != 0 || val[1] != 33) {
                                 console.log("$scope.capabilityList[i]", $scope.capabilityList[i]);
                                 var obj = {
                                     'MinThreshold': val[0],
@@ -180,7 +181,7 @@ angular.module('assetmonitoringApp')
                        
                         var obj = {
                             'MinThreshold': $scope.selectedGatewayRule   ,                            
-                            'Operator': 'range',
+                            'Operator': '',
                             'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
                         }
 
@@ -198,14 +199,16 @@ angular.module('assetmonitoringApp')
 
         }
         function createRuleApiCall(reqobj) {
-            
+            console.log(reqobj);
             if (reqobj.length > 0) {
-                $scope.loader = "block";
+                //$scope.loader = "block";
+                Alertify.log("Rule Creation Started");
+                $state.go('rules');
                 Restservice.post('api/SensorRule/' + $scope.groupSelected, reqobj, function (err, response) {
                     if (!err) {
                         $scope.loader = "none";
                         console.log("[Info] :: Create Rule ", response);
-                        $state.go('rules');
+                        Alertify.success("Rule Created");                        
 
                     }
                     else {

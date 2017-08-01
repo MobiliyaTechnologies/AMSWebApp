@@ -9,11 +9,18 @@
  */
 angular.module('assetmonitoringApp')
     .controller('ruleCtrl', function ($scope, Restservice, $modal, $state, Alertify) {
+        $scope.rules_loading_label = false;
+        var myEl = angular.element(document.querySelector('#rules-datatable-loader'));
+        myEl.css('display', 'block');
         $scope.getAllRule = function () {
             Restservice.get('api/SensorRule', function (err, response) {
                 if (!err) {
                     console.log("[Info]:: Get Rule list response ", response);
                     $scope.ruleList = response;
+                    myEl.css('display', 'none');
+                    if ($scope.ruleList.length == 0) {
+                        $scope.rules_loading_label = true;
+                    }
                     $scope.rulesCount = $scope.ruleList.length;
                 }
                 else {

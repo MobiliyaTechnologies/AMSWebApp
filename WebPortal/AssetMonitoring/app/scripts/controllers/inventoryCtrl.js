@@ -8,22 +8,35 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('inventoryCtrl', function ($modal, $scope, $http, Restservice, Alertify) {
+    .controller('inventoryCtrl', function ($modal, $scope, $http, Restservice, Alertify, DTOptionsBuilder ) {
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
-        
+        $scope.sensor_loading_label = false;
+        $scope.gateway_loading_label = false;
+        $scope.group_loading_label = false;
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+            .withOption('processing', true);
+        $scope.dtOptions = DTOptionsBuilder.fromSource($scope.sensorList )
+            .withOption('processing', true);
         $scope.getshipmentdetail = {
             shipmentId: 10,
             origin: 'Seattle, Washington, USA',
             destination: 'Linn County, Oregon, USA'
         }
         $scope.getAllSensor = function () {
+            var myEl = angular.element(document.querySelector('#sensor-datatable-loader'));
+            myEl.css('display', 'block');
+            
             Restservice.get('api/Sensor', function (err, response) {
                 if (!err) {
                     console.log("[Info]:: Get Sensor list response ", response);
                     $scope.sensorList = response;
+                    myEl.css('display', 'none');                     
                     $scope.sensorCount = $scope.sensorList.length;
+                    if ($scope.sensorList.length == 0) {
+                        $scope.sensor_loading_label = true;
+                    }
                 }
                 else {
                     console.log("[Error]:: Get Sensor list response ", err);
@@ -32,11 +45,17 @@ angular.module('assetmonitoringApp')
         }
         $scope.getAllSensor();
         $scope.getAllGateway = function () {
+            var myEl = angular.element(document.querySelector('#gateway-datatable-loader'));
+            
             Restservice.get('api/Gateway', function (err, response) {
                 if (!err) {
                     console.log("[Info]:: Get Gateway list response ", response);
                     $scope.gatewayList = response;
                     $scope.gatewayCount = $scope.gatewayList.length;
+                    myEl.css('display', 'none');
+                    if ($scope.gatewayList.length == 0) {
+                        $scope.gateway_loading_label = true;
+                    }
                     //$scope.gatewayCount = 0;
                 }
                 else {
@@ -46,10 +65,16 @@ angular.module('assetmonitoringApp')
         }
         $scope.getAllGateway();
         $scope.getAllSensorGroup = function () {
+            var myEl = angular.element(document.querySelector('#group-datatable-loader'));
+           
             Restservice.get('api/SensorGroup', function (err, response) {
                 if (!err) {
                     console.log("[Info]:: Get SensorGroup list response ", response);
                     $scope.groupList = response;
+                    myEl.css('display', 'none');
+                    if ($scope.groupList.length == 0) {
+                        $scope.group_loading_label = true;
+                    }
                 }
                 else {
                     console.log("[Error]:: Get SensorGroup list response ", err);

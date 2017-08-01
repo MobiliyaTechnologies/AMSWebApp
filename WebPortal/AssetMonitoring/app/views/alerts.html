@@ -19,7 +19,7 @@
           <!-- /.box-header -->
 
           <div class="box-body">
-              <table id="entry-grid" ass="table table-striped table-bordered table-condensed" datatable="ng" width="100%" dt-options="dtOptions">
+              <table id="entry-grid"  datatable="ng" width="100%" dt-options="dtOptions">
                   <thead class="table-blue-border">
                       <tr>
                           <th style="font-weight:100;width:15%;">Group</th>
@@ -30,7 +30,9 @@
                       </tr>
                   </thead>
 
-                  <tbody>
+                  <tbody id="alerts-datatable-body">
+                      <img id="alerts-datatable-loader" src="../../img/Loading.gif" class="datatable-loader" style="left:35%" />
+                      <label class="data-table-no-data" ng-show="alerts_loading_label">No data available</label>
                       <tr ng-repeat="alert in alertList | orderBy : 'Timestamp'">
                           <td style="width:15%;">{{alert.GroupName}}</td>
                           <td style="width:17%;overflow:hidden;">{{alert.Value}}</td>
@@ -40,6 +42,8 @@
                       </tr>
                   </tbody>
               </table>
+
+              <!--<table id="entry-grid" datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-hover"></table>--> 
           </div>
           <!-- /.box-body -->
 
