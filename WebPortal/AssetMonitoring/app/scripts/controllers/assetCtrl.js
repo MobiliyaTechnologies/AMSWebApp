@@ -10,10 +10,13 @@
 angular.module('assetmonitoringApp')
     .controller('assetCtrl', function ($scope, Restservice, $filter, DTOptionsBuilder, $modal, Alertify) {
         //$scope.loader = 'block';
-        $scope.dtOptions = DTOptionsBuilder.newOptions()
-            .withPaginationType('full_numbers')
-            .withDisplayLength(5)
-            .withOption('order', [2, 'desc']);
+        //$scope.dtOptions = DTOptionsBuilder.newOptions()
+        //    .withPaginationType('full_numbers')
+        //    .withDisplayLength(5)
+        //    .withOption('order', [2, 'desc']);
+        $scope.assets_loading_label = false;
+        var myEl = angular.element(document.querySelector('#assets-datatable-loader'));
+        myEl.css('display', 'block');
         $scope.getAllAssets = function () {
             Restservice.get('api/Asset', function (err, response) {
                 if (!err) {
@@ -21,6 +24,8 @@ angular.module('assetmonitoringApp')
                     console.log("[Info]:: Get Assets list response", response);
                     $scope.assetList = [];
                     $scope.assetObj = response;
+                    myEl.css('display', 'none');
+                   
                     for (var i = 0; i < $scope.assetObj.length; i++) {
                         //for (var j = 0; j < $scope.assetObj[i].SensorKeys.length;j++){
                            // $scope.assetObj[i].sensorKey = $scope.assetObj[i].SensorKeys[j];
@@ -33,6 +38,9 @@ angular.module('assetmonitoringApp')
                             }
                            $scope.assetList.push(obj);
                        // }
+                    }
+                    if ($scope.assetList.length == 0) {
+                        $scope.assets_loading_label = true;
                     }
 
                 }

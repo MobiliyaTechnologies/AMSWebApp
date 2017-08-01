@@ -47,7 +47,9 @@
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="rules-datatable-body">
+                    <img id="rules-datatable-loader" src="../../img/Loading.gif" class="datatable-loader" style="left:35%"/>
+                    <label class="data-table-no-data" ng-show="rules_loading_label">No data available</label>
                   <tr ng-repeat="rule in ruleList">
                     <td style="width:13%">{{rule.MinThreshold}}</td>
                     <td style="width:13%">{{rule.MaxThreshold}}</td>

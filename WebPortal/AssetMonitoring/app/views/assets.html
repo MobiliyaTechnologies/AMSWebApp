@@ -19,27 +19,30 @@
         <div class="col-md-12">
           <div class="box">
             <div class="table-responsive">
-              <table id="entry-grid" datatable="ng" width="100%" dt-options="dtOptions">
-                <thead class="table-blue-border">
-                <th style="font-weight:100;width:13%;">Select</th>
-                <th style="font-weight:100;width:13%;">Asset Id</th>
-                <th style="font-weight:100;width:13%;">Asset Barcode</th>
-                <th style="font-weight:100;width:13%;">Group Name</th>
-                <!--th style="font-weight:100;width:13%;">Sensor Key</th>-->
-                <th style="font-weight:100;width:13%;">Detach</th>
-                </thead>
-                <tbody style="height:280px;" >
-                   <tr ng-repeat="asset in assetList" >
-                     <td style="width:13%;"><input type="checkbox" ng-model="asset.selected" ng-click="select(asset)"/></td>
-                     <td style="width:13%;">{{asset.AssetId}}</td>
-                     <td style="width:13%;">{{asset.AssetBarcode}}</td>
-                     <td style="width:13%;">{{asset.GroupName}}</td>
-                     <!--<td style="width:13%;">{{asset.SensorKey}}</td>-->
-                     <td style="width:13%;"><a ng-click="detachSensor(asset)" title="Edit Details"><i class="fa fa-trash"></i></a></td>
-                  </tr>
-                 
-                </tbody>
-              </table>
+              <table id="entry-grid1"  datatable="ng" width="100%" dt-options="dtOptions">
+                      <thead class="table-blue-border">
+                      <th style="font-weight:100;width:5%;">Select</th>
+                      <th style="font-weight:100;width:5%;">Asset Id</th>
+                      <th style="font-weight:100;width:29%;">Asset Barcode</th>
+                      <th style="font-weight:100;width:13%;">Group Name</th>
+                      <!--th style="font-weight:100;width:13%;">Sensor Key</th>-->
+                      <th style="font-weight:100;width:13%;">Detach</th>
+                      </thead>
+                      <tbody id="assets-datatable-body" style="height:380px;">
+                          <img id="assets-datatable-loader" src="../../img/Loading.gif" class="datatable-loader" style="left:35%" />
+                          <label class="data-table-no-data" ng-show="assets_loading_label">No data available</label>
+                          <tr ng-repeat="asset in assetList">
+                              <td style="width:5%;"><input type="checkbox" ng-model="asset.selected" ng-click="select(asset)" /></td>
+                              <td style="width:5%;">{{asset.AssetId}}</td>
+                              <td style="width:29%;">{{asset.AssetBarcode}}</td>
+                              <td style="width:13%;">{{asset.GroupName}}</td>
+                              <!--<td style="width:13%;">{{asset.SensorKey}}</td>-->
+                              <td style="width:13%;"><a ng-click="detachSensor(asset)" title="Edit Details"><i class="fa fa-trash"></i></a></td>
+    </tr>
+                          </tr>
+
+                      </tbody>
+                  </table>
             </div>
 
             <!-- /.box-body -->

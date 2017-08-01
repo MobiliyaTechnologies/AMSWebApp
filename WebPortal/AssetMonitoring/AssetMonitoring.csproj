@@ -120,6 +120,7 @@
     <Content Include="app\scripts\controllers\alertCtrl.js" />
     <Content Include="app\scripts\controllers\angular-datatables.js" />
     <Content Include="app\scripts\controllers\assetCtrl.js" />
+    <Content Include="app\scripts\Chart.min.js" />
     <Content Include="app\scripts\controllers\configurationCtrl.js" />
     <Content Include="app\scripts\controllers\dashboardCtrl.js" />
     <Content Include="app\scripts\controllers\inventoryCtrl.js" />
@@ -134,6 +135,7 @@
     <Content Include="app\scripts\service\AclServiceProvider.js" />
     <Content Include="app\scripts\service\ConfigService.js" />
     <Content Include="app\scripts\service\RestService.js" />
+    <Content Include="app\scripts\v3_epoly.js" />
     <Content Include="app\styles\assetview.css" />
     <Content Include="app\styles\dashboard.css" />
     <Content Include="app\styles\device.css" />
@@ -253,8 +255,10 @@
     <Content Include="img\Gyroscope.svg" />
     <Content Include="img\Humidity.svg" />
     <Content Include="img\Inventory.svg" />
+    <Content Include="img\layout.jpg" />
     <Content Include="img\Lesser_than.svg" />
     <Content Include="img\ListView.svg" />
+    <Content Include="img\Loading.gif" />
     <Content Include="img\Logo.png" />
     <Content Include="img\Logo_New.png" />
     <Content Include="img\Logo_New_SignIn.png" />

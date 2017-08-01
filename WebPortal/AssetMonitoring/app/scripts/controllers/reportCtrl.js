@@ -15,6 +15,11 @@ angular.module('assetmonitoringApp')
         $scope.sensorList = [{ 'Name': 'No Group Selected' }];
         $scope.sensorSelected = $scope.sensorList[0];
         $scope.loadingsensor = true;
+        $scope.chartdata = {};
+        $scope.chartXYZdata = {};
+        $scope.chartObj = {};
+        $scope.capibilityValue = {};
+        $scope.capibilityXYZValue = {};
         /*
         $scope.powerBiURl = [{ 'Capability': 'Temperature', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=ff107836-abac-470e-b55c-405319da2dc1' },
             { 'Capability': 'Accelerometer', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=82f39ebd-0b84-4652-a24f-c55c7a16989a' },
@@ -29,7 +34,7 @@ angular.module('assetmonitoringApp')
         //{ 'Capability': 'UVIndex', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=f8f20e4b-4391-49aa-8e42-8b108a1c30c2' },
         //{ 'Capability': 'Luminescence', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=7ea991dd-86bd-43c0-a8da-86b05ead5488' }
         //]
-        
+
 
         //$scope.historyUrl = "https://app.powerbi.com/reportEmbed?reportId=cd692a37-cab7-4970-8af4-c844c67298e1&$filter=Sensors/SensorGroupId eq";
         //$scope.historyUrl = "https://app.powerbi.com/reportEmbed?reportId=b8170f6b-9429-4509-b4ee-4fdc10657766&$filter=Sensors/SensorGroupId eq";
@@ -51,7 +56,7 @@ angular.module('assetmonitoringApp')
                 if (!err) {
                     console.log("[Info]:: Get Sensor Group response ", response);
                     $scope.sensorGroupList = response;
-                    if ($scope.sensorGroupList.length==0){
+                    if ($scope.sensorGroupList.length == 0) {
                         $scope.sensorGroupList = [{ 'Name': 'No Sensor Group available' }];
                     }
                 }
@@ -66,32 +71,33 @@ angular.module('assetmonitoringApp')
             $scope.sensorList = [{ 'Name': 'Loading Sensor' }];
             $scope.sensorSelected = $scope.sensorList[0];
             $scope.sensorList = [];
-            $scope.sensorList = [{ 'Name': 'Loading Sensor'}];
+            $scope.sensorList = [{ 'Name': 'Loading Sensor' }];
             $scope.sensorSelected = $scope.sensorList[0];
-            
+
         }
         $scope.sensorChange = function () {
             $scope.getSensorDetail();
-           
+
         }
-        
+       
         $scope.getAllSensor = function () {
-                Restservice.get('api/SensorGroup/' + $scope.groupSelected, function (err, response) {
-                    if (!err) {
-                        console.log("[Info]:: Get  Sensor Group Detail ", response);
-                        $scope.sensorList = response.Sensors;
-                        $scope.loadingsensor = false;
-                        if ($scope.sensorList.length == 0) {
-                            $scope.sensorList = [{ 'Name': 'No Sensor available' }];
-                        }
+            Restservice.get('api/SensorGroup/' + $scope.groupSelected, function (err, response) {
+                if (!err) {
+                    console.log("[Info]:: Get  Sensor Group Detail ", response);
+                    $scope.sensorList = response.Sensors;
+                    $scope.ruleList = response.SensorRules;
+                    $scope.loadingsensor = false;
+                    if ($scope.sensorList.length == 0) {
+                        $scope.sensorList = [{ 'Name': 'No Sensor available' }];
                     }
-                    else {
-                        console.log("[Error]:: Get Get  Sensor Group Detail ", err);
-                    }
-                });
+                }
+                else {
+                    console.log("[Error]:: Get Get  Sensor Group Detail ", err);
+                }
+            });
         }
         function sendFilter() {
-           
+
             var object_by_id = $filter('filter')($scope.capabilityList, { Name: 'Gateway' })[0];
             var index = $scope.capabilityList.indexOf(object_by_id);
             $scope.capabilityList.splice(index);
@@ -110,10 +116,10 @@ angular.module('assetmonitoringApp')
                 }
             });
 
-           
+
         }
         $scope.getSensorDetail = function () {
-            
+
             if ($scope.sensorSelected) {
                 $scope.loader = "block";
 
@@ -122,18 +128,22 @@ angular.module('assetmonitoringApp')
                         console.log("[Info]:: Get  Sensor Type Detail ", response);
                         $scope.loader = "none";
                         $scope.capabilityList = response.Capabilities;
-                        sendFilter();
+                        //sendFilter();
                         setTimeout(function () {
-                            embedDashboards();
-                            var object_by_id  = $filter('filter')($scope.powerBiURl, { Capability: 'History' })[0];
+                            //embedDashboards();
+                            var object_by_id = $filter('filter')($scope.powerBiURl, { Capability: 'History' })[0];
                             if (object_by_id) {
-                                embedReport(object_by_id.Url + "&$filter=Sensors/Sensor eq '" + $scope.sensorSelected.Name+"'", 'historic-container');
+                                embedReport(object_by_id.Url + "&$filter=Sensors/Sensor eq '" + $scope.sensorSelected.Name + "'", 'historic-container');
                             }
-                            else{
+                            else {
                                 console.log("[Error] :: Please Update Power Bi urls");
                             }
                         }, 1000);
 
+                        setTimeout(function () {
+                            socketSub();
+                            createChartObject();
+                        }, 1000);
                     }
                     else {
                         console.log("[Error]:: GetGet  Sensor Type Detail ", err);
@@ -141,7 +151,7 @@ angular.module('assetmonitoringApp')
                 });
             }
         }
-        
+
         function embedDashboards() {
             for (var i = 0; i < $scope.capabilityList.length; i++) {
                 var object_by_id = $filter('filter')($scope.powerBiURl, { Capability: $scope.capabilityList[i].Name })[0];
@@ -151,9 +161,9 @@ angular.module('assetmonitoringApp')
                 else {
                     console.log("[Error] :: Please Update Power Bi urls for " + $scope.capabilityList[i].Name);
                 }
-                }
+            }
         }
-        
+
         function embedDashboard(embedUrl, containerId) {
             // Read embed application token from textbox
             var txtAccessToken = Token.data.accesstoken;
@@ -168,7 +178,7 @@ angular.module('assetmonitoringApp')
                 type: 'dashboard',
                 accessToken: txtAccessToken,
                 embedUrl: embedUrl
-                
+
             };
             // Get a reference to the embedded dashboard HTML element
             // Grab the reference to the div HTML element that will host the dashboard.
@@ -219,8 +229,232 @@ angular.module('assetmonitoringApp')
             iframe = document.getElementById(iframeId);
             iframe.contentWindow.postMessage(message, "*");;
         }
-       
+
         $scope.toggleHistory = function () {
             $scope.historic ? $scope.historic = false : $scope.historic = true;
         }
+        var socket = io('https://assetnodeserver20170727030834.azurewebsites.net/');
+        //var socket = io('http://localhost:1337');
+        $scope.oldTopic = "";
+        function socketSub() {
+            console.log("groupSelected", $scope.groupSelected);
+            console.log("$scope.sensorSelected", $scope.sensorSelected);
+            socket.removeListener($scope.oldTopic);
+            $scope.oldTopic = 'topic/' + $scope.groupSelected + '/' + $scope.sensorSelected.SensorKey;
+            console.log("$scope.oldTopic", $scope.oldTopic);
+            socket.on($scope.oldTopic, function (obj) {
+                console.log("obj", obj);
+
+                try {
+                    var obj = JSON.parse(obj);
+                    var object_by_id = $filter('filter')($scope.capabilityList, { Id: obj.CapabilityId })[0];
+                   
+                    if (object_by_id.Name == 'Accelerometer' || object_by_id.Name == 'Gyroscope' || object_by_id.Name == 'Magnetometer') {
+                        console.log("object_by_id.Name", object_by_id.Name);
+                        console.log("XYZ obj", obj);
+                        $scope.chartXYZdata[obj.CapabilityId].x.push(obj.x);
+                        $scope.chartXYZdata[obj.CapabilityId].y.push(obj.y);
+                        $scope.chartXYZdata[obj.CapabilityId].z.push(obj.z);
+                        $scope.capibilityXYZValue[obj.CapabilityId] = {
+                            'x': '',
+                            'y': '',
+                            'z':''
+                        }
+                        $scope.capibilityXYZValue[obj.CapabilityId].x = obj.x.toFixed(2);
+                        $scope.capibilityXYZValue[obj.CapabilityId].y = obj.y.toFixed(2);
+                        $scope.capibilityXYZValue[obj.CapabilityId].z = obj.z.toFixed(2);
+                        $scope.$apply();
+                        $scope.timeData[obj.CapabilityId].push(new Date(obj.Timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+                        const maxLen = 50;
+                        var len = $scope.chartXYZdata[obj.CapabilityId].x.length;
+                        if (len > maxLen) {
+                            $scope.timeData[obj.CapabilityId].shift();
+                            $scope.chartXYZdata[obj.CapabilityId].x.shift();
+                            $scope.chartXYZdata[obj.CapabilityId].y.shift();
+                            $scope.chartXYZdata[obj.CapabilityId].z.shift();
+                        }
+                        $scope.chartObj[obj.CapabilityId].update();
+                    }
+                    else {
+                        //console.log(obj[object_by_id.Name]);
+                        $scope.chartdata[obj.CapabilityId].push(obj[object_by_id.Name]);
+                        $scope.capibilityValue[obj.CapabilityId] = obj[object_by_id.Name].toFixed(2);;
+                        $scope.$apply();
+                        $scope.timeData[obj.CapabilityId].push(new Date(obj.Timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, '') );
+                        const maxLen = 50;
+                        var len = $scope.chartdata[obj.CapabilityId].length;
+                        if (len > maxLen) {
+                            $scope.timeData[obj.CapabilityId].shift();
+                            $scope.chartdata[obj.CapabilityId].shift();
+                        }
+                        $scope.chartObj[obj.CapabilityId].update();
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+
+            });
+        }
+
+
+        $scope.timeData = {};
+
+
+
+        function createChartObject() {
+            //Get the context of the canvas element we want to select
+           // console.log("$scope.capabilityList", $scope.capabilityList);
+            for (var i = 0; i < $scope.capabilityList.length; i++) {
+                if ($scope.capabilityList[i].Name != 'Accelerometer' && $scope.capabilityList[i].Name != 'Gyroscope' && $scope.capabilityList[i].Name != 'Magnetometer') {
+                    $scope.chartdata[$scope.capabilityList[i].Id] = [];
+                    $scope.timeData[$scope.capabilityList[i].Id] = [];
+                    var data = {
+                        labels: $scope.timeData[$scope.capabilityList[i].Id],
+                        datasets: [
+                            {
+                                fill: false,
+                                label: $scope.capabilityList[i].Name,
+                                yAxisID: $scope.capabilityList[i].Name,
+                                borderColor: "#01b8aa",
+                                pointBoarderColor: "#01b8aa",
+                                backgroundColor: "#01b8aa",
+                                pointHoverBackgroundColor: "#01b8aa",
+                                pointHoverBorderColor: "#01b8aa",
+                                data: $scope.chartdata[$scope.capabilityList[i].Id]
+                            }
+                        ]
+                    }
+
+                    var ruleObj = $filter('filter')($scope.ruleList, { CapabilityFilterId: $scope.capabilityList[i].Filters[0].Id })[0];
+                    
+                    if (ruleObj) {
+                        console.log("ruleobj", ruleObj.MaxThreshold);
+                        var obj = {
+                            data: Array.apply(null, new Array(50)).map(Number.prototype.valueOf, parseInt(ruleObj.MaxThreshold)),// ruleObj.MaxThreshold),
+                            fill: false,
+                            label: 'Rule',
+                            radius: 0,
+                            borderColor: "rgba(255, 0, 0, 1)",
+                            backgroundColor: "rgba(255, 0, 0, 1)"
+                        };
+                        data.datasets.push(obj);
+                    }
+
+                    var basicOption = {
+                        title: {
+                            display: true,
+                            //text: $scope.capabilityList[i].Name,
+                            fontSize: 20
+                        },
+                        scales: {
+                            yAxes: []
+                        }
+                    }
+                    var ctx = document.getElementById($scope.capabilityList[i].Name + "-Chart").getContext("2d");
+                    var optionsNoAnimation = { animation: true }
+                    var obj = {
+                        id: $scope.capabilityList[i].Name,
+                        type: 'linear',
+                        scaleLabel: {
+                            labelString: $scope.capabilityList[i].Name,
+                            display: true
+                        },
+                        position: 'left',
+                    };
+
+                    basicOption.scales.yAxes.push(obj);
+                    $scope.chartObj[$scope.capabilityList[i].Id] = new Chart(ctx, {
+                        type: 'line',
+                        data: data,
+                        options: basicOption
+                    });
+                }
+                else {
+                    $scope.chartXYZdata[$scope.capabilityList[i].Id] = {
+                        x: [],
+                        y: [],
+                        z: []
+                    };
+                    $scope.timeData[$scope.capabilityList[i].Id] = [];
+                    var data = {
+                        labels: $scope.timeData[$scope.capabilityList[i].Id],
+                        datasets: [
+                            {
+                                fill: false,
+                                label: 'x',
+                                yAxisID: 'x',
+                                borderColor: "#01b8aa",
+                                pointBoarderColor: "#01b8aa",
+                                backgroundColor: "#01b8aa",
+                                pointHoverBackgroundColor: "#01b8aa",
+                                pointHoverBorderColor: "#01b8aa",
+                                data: $scope.chartXYZdata[$scope.capabilityList[i].Id].x
+                            },
+                            {
+                                fill: false,
+                                label: 'y',
+                                yAxisID: 'x',
+                                borderColor: "rgba(24, 120, 240, 1)",
+                                pointBoarderColor: "rgba(24, 120, 240, 1)",
+                                backgroundColor: "rgba(24, 120, 240, 1)",
+                                pointHoverBackgroundColor: "rgba(24, 120, 240, 1)",
+                                pointHoverBorderColor: "rgba(24, 120, 240, 1)",
+                                data: $scope.chartXYZdata[$scope.capabilityList[i].Id].y
+                            },
+                            {
+                                fill: false,
+                                label: 'z',
+                                yAxisID: 'x',
+                                borderColor: "rgba(255, 204, 0, 1)",
+                                pointBoarderColor: "rgba(255, 204, 0, 1)",
+                                backgroundColor: "rgba(255, 204, 0, 1)",
+                                pointHoverBackgroundColor: "rgba(255, 204, 0, 1)",
+                                pointHoverBorderColor: "rgba(255, 204, 0, 1)",
+                                data: $scope.chartXYZdata[$scope.capabilityList[i].Id].z
+                            }
+                            //,
+                            //{
+                            //    data: Array.apply(null, new Array(50)).map(Number.prototype.valueOf, 1),
+                            //    fill: false,
+                            //    label: 'Rule',
+                            //    radius: 0,
+                            //    borderColor: "rgba(255, 0, 0, 1)",
+                            //    backgroundColor: "rgba(255, 0, 0, 1)"
+                            //}
+                        ]
+                    }
+                    var basicOption = {
+                        title: {
+                            display: true,
+                            //text: $scope.capabilityList[i].Name,
+                            fontSize: 20
+                        },
+                        scales: {
+                            yAxes: [{
+                                id: 'x',
+                                type: 'linear',
+                                scaleLabel: {
+                                    labelString: 'x',
+                                    display: true
+                                },
+                                position: 'left'
+                            }]
+                        }
+                        
+                    }
+                    var ctx = document.getElementById($scope.capabilityList[i].Name + "-Chart").getContext("2d");
+                    var optionsNoAnimation = { animation: true }
+
+                    $scope.chartObj[$scope.capabilityList[i].Id] = new Chart(ctx, {
+                        type: 'line',
+                        data: data,
+                        options: basicOption
+                    });
+
+                }
+            }
+
+        }
+     
+
     });

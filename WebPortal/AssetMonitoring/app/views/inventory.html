@@ -88,7 +88,9 @@
             </tr>
           </thead>
           
-          <tbody>
+          <tbody id="sensor-datatable-body">
+            <img id="sensor-datatable-loader" src="../../img/Loading.gif" class="datatable-loader" />
+            <label class="data-table-no-data" ng-show="sensor_loading_label">No data available</label>
             <tr ng-repeat="sensor in sensorList">
               <td style="width:15%;">{{sensor.Name}}</td>
               <td style="width:15%;">{{sensor.SensorGroupName}}</td>
@@ -113,7 +115,10 @@
               </tr>
             </thead>
             
-            <tbody>
+            <tbody id="gateway-datatable-body">
+                
+                <img id="gateway-datatable-loader" src="../../img/Loading.gif" class="datatable-loader" />
+                <label class="data-table-no-data" ng-show="gateway_loading_label">No data available</label>
               <tr ng-repeat="gateway in gatewayList">
                 <td style="width:15%;">{{gateway.Name}}</td>
                 <td style="width:15%;">{{gateway.GatewayKey}}</td>
@@ -138,7 +143,9 @@
               </tr>
             </thead>
 
-            <tbody>
+            <tbody id="group-datatable-body">
+              <img id="group-datatable-loader" src="../../img/Loading.gif" class="datatable-loader" />
+              <label class="data-table-no-data" ng-show="group_loading_label">No data available</label>
               <tr ng-repeat="group in groupList">
                 <td style="width:15%;">{{group.Name}}</td>
                 <!--<td><a ng-click="addSensorToGroupPopUp(group)" title="Add Sensor"><i class="fa fa-plus"></i></a></td>

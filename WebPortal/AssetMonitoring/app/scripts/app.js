@@ -20,7 +20,9 @@ angular
       'ui.bootstrap',
       'datatables',
       'ngMap',
-      'Alertify'
+      'Alertify',
+      'ngDragDrop'
+
   ])
     .config(function ($stateProvider, $routeProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/');
@@ -88,7 +90,7 @@ angular
 
     
     })
-    .run(function ($http, $rootScope, config, $location, Token, $interval, Alertify) {
+    .run(function ($http, $rootScope, config, $location, Token, $interval, Alertify, DTDefaultOptions) {
         $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/PowerBIService.asmx/updateConfig', null).then(function (data) {
             $http.get('config.json')
                 .then(function (data, status, headers) {
@@ -114,7 +116,7 @@ angular
             }, 2400000);
 
         }   
-       
+        DTDefaultOptions.setLoadingTemplate('<img src="img/loading.gif">');
 
         
         //var data = {
