@@ -21,7 +21,7 @@ angular.module('assetmonitoringApp')
                 this.signInPolicyName = data.signInPolicyName;
                 this.signInSignUpPolicyName = data.signInSignUpPolicyName;
                 this.editProfilePolicyName = data.editProfilePolicyName;
-                this.redirect_uri = data.redirect_uri;
+                this.nodeserver = data.nodeserver;
 
                 localStorage.setItem("restServer", this.restServer);
                 localStorage.setItem("restServerAnalytics", this.restServerAnalytics);
@@ -31,7 +31,7 @@ angular.module('assetmonitoringApp')
                 localStorage.setItem("signInSignUpPolicyName", this.signInSignUpPolicyName);
                 localStorage.setItem("editProfilePolicyName", this.editProfilePolicyName);
                 localStorage.setItem("redirect_uri", this.redirect_uri);
-
+                localStorage.setItem("nodeserver", this.nodeserver);
                 $timeout(function () {
                     $rootScope.$broadcast('config-loaded');
                 }, 1000);

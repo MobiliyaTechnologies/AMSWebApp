@@ -321,40 +321,54 @@ input[type='radio'] {
   }
 
 .background-img {
-  background-size: 120px;
-  background-repeat: no-repeat;
-  background-position: right;
-  background-position-x: 130%;
-  background-position-y: 160%;
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-position-x: 100%;
+    background-position-y: 100%;
+    background-color: rgba(255, 255, 255, 1);
+}
+#AmbientTemperature {
+    background-image: url(/img/AmbientTemperature.png);
 }
 
-#Temperature {
-  background-image: url(/img/Temperature.svg);
+#ObjectTemperature {
+    background-image: url(/img/ObjectTemperature.png);
 }
 
 #Humidity {
-  background-image: url(/img/Humidity.svg);
+  background-image: url(/img/Humidity.png);
 }
 
-#Pressure {
-  background-image: url(/img/Pressure.svg);
+#BarometricPressure {
+    background-image: url(/img/BarometricPressure.png);
 }
-
 #Accelerometer {
-  background-image: url(/img/Accelerometer.svg);
+  background-image: url(/img/Accelerometer.png);
 }
-
-#Gyrometer {
-  background-image: url(/img/Gyroscope.svg);
-}
-
 #Magnetometer {
-  background-image: url(/img/Magnetometer.svg);
+    background-image: url(/img/Magnetometer.png);
+}
+#Gyroscope {
+    background-image: url(/img/Gyroscope.png);
 }
 
-#Luminescence {
-  background-image: url(/img/Luxometer.svg);
+#Luxometer {
+    background-image: url(/img/Luxometer.png);
 }
+#UVIndex {
+    background-image: url(/img/UVIndex.png);
+}
+#NoiseLevel {
+    background-image: url(/img/NoiseLevel.png);
+}
+#Gateway {
+    background-image: url(/img/Gateway.png);
+}
+#GatewayRange {
+    background-image: url(/img/GatewayRange.png);
+}
+
 /*-------------------------------------*/
 
 .ui-slider-vertical .ui-slider-range {

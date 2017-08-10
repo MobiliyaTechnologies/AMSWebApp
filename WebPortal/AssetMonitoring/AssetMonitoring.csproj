@@ -143,6 +143,7 @@
     <Content Include="app\styles\login.css" />
     <Content Include="app\styles\main.css" />
     <Content Include="app\styles\notification.css" />
+    <Content Include="app\styles\proxima.css" />
     <Content Include="app\styles\rules.css" />
     <Content Include="app\views\about.html" />
     <Content Include="app\views\addRule.html" />
@@ -235,12 +236,13 @@
     <Content Include="dist\js\pages\dashboard2.js" />
     <Content Include="firebase-messaging-sw.js" />
     <Content Include="img\404.svg" />
-    <Content Include="img\Accelerometer.svg" />
     <Content Include="img\Add.svg" />
     <Content Include="img\Alerts.svg" />
     <Content Include="img\Assets.svg" />
     <Content Include="img\avatar04.png" />
     <Content Include="img\Back.svg" />
+    <Content Include="img\Accelerometer.png" />
+    <Content Include="img\BarometricPressure.png" />
     <Content Include="img\bg-footer.svg" />
     <Content Include="img\BG-Image.jpg" />
     <Content Include="img\Configuration.svg" />
@@ -250,10 +252,13 @@
     <Content Include="img\Departure.svg" />
     <Content Include="img\dsh_logo.png" />
     <Content Include="img\ExpandAccordion.svg" />
+    <Content Include="img\flip.svg" />
+    <Content Include="img\Gateway.png" />
     <Content Include="img\Gateway.svg" />
     <Content Include="img\Greater_than.svg" />
-    <Content Include="img\Gyroscope.svg" />
-    <Content Include="img\Humidity.svg" />
+    <Content Include="img\Gyroscope.png" />
+    <Content Include="img\history.png" />
+    <Content Include="img\Humidity.png" />
     <Content Include="img\Inventory.svg" />
     <Content Include="img\layout.jpg" />
     <Content Include="img\Lesser_than.svg" />
@@ -262,10 +267,11 @@
     <Content Include="img\Logo.png" />
     <Content Include="img\Logo_New.png" />
     <Content Include="img\Logo_New_SignIn.png" />
-    <Content Include="img\Luxometer.svg" />
-    <Content Include="img\Magnetometer.svg" />
+    <Content Include="img\Luxometer.png" />
+    <Content Include="img\Magnetometer.png" />
     <Content Include="img\MapView.svg" />
-    <Content Include="img\Pressure.svg" />
+    <Content Include="img\NoiseLevel.png" />
+    <Content Include="img\GatewayRange.png" />
     <Content Include="img\Reports.svg" />
     <Content Include="img\Rules.svg" />
     <Content Include="img\Search.svg" />
@@ -273,7 +279,9 @@
     <Content Include="img\Settings.svg" />
     <Content Include="img\Shipment.svg" />
     <Content Include="img\Successful.svg" />
-    <Content Include="img\Temperature.svg" />
+    <Content Include="img\ObjectTemperature.png" />
+    <Content Include="img\AmbientTemperature.png" />
+    <Content Include="img\UVIndex.png" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

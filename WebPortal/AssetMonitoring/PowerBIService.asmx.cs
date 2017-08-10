@@ -181,6 +181,7 @@ namespace AssetMonitoring
             configs.Add("tenantName", System.Configuration.ConfigurationManager.AppSettings["tenantName"]);
             configs.Add("signInPolicyName", System.Configuration.ConfigurationManager.AppSettings["signInPolicyName"]);
             configs.Add("redirect_uri", System.Configuration.ConfigurationManager.AppSettings["redirect_uri"]);
+            configs.Add("nodeserver", System.Configuration.ConfigurationManager.AppSettings["nodeserver"]);
             return configs;
         }
         

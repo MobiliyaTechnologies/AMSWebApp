@@ -33,7 +33,7 @@ angular.module('assetmonitoringApp')
                                 'AssetId': $scope.assetObj[i].AssetId,
                                 'AssetBarcode': $scope.assetObj[i].AssetBarcode,
                                 'GroupName': $scope.assetObj[i].GroupName,
-                           //     'SensorKey': $scope.assetObj[i].SensorKeys[j],
+                                'SensorKey': $scope.assetObj[i].SensorKeys,
                                 'selected':false
                             }
                            $scope.assetList.push(obj);

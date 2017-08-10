@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('reportCtrl', function ($scope, Restservice, Token, $filter, $http) {
+    .controller('reportCtrl', function ($scope, Restservice, Token, $filter, $http, config ) {
         $scope.historic = false;
         $scope.loader = "none";
         $scope.sensorGroupList = [{ 'Name': 'Loading Group' }];
@@ -233,7 +233,7 @@ angular.module('assetmonitoringApp')
         $scope.toggleHistory = function () {
             $scope.historic ? $scope.historic = false : $scope.historic = true;
         }
-        var socket = io('https://assetnodeserver20170727030834.azurewebsites.net/');
+        var socket = io(config.nodeserver);
         //var socket = io('http://localhost:1337');
         $scope.oldTopic = "";
         function socketSub() {
@@ -277,6 +277,7 @@ angular.module('assetmonitoringApp')
                     }
                     else {
                         //console.log(obj[object_by_id.Name]);
+                        if ($scope.chartdata[obj.CapabilityId]){
                         $scope.chartdata[obj.CapabilityId].push(obj[object_by_id.Name]);
                         $scope.capibilityValue[obj.CapabilityId] = obj[object_by_id.Name].toFixed(2);;
                         $scope.$apply();
@@ -288,6 +289,7 @@ angular.module('assetmonitoringApp')
                             $scope.chartdata[obj.CapabilityId].shift();
                         }
                         $scope.chartObj[obj.CapabilityId].update();
+                        }
                     }
                 } catch (err) {
                     console.error(err);
@@ -315,11 +317,11 @@ angular.module('assetmonitoringApp')
                                 fill: false,
                                 label: $scope.capabilityList[i].Name,
                                 yAxisID: $scope.capabilityList[i].Name,
-                                borderColor: "#01b8aa",
-                                pointBoarderColor: "#01b8aa",
-                                backgroundColor: "#01b8aa",
-                                pointHoverBackgroundColor: "#01b8aa",
-                                pointHoverBorderColor: "#01b8aa",
+                                borderColor: "rgba(118, 215, 240, 1)",
+                                pointBoarderColor: "rgba(118, 215, 240, 1)",
+                                backgroundColor: "rgba(118, 215, 240, 1)",
+                                pointHoverBackgroundColor: "rgba(118, 215, 240, 1)",
+                                pointHoverBorderColor: "rgba(118, 215, 240, 1)",
                                 data: $scope.chartdata[$scope.capabilityList[i].Id]
                             }
                         ]
@@ -455,6 +457,9 @@ angular.module('assetmonitoringApp')
             }
 
         }
-     
+        $scope.$on('$destroy', function (event) {
+            socket.disconnect();
+
+        });
 
     });
