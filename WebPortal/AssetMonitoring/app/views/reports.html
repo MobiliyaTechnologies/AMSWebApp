@@ -1,5 +1,5 @@
-﻿<section class="content-header" style="margin-top: 1%;"> </section>
-<section class="content" style=" padding: 0px 4% !important; !important">
+﻿<section class="content-header" style="margin-top: 1%;"></section>
+<section class="content" style=" padding: 0px 4% !important">
     <!-- Small boxes (Stat box) -->
 
     <div class="row">
@@ -9,15 +9,16 @@
         </div>
     </div>
         <br>
-        <div class="col-lg-12" id="grouplist" style=" padding: 0px 1% !important; !important;text-align: center;border-bottom:1px solid #DFDFDF;display: table;">
+        <div class="col-lg-12" id="grouplist" style=" padding: 0px 1% !important; !important;text-align: center;display: table;">
             <div>
                 <div style=" float: left;font-size: 18px;display:table-cell;margin-top:5px;">Select Group &nbsp; </div>
-                <select class="form-control" id="shipment" name="shipment" style="float: left;display:table-cell;width: 126px; height: 41px;margin-bottom:10px;margin-right:20px;" ng-model="groupSelected" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList" ng-change="groupChange()">Loading Groups</select>
+                <select class="form-control" id="shipment" name="shipment"  ng-model="groupSelected" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList" ng-change="groupChange()">Loading Groups</select>
                 <div style="float: left;font-size: 18px;display:table-cell;margin-right:20px;margin-top:5px;">Select Sensor  &nbsp;</div>
-                <select ng-disabled="loadingsensor" class="form-control" id="shipment" name="shipment" style="float: left;display:table-cell;width: 126px; height: 41px;margin-bottom:10px;" ng-model="sensorSelected" ng-options="sensor as sensor.Name for sensor in sensorList" ng-change="sensorChange()"></select>
-                <button type="button" class="btn btn-box-tool" style="float:right;font-size:20px;" ng-click="toggleHistory()">
-                    <i class="fa fa-h-square"></i>
-                </button>
+                <select ng-disabled="loadingsensor" class="form-control" id="shipment" name="shipment"  ng-model="sensorSelected" ng-options="sensor as sensor.Name for sensor in sensorList" ng-change="sensorChange()"></select>
+                <div class="history-icon">
+                    <img src="../../img/history.png" style="margin-top:3px;" ng-click="toggleHistory()">
+                </div>
+                    
             </div>
             <br>
         </div>

@@ -57,6 +57,7 @@ angular.module('assetmonitoringApp')
                     for (var i = 0; i < response.CapabilityNames.length; i++) {
                         $("#" + response.CapabilityNames[i]).removeClass("disabledbutton");
                     }
+                    $("#GatewayRange").removeClass("disabledbutton");
                 }
                 else {
                     console.log("[Error]:: Get Group Capability  response ", err);
@@ -125,6 +126,9 @@ angular.module('assetmonitoringApp')
             recursiveCreateRule(0, 0);
 
         }
+        $scope.selected = {
+            'range': ''
+        }
         function recursiveCreateRule(i, j) {
 
             if ($scope.capabilityList && i < $scope.capabilityList.length) {
@@ -188,6 +192,17 @@ angular.module('assetmonitoringApp')
                         console.log(obj);
                         reqobj.push(obj);
                     }
+                    if ($scope.selected.range != '' && $scope.selected.range && $scope.selectedGatewayRange != '' && $scope.selectedGatewayRange) {
+                        console.log("$scope.gatewayrange", $scope.selected.range);
+                        var obj = {
+                            'MinThreshold': $scope.selectedGatewayRange,
+                            'MaxThreshold': $scope.selected.range,
+                            'Operator': '',
+                            'CapabilityFilterId': $scope.capabilityList[i].Filters[j+1].Id
+                        }
+                        console.log(obj);
+                        reqobj.push(obj);
+                    }
                     recursiveCreateRule(i + 1, 0);
                     
                 }
@@ -222,9 +237,11 @@ angular.module('assetmonitoringApp')
                 Alertify.error("Please Create Rule");
             }
         }
-        $scope.gatewayChange = function (selectedGatewayRule) {
-            
+        $scope.gatewayChange = function (selectedGatewayRule) {            
             $scope.selectedGatewayRule = selectedGatewayRule;
-            console.log($scope.selectedGatewayRule );
+        }
+
+        $scope.gatewayRangeChange = function (selectedGatewayRange) {
+            $scope.selectedGatewayRange = selectedGatewayRange;
         }
     });
