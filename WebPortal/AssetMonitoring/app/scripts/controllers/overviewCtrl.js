@@ -255,11 +255,16 @@ angular.module('assetmonitoringApp')
                         console.error(err);
                     }
                 }
-                else if (obj.SensorRuleId != undefined) {
+                else if (obj.sensorruleid != undefined) {
                     console.log("IOT HUB Rule Break Data ::", obj);
-                    if (document.getElementById(obj.AssetBarcode + "-Asset")) {
-                        document.getElementById(obj.AssetBarcode + "-Asset").style.backgroundColor = 'red';
-                        Alertify.error('Rule Broke');
+                    if (document.getElementById(obj.assetbarcode + "-Asset")) {
+                        if (document.getElementById(obj.assetbarcode + "-Asset").style.backgroundColor == 'red') {
+
+                        }
+                        else {
+                            document.getElementById(obj.assetbarcode + "-Asset").style.backgroundColor = 'red';
+                            Alertify.error('Rule Broke');
+                        }
                     }
                 }
                 else{
