@@ -22,6 +22,7 @@ angular.module('assetmonitoringApp')
                 this.signInSignUpPolicyName = data.signInSignUpPolicyName;
                 this.editProfilePolicyName = data.editProfilePolicyName;
                 this.nodeserver = data.nodeserver;
+                this.redirect_uri = data.redirect_uri;
 
                 localStorage.setItem("restServer", this.restServer);
                 localStorage.setItem("restServerAnalytics", this.restServerAnalytics);

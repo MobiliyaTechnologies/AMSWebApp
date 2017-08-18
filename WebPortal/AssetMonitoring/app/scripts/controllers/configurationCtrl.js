@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state, Token, $location, Restservice, $filter) {
+    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state, Token, $location, Restservice, $filter, $rootScope) {
         $scope.powerbiUrls = {
             'data': []
         }
@@ -32,6 +32,7 @@ angular.module('assetmonitoringApp')
             var authResponse = hello('adB2CSignIn').getAuthResponse();
 
             $scope.application.logo = document.getElementById('application_logo').files[0];
+            $rootScope.$broadcast('logoUploaded', $scope.application.logo);
             if (authResponse != null && $scope.application.logo) {
 
                 $http({

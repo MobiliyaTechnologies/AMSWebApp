@@ -600,6 +600,7 @@ svg path {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+
 }
 
     .sidenav a {
@@ -617,10 +618,12 @@ svg path {
 
 .sidenav .closebtn {
     position: absolute;
-    top: 0;
+    top: 30px;
     right: 25px;
-    font-size: 36px;
+    font-size: 30px;
     margin-left: 50px;
+    color: white;
+}
 }
 #main {
     transition: margin-right .5s;
@@ -682,5 +685,7 @@ padding:0px;
     width: 32px;
     cursor:pointer;
 }
-
+.dataTable td {
+    word-wrap:break-word;
+}
 
