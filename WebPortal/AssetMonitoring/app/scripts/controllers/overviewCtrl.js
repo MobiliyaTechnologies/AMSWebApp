@@ -226,11 +226,13 @@ angular.module('assetmonitoringApp')
                         console.log("IOT HUB RSSI Data ::", obj);
                         var circle;
                         var dataObj;
+                        var state;
                         var asset = document.getElementById(obj.AssetBarcode + "-Asset");
                         if (asset) {
-                            dataObj=asset.attributes.data.value;
+                            dataObj = asset.attributes.data.value;
+                            state = document.getElementById(obj.AssetBarcode + "-Asset").style.backgroundColor;
                             document.getElementById(obj.AssetBarcode + "-Asset").remove();
-                        }
+                        
                         if (obj.RSSI > -33) {
 
                             console.log("CLOSE");
@@ -247,19 +249,25 @@ angular.module('assetmonitoringApp')
 
                         }
                         if (circle) {
-                            var innerDiv = $compile('<div id="' + obj.AssetBarcode + '-Asset" data=\'' + dataObj + '\' class="asset-circle" ng-click="assetClick($event)"></div>')($scope);
+                            var innerDiv = $compile('<div id="' + obj.AssetBarcode + '-Asset" data=\'' + dataObj + '\' class="asset-circle" ng-click="assetClick($event)" style="background-color:' + state+'"></div>')($scope);
                             angular.element(circle).append(innerDiv);
+                        }
                         }
 
                     } catch (err) {
                         console.error(err);
                     }
                 }
-                else if (obj.SensorRuleId != undefined) {
+                else if (obj.sensorruleid != undefined) {
                     console.log("IOT HUB Rule Break Data ::", obj);
-                    if (document.getElementById(obj.AssetBarcode + "-Asset")) {
-                        document.getElementById(obj.AssetBarcode + "-Asset").style.backgroundColor = 'red';
-                        Alertify.error('Rule Broke');
+                    if (document.getElementById(obj.assetbarcode + "-Asset")) {
+                        if (document.getElementById(obj.assetbarcode + "-Asset").style.backgroundColor == 'red') {
+
+                        }
+                        else {
+                            document.getElementById(obj.assetbarcode + "-Asset").style.backgroundColor = 'red';
+                            Alertify.error('Rule Broke');
+                        }
                     }
                 }
                 else{

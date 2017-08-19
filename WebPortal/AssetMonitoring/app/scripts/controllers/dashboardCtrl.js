@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('dashboardCtrl', function ($scope, $state, $location, aadService, Restservice ) {
+    .controller('dashboardCtrl', function ($scope, $state, $location, aadService, Restservice, $rootScope ) {
         $scope.changeState = function (state) {
             $state.go(state);
         }
@@ -42,4 +42,12 @@ angular.module('assetmonitoringApp')
             });
         }
         $scope.getUser();
+        $scope.$on('logoUploaded', function (evt, message) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                console.log("e", e);
+                $('#logourl').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(message);
+        })
     });

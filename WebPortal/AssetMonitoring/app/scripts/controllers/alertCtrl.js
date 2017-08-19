@@ -12,28 +12,61 @@ angular.module('assetmonitoringApp')
         $scope.alerts_loading_label = false;
         var myEl = angular.element(document.querySelector('#alerts-datatable-loader'));
         myEl.css('display', 'block');
-        Restservice.get('api/Alert', function (err, response) {
-            if (!err) {
-                console.log("[Info]:: Get Alert list response ", response);
-                $scope.alertList = response;
-                myEl.css('display', 'none');
-                if ($scope.alertList.length == 0) {
-                    $scope.alerts_loading_label = true;
+        $scope.getAlerts = function () {
+            var object = {
+                "GroupId": $scope.groupSelected.GroupId,
+                "AssetBarcode": $scope.assetSelected,
+                "RuleId": $scope.capabilitySelected
+            }
+            Restservice.post('api/PaginateAlert',object, function (err, response) {
+                if (!err) {
+                    console.log("[Info]:: Get Alert list response ", response);
+                    $scope.alertList = response.data.Result;
+                    myEl.css('display', 'none');
+                    if ($scope.alertList.length == 0) {
+                        $scope.alerts_loading_label = true;
+                    }
                 }
+                else {
+                    console.log("[Error]:: Get Alert list response ", err);
+                }
+            });
+        }
+        //Restservice.get('api/Alert', function (err, response) {
+        //    if (!err) {
+        //        console.log("[Info]:: Get Alert list response ", response);
+        //        $scope.alertList = response;
+        //        myEl.css('display', 'none');
+        //        if ($scope.alertList.length == 0) {
+        //            $scope.alerts_loading_label = true;
+        //        }
+        //    }
+        //    else {
+        //        console.log("[Error]:: Get Alert list response ", err);
+        //    }
+        //});
+        $scope.groupSelected = '';
+        Restservice.get('api/GroupAlertFilter', function (err, response) {
+            if (!err) {
+                console.log("[Info]:: Get GroupAlertFilter ", response);
+                $scope.groupList = response;
+                $scope.groupSelected = $scope.groupList[0];
+                $scope.assetList = $scope.groupSelected.AssetBarcodes;
+                $scope.capabilitiesList = $scope.groupSelected.GroupRules;
+                $scope.getAlerts();
             }
             else {
-                console.log("[Error]:: Get Alert list response ", err);
+                console.log("[Error]:: Get GroupAlertFilter", err);
             }
         });
-       
 
         //$scope.dtColumns = [
-        //    //here We will add .withOption('name','column_name') for send column name to the server 
+        //    here We will add .withOption('name','column_name') for send column name to the server 
         //    DTColumnBuilder.newColumn("Capability", "Capability").withOption('name', 'Capability'),
-        //    //DTColumnBuilder.newColumn("CompanyName", "Company Name").withOption('name', 'CompanyName'),
-        //    //DTColumnBuilder.newColumn("ContactName", "Contact Name").withOption('name', 'ContactName'),
-        //    //DTColumnBuilder.newColumn("Phone", "Phone").withOption('name', 'Phone'),
-        //    //DTColumnBuilder.newColumn("City", "City").withOption('name', 'City')
+        //    DTColumnBuilder.newColumn("CompanyName", "Company Name").withOption('name', 'CompanyName'),
+        //    DTColumnBuilder.newColumn("ContactName", "Contact Name").withOption('name', 'ContactName'),
+        //    DTColumnBuilder.newColumn("Phone", "Phone").withOption('name', 'Phone'),
+        //    DTColumnBuilder.newColumn("City", "City").withOption('name', 'City')
         //]
         //var authResponse = hello('adB2CSignIn').getAuthResponse();
         //$scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -44,7 +77,8 @@ angular.module('assetmonitoringApp')
         //        "Content-Type": "application/json",
         //        "Authorization": authResponse.token_type + ' ' + authResponse.access_token,
         //        "Access-Control-Allow-Origin": "*"
-        //    }
+        //    },
+        //    data: {"GroupId":''}
         //})
         //    .withOption('processing', true) //for show progress bar
         //    .withOption('serverSide', true) // for server side processing
@@ -52,4 +86,12 @@ angular.module('assetmonitoringApp')
         //    .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
         //    .withDisplayLength(1) // Page size
         //    .withOption('aaSorting', [0, 'asc']) // for default sorting column // here 0 means first column
+
+
+        $scope.groupChangeEvent = function () {
+            //console.log($scope.groupSelected);
+            $scope.assetList = $scope.groupSelected.AssetBarcodes;
+            $scope.capabilitiesList = $scope.groupSelected.GroupRules;
+
+        }
     });

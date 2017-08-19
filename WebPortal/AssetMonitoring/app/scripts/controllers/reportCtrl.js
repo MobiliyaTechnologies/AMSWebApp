@@ -334,7 +334,17 @@ angular.module('assetmonitoringApp')
                         var obj = {
                             data: Array.apply(null, new Array(50)).map(Number.prototype.valueOf, parseInt(ruleObj.MaxThreshold)),// ruleObj.MaxThreshold),
                             fill: false,
-                            label: 'Rule',
+                            label: 'Max Rule',
+                            radius: 0,
+                            borderColor: "rgba(255, 0, 0, 1)",
+                            backgroundColor: "rgba(255, 0, 0, 1)"
+                        };
+                        data.datasets.push(obj);
+
+                        var obj = {
+                            data: Array.apply(null, new Array(50)).map(Number.prototype.valueOf, parseInt(ruleObj.MinThreshold)),// ruleObj.MaxThreshold),
+                            fill: false,
+                            label: 'Min Rule',
                             radius: 0,
                             borderColor: "rgba(255, 0, 0, 1)",
                             backgroundColor: "rgba(255, 0, 0, 1)"

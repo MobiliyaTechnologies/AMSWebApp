@@ -57,10 +57,12 @@ angular.module('assetmonitoringApp')
                     adB2CSignInSignUp: applicationId,
                     adB2CEditProfile: applicationId
                 }, {
-                        redirect_uri: ' htt/redirect.html',
+                        post_logout_redirect_uri:'http://mobiliya.com',
+                        redirect_uri: '/redirect.html',
                         scope: 'openid ' + applicationId,
                         response_type: 'token id_token'
                     });
+                console.log("Hereeee");
                 this.policyLogout(helloNetwork.adB2CSignIn, config.signInPolicyName);
             },
             policyLogin: function (network, displayType) {

@@ -75,10 +75,10 @@ angular.module('assetmonitoringApp')
                 }
             }).result.then(function (result) {
                 $scope.getAllAssets();
-                Alertify.success('Sensor Added');
+                Alertify.success('Asset Added to Group');
                 }, function () {
                     $scope.getAllAssets();
-                    Alertify.error('Sensor Not Added');
+                    Alertify.error('Asset Not Added to Group');
             });
         }
 
