@@ -217,19 +217,19 @@ angular.module('assetmonitoringApp')
             console.log(reqobj);
             if (reqobj.length > 0) {
                 //$scope.loader = "block";
-                Alertify.log("Rule Creation Started");
+                Alertify.log("Rule creation has started. You will be notified once rule is created.");
                 $state.go('rules');
                 Restservice.post('api/SensorRule/' + $scope.groupSelected, reqobj, function (err, response) {
                     if (!err) {
                         $scope.loader = "none";
                         console.log("[Info] :: Create Rule ", response);
-                        Alertify.success("Rule Created");                        
+                        //Alertify.success("Rule Created");                        
 
                     }
                     else {
                         $scope.loader = "none";
                         console.log("[Error] :: Create Rule  ", err);
-                        Alertify.error("Rule not Created");
+                        Alertify.error("Rule creation fail");
                     }
                 });
             }

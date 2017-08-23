@@ -8,11 +8,12 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('overviewCtrl', function ($scope, Restservice, $compile, Alertify, config) {
+    .controller('overviewCtrl', function ($scope, Restservice, $compile, Alertify, config, $rootScope, $state, $filter) {
         $scope.gatewayCount = 0;
         $scope.getonboardsensorcount = 0;
         $scope.damageassetcount = 0;
         $scope.onlinegatewaycount = 0;
+        $scope.lastSync = '--';
         $scope.getAllGateway = function () {
             Restservice.get('api/Gateway', function (err, response) {
                 if (!err) {
@@ -26,6 +27,11 @@ angular.module('assetmonitoringApp')
             });
         }
         $scope.getAllGateway();
+
+        $scope.changeState = function (state) {
+            $state.go(state);
+
+        }
 
         $scope.getAllAsset = function () {
             Restservice.get('api/Asset', function (err, response) {
@@ -210,11 +216,12 @@ angular.module('assetmonitoringApp')
             }
             socketSub('RSSI');
             socketSub('RuleBreak');
-            
+            socketSub('RuleCreationMessage');
           
         }
         var socket = io(config.nodeserver);
         //var socket = io('http://localhost:1337/');
+        $scope.ruleBreakFlag = false;
         function socketSub(topic) {
           
             socket.on(topic, function (obj) {  
@@ -231,7 +238,7 @@ angular.module('assetmonitoringApp')
                         if (asset) {
                             dataObj = asset.attributes.data.value;
                             state = document.getElementById(obj.AssetBarcode + "-Asset").style.backgroundColor;
-                            document.getElementById(obj.AssetBarcode + "-Asset").remove();
+                           
                         
                         if (obj.RSSI > -33) {
 
@@ -250,7 +257,9 @@ angular.module('assetmonitoringApp')
                         }
                         if (circle) {
                             var innerDiv = $compile('<div id="' + obj.AssetBarcode + '-Asset" data=\'' + dataObj + '\' class="asset-circle" ng-click="assetClick($event)" style="background-color:' + state+'"></div>')($scope);
+                            document.getElementById(obj.AssetBarcode + "-Asset").remove();
                             angular.element(circle).append(innerDiv);
+
                         }
                         }
 
@@ -261,29 +270,55 @@ angular.module('assetmonitoringApp')
                 else if (obj.sensorruleid != undefined) {
                     console.log("IOT HUB Rule Break Data ::", obj);
                     if (document.getElementById(obj.assetbarcode + "-Asset")) {
-                        if (document.getElementById(obj.assetbarcode + "-Asset").style.backgroundColor == 'red') {
+                        $rootScope.$broadcast('newalert', '');
+                        console.log("$scope.ruleBreakFlag", $scope.ruleBreakFlag);
+                        if ($scope.ruleBreakFlag) {
 
                         }
                         else {
                             document.getElementById(obj.assetbarcode + "-Asset").style.backgroundColor = 'red';
-                            Alertify.error('Rule Broke');
+                            //var capabality = ruleMap[obj.sensorruleid] ? ruleMap[obj.sensorruleid] : '';
+                            var Ruleobj = $filter('filter')($scope.ruleList, { Id: obj.sensorruleid })[0];
+                            if (!Ruleobj) {
+                                $scope.getAllRule(function () {
+                                    var Ruleobj = $filter('filter')($scope.ruleList, { Id: obj.sensorruleid })[0];
+                                    Alertify.error(Ruleobj.Capability + ' Rule Trigger for Asset ' + obj.assetbarcode);
+                                });
+                            }
+                            else {
+                                Alertify.error(Ruleobj.Capability + ' Rule Trigger for Asset ' + obj.assetbarcode);
+                            }
+                           
+                            $scope.ruleBreakFlag = true;
+                            setTimeout(function () {
+                                $scope.ruleBreakFlag = false;
+                            },15000);
                         }
                     }
+                }
+                else if (obj.RuleCreationMessage != undefined) {
+                    console.log("IOT HUB Rule Create Data ::", obj);
+                    Alertify.success(obj.RuleCreationMessage);
                 }
                 else{
                     console.log("IOT HUB Asset Data ::", obj);
                     var filterObj = $scope.assetCapabilities.filter(function (element, i) {
                         return element.Id == obj.CapabilityId;
                     })[0];
-                
+                    var d = new Date();
+                    $scope.lastSync = ("0" + d.getDate()).slice(-2) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+                        d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+
                     var index = $scope.assetCapabilities.indexOf(filterObj);
                     if ($scope.assetCapabilities[index].Name == 'Accelerometer' || $scope.assetCapabilities[index].Name == 'Gyroscope' || $scope.assetCapabilities[index].Name == 'Magnetometer') {
-                       $scope.assetCapabilities[index].value = 'X : ' + obj.x.toFixed(2) + ' Y: ' + obj.y.toFixed(2) + ' Z:' + obj.z.toFixed(2);
-    
-                    }
+                        $scope.assetCapabilities[index].value = 'X : ' + obj.x.toFixed(2) + ' Y: ' + obj.y.toFixed(2) + ' Z:' + obj.z.toFixed(2);
+                        
+                    }                   
                     else {
                         $scope.assetCapabilities[index].value = obj[$scope.assetCapabilities[index].Name];
                     }
+                    console.log("$scope.gatewayCapabilityIndex", $scope.gatewayCapabilityIndex);
+                    $scope.assetCapabilities[$scope.gatewayCapabilityIndex].value = obj.Gatewaykey;
                     $scope.$apply();
 
                 }
@@ -295,7 +330,7 @@ angular.module('assetmonitoringApp')
 
         });
 
-
+        
         $scope.assetClick = function (event) {
             var obj = JSON.parse(event.target.attributes.data.value);
             if ($scope.assetTopic) {
@@ -304,7 +339,11 @@ angular.module('assetmonitoringApp')
             $scope.assetCapabilities = obj.SensorCapabilities;
             for (var i = 0; i < $scope.assetCapabilities.length; i++) {
                 $scope.assetCapabilities[i].value = '--';
+                if ($scope.assetCapabilities[i].Name == 'Gateway') {
+                    $scope.gatewayCapabilityIndex = i;
+                }
             }
+            $scope.lastSync = '--';
             $scope.assetTopic = "topic/" + obj.AssetBarcode;
             $scope.selectedAsset = obj.AssetBarcode;
             console.log("Asset Topic ::", $scope.assetTopic);
@@ -321,5 +360,28 @@ angular.module('assetmonitoringApp')
             document.getElementById("mySidenav").style.width = "0";
             document.getElementById("main").style.marginRight = "0";
         }
+
+        var ruleMap = [];
+        $scope.getAllRule = function (callback) {
+            Restservice.get('api/SensorRule', function (err, response) {
+                if (!err) {
+                    console.log("[Info]:: Get Rule list response ", response);
+                    $scope.ruleList = response;
+                    //for (var i = 0; i < $scope.ruleList; i++) {
+                    //    var obj = {
+                    //        'Id': $scope.ruleList[i].Id
+                    //    }
+                    //    ruleMap[$scope.ruleList[i].Id] = $scope.ruleList[i].Capability;
+                    //}
+                  
+                    callback();
+                }
+                else {
+                    console.log("[Error]:: Get Rule list response ", err);
+                }
+            });
+        }
+        $scope.getAllRule(function () {
+        });
 
     });

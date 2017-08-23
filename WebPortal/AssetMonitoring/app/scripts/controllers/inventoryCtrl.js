@@ -226,7 +226,7 @@ angular.module('assetmonitoringApp')
                         }
                         else {
                             console.log("[Error]:: Delete Gateway response ", err);
-                            Alertify.error("Error in deleting sensor");
+                            Alertify.error("Error in deleting gateway");
                         }
                     });
                 },
@@ -290,12 +290,13 @@ angular.module('assetmonitoringApp')
                         if (!err) {
                             $scope.loader = "none";
                             console.log("[Info]:: Delete SensorGroup  response ", response);
-                            Alertify.success("Group deleted successfully");
+                            Alertify.success("Group Deleted successfully");
                             $scope.getAllSensorGroup();
                         }
                         else {
                             console.log("[Error]:: Delete SensorGroup  response ", err);
-                            Alertify.error("Error in deleting Group");
+                            Alertify.error("Error in Deleting Group");
+                            $scope.loader = "none";
                         }
                     });
                 },

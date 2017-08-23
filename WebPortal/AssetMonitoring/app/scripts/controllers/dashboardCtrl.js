@@ -10,7 +10,11 @@
 angular.module('assetmonitoringApp')
     .controller('dashboardCtrl', function ($scope, $state, $location, aadService, Restservice, $rootScope ) {
         $scope.changeState = function (state) {
-            $state.go(state);
+            if (state == 'alerts') {
+                $scope.shownewtilte = false;
+            }
+             $state.go(state);
+            
         }
         $scope.isActive = function(viewLocation) {
             return viewLocation === $location.path();
@@ -49,5 +53,10 @@ angular.module('assetmonitoringApp')
                 $('#logourl').attr('src', e.target.result);
             }
             reader.readAsDataURL(message);
-        })
+        });
+        $scope.shownewtilte = false;
+        $scope.$on('newalert', function (evt, message) {
+            $scope.shownewtilte = true;
+            $scope.$apply();
+        });
     });
