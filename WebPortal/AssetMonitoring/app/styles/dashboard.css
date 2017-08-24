@@ -127,6 +127,15 @@ border-radius: 4px 4px 0 0 ;
     color: rgba(255, 255, 255, 1);
     font-size: 1vw;
 }
+.new-title {
+    font-family: 'Proxima Nova';
+    color: rgba(255, 255, 255, 1);
+    font-size: 1vw;
+    float: right;
+    margin-right: 1vw;
+    color: rgba(243, 117, 88, 1);
+    // border: 1px solid rgba(47, 186, 221, 1);
+}
 
 .sidebar-menu > li {
     font-family: 'Proxima Nova';

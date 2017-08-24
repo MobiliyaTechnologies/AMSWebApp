@@ -93,7 +93,7 @@
               }
               map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-              address = 'Baner Road,Pune,India'
+              address = 'Readmond,US'
               geocoder = new google.maps.Geocoder();
               geocoder.geocode({ 'address': address }, function (results, status) {
                   map.fitBounds(results[0].geometry.viewport);
@@ -296,12 +296,22 @@
     <section class="content-header" style="margin-top: 1%;"></section>
     <div id="mySidenav" class="sidenav">
         <a class="closebtn" ng-click="closeNav()">&times;</a>
+
         <div class="row"  style="margin-top:10px;">
             <div class="col-lg-7">
                 <label class="sidetitle" style="margin-left:10px;">Selected Asset</label>
              </div>
             <div class="col-lg-4">
                 <label class="sidetitle" style="color:#3eb493;margin-top:2px;">{{selectedAsset}}</label>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+            <div class="col-lg-7">
+                <label class="sidetitle" style="margin-left:10px;">Last Sync</label>
+            </div>
+            <div class="col-lg-4">
+                <label class="sidetitle" style="color:#3eb493;margin-top:2px;">{{lastSync}}</label>
             </div>
         </div>
                 <div ng-repeat="capability in assetCapabilities" style="margin-left:10px;font-size:10pt;">
@@ -332,7 +342,7 @@
                             <div class="row">
                                 <div class="col-lg-5 col-xs-5 newboxstyle" style="width: 50%;">
                                     <div class="col-lg-8 col-xs-6" style="height:inherit">
-                                        <div style="display:inline-flex;height:100%;">
+                                        <div style="display:inline-flex;height:100%;" ng-click="changeState('assets')">
                                             <img src="/img/Sensor.svg" class="iconimage" style="height:100%;" />&nbsp;&nbsp;
                                             <div style=" margin-top:  25px;margin-left: 1%;">
                                                 <span class="tiletitle">{{getonboardsensorcount}} </span>
@@ -346,7 +356,7 @@
                                           <div> Damaged</div></div>-->
                                         <div style="display:inline-flex;height:100%;">
                                             &nbsp;&nbsp;
-                                            <div style="margin-top: 22px;margin-left: 1%;">
+                                            <div style="margin-top: 22px;margin-left: 1%;" ng-click="changeState('alerts')">
                                                 <span class="tiletitle">{{damageassetcount}}</span>
                                                 <div class="tilteconteheading" style="cursor:pointer" id="assetliveview">Damaged</div>
                                             </div>
@@ -358,9 +368,9 @@
                                 <div class="col-lg-2 col-xs-2" style="width: 0px;">
                                 </div>
 
-                                <div class="col-lg-5 col-xs-5 newboxstyle" style="width: 47%;">
+                                <div class="col-lg-5 col-xs-5 newboxstyle" style="width: 47%;cursor:pointer;" ng-click="changeState('inventory')">
                                     <div class="col-lg-8 col-xs-6" style="height:inherit">
-                                        <div style="display:inline-flex">
+                                        <div style="display:inline-flex;" >
                                             <img src="/img/Gateway.svg" class="iconimage" />&nbsp;&nbsp;
                                             <div style=" margin-top: 30px;margin-left: 13%;">
                                                 <span class="tiletitle">{{gatewayCount}} </span>
