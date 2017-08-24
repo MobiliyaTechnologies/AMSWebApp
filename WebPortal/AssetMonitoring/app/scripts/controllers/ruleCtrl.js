@@ -48,8 +48,13 @@ angular.module('assetmonitoringApp')
                         }
                         else {
                             console.log("[Error]:: Delete Rule response ", err);
-                            Alertify.error("Error in Deleting Rule");
-                        }
+                            if (err.status == 400) {
+                                Alertify.error(err.data.Message);
+                            }
+                            else {
+                                Alertify.error("Error in Deleting Rule");
+                            }
+                         }
                     });
                 },
                 function onCancel() {
