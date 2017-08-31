@@ -22,6 +22,7 @@ angular.module('assetmonitoringApp')
                 }
                 else {
                     console.log("[Error]:: Get Sensor Group response ", err);
+                   
                 }
             });
         }
@@ -42,7 +43,7 @@ angular.module('assetmonitoringApp')
                     $scope.gatewayCount = $scope.gatewayList.length;
                 }
                 else {
-                    console.log("[Error]:: Get Gateway list response ", err);
+                    console.log("[Error]:: Get Gateway list response ", err);                    
                 }
             });
         }
@@ -56,11 +57,16 @@ angular.module('assetmonitoringApp')
                     console.log("[Info]:: Get Group Capability response ", response);
                     for (var i = 0; i < response.CapabilityNames.length; i++) {
                         $("#" + response.CapabilityNames[i]).removeClass("disabledbutton");
+                        if (response.CapabilityNames[i] == 'Gateway') {
+                            $("#GatewayRange").removeClass("disabledbutton");
+                        }
+
                     }
-                    $("#GatewayRange").removeClass("disabledbutton");
+                   
                 }
                 else {
                     console.log("[Error]:: Get Group Capability  response ", err);
+                    
                 }
             }); 
         }
@@ -72,7 +78,7 @@ angular.module('assetmonitoringApp')
                     setTimeout(function () { $scope.createSlider(); }, 3000);
                 }
                 else {
-                    console.log("[Error]:: Get Capability list response ", err);
+                    console.log("[Error]:: Get Capability list response ", err);                 
                 }
             }); 
         }
@@ -100,29 +106,7 @@ angular.module('assetmonitoringApp')
         }
         var reqobj = [];
         $scope.createRule = function () {
-            //reqobj = [];
-            //for (var i = 0; i < $scope.capabilityList.length; i++) {
-            //    for (var j = 0; j < $scope.capabilityList[i].Filters.length; j++){
-            //        var val = $("#" + $scope.capabilityList[i].Filters[j].Name + "-slider-range").slider("option", "values");
-            //        console.log("$scope.capabilityList[i].Name", $scope.capabilityList[i].Name);
-            //        console.log("val", val);
-            //        if (val[0] != 0 || val[1] != 67) {
-                        
-            //            var obj = {
-            //                'MinThreshold': val[0],
-            //                'MaxThreshold': val[1],
-            //                'Operator': 'range',
-            //                'CapabilityFilterId': $scope.capabilityList[i].Filters[j].Id
-            //            }
-            //            console.log("obj", obj);
-            //            reqobj.push(obj);
-            //        }
-
-            //    }
-                
-            //}
-
-            //createRuleApiCall(reqobj);
+           
             recursiveCreateRule(0, 0);
 
         }
@@ -231,7 +215,7 @@ angular.module('assetmonitoringApp')
                         console.log("[Error] :: Create Rule  ", err);
                         if (err.status == 400) {
                             Alertify.error(err.data.Message);
-                        }
+                        } 
                         else {
                             Alertify.error("Rule creation fail");
                         }

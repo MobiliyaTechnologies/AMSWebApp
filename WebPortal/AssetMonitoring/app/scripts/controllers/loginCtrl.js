@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('loginCtrl', function (aadService,$scope,config,$timeout,$rootScope,$state) {
+    .controller('loginCtrl', function (aadService, $scope, config, $timeout, $rootScope, $state, Restservice, applicationInsightsService) {
 
         var loginDisplayType = {
             PopUp: 'popup',
@@ -38,10 +38,12 @@ angular.module('assetmonitoringApp')
                    
                     aadService.policyLogin(helloNetwork.adB2CSignIn, loginDisplayType.Page);
                 }
-                else if (online(b2cSession) && state == 'intial') {
+                else if (online(b2cSession) && state == 'intial' || state == 'click') {
                     //getUserDetails();
                     //console.log("login");
-                    $state.go('overview');
+                    //$state.go('overview');
+                    $scope.loader = "block";
+                    $scope.getUser();
                 }
             });
         }
@@ -57,7 +59,8 @@ angular.module('assetmonitoringApp')
             $scope.showLogin = true;
             if (config.restServer == "" || config.restServer == undefined) {
                 $scope.showLogin = false;
-                console.log("[Error] :: COnfig not loaded");
+                console.log("[Error] :: Config not loaded");
+                applicationInsightsService.trackException("[Error] :: Config not loaded");
 
             }
             else {
@@ -69,5 +72,19 @@ angular.module('assetmonitoringApp')
                 $scope.showLogin = true;
             }
         });
+        
+        $scope.getUser = function () {
+            Restservice.get('api/User', function (err, response) {
+                if (!err) {
+                    console.log("[Info]:: Get User Details ", response);
+                    $scope.loader = "none";
+                    $state.go('overview');
+                }
+                else {
+                    console.log("[Error]:: Get User Details ", err);
+                }
+            });
+        }
+       
     
   });

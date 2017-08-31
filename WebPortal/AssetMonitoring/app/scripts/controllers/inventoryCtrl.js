@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('inventoryCtrl', function ($modal, $scope, $http, Restservice, Alertify, DTOptionsBuilder ) {
+    .controller('inventoryCtrl', function ($modal, $scope, $http, Restservice, Alertify, DTOptionsBuilder) {
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
@@ -138,7 +138,7 @@ angular.module('assetmonitoringApp')
                         }
                         else {
                             console.log("[Error]:: Delete Sensor response ", err);
-                            Alertify.error("Error in adding sensor");
+                            Alertify.error("Error in deleting sensor");
                         }
                     });
                 },
@@ -484,8 +484,6 @@ angular.module('assetmonitoringApp').controller('GatewayModalCtrl', function ($s
                 }
                 else {
                     console.log("[Error] :: Add Gateway ", err);
-                    
-
                     if (err.data) {
                         Alertify.error(err.data.Message);
                     }
@@ -540,7 +538,6 @@ angular.module('assetmonitoringApp').controller('editGatewayCtrl', function ($sc
 });
 angular.module('assetmonitoringApp').controller('viewGatewayDetailCtrl', function ($scope, DTOptionsBuilder, $modalInstance, $http, $modal, Restservice, gateway, Alertify) {
     $scope.gateway = gateway;
-    console.log("Here");
     console.log("$scope.sensor", $scope.sensor);
 
     $scope.cancel = function () {

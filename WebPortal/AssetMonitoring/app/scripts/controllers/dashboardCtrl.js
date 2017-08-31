@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('dashboardCtrl', function ($scope, $state, $location, aadService, Restservice, $rootScope ) {
+    .controller('dashboardCtrl', function ($scope, $state, $location, aadService, Restservice, $rootScope) {
         $scope.changeState = function (state) {
             if (state == 'alerts') {
                 $scope.shownewtilte = false;

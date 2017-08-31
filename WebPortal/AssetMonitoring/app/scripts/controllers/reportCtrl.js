@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('reportCtrl', function ($scope, Restservice, Token, $filter, $http, config ) {
+    .controller('reportCtrl', function ($scope, Restservice, Token, $filter, $http, config) {
         $scope.historic = false;
         $scope.loader = "none";
         $scope.sensorGroupList = [{ 'Name': 'Loading Group' }];
@@ -20,24 +20,6 @@ angular.module('assetmonitoringApp')
         $scope.chartObj = {};
         $scope.capibilityValue = {};
         $scope.capibilityXYZValue = {};
-        /*
-        $scope.powerBiURl = [{ 'Capability': 'Temperature', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=ff107836-abac-470e-b55c-405319da2dc1' },
-            { 'Capability': 'Accelerometer', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=82f39ebd-0b84-4652-a24f-c55c7a16989a' },
-            { 'Capability': 'Humidity', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=cf2b5d0e-c16d-4ad2-8ff6-5058088d9bc1' },
-            { 'Capability': 'UVIndex', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=02ad1280-cab2-4cac-87d5-39ebc6f1539b' },
-            { 'Capability': 'Luminescence', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=fa9ec27c-a8ff-49ee-8052-9d8d781f4757' }
-        ]
-        /* New*/
-        //$scope.powerBiURl = [{ 'Capability': 'Temperature', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=c1f90493-e33f-42b3-9a01-67632c6e059f' },
-        //{ 'Capability': 'Accelerometer', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=b8f254fa-4d81-4ed7-ab86-dd88dcfa66fc' },
-        //{ 'Capability': 'Humidity', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=f30e9002-6bc6-465d-9dc7-5a2ebb2a6fff' },
-        //{ 'Capability': 'UVIndex', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=f8f20e4b-4391-49aa-8e42-8b108a1c30c2' },
-        //{ 'Capability': 'Luminescence', 'Url': 'https://app.powerbi.com/dashboardEmbed?dashboardId=7ea991dd-86bd-43c0-a8da-86b05ead5488' }
-        //]
-
-
-        //$scope.historyUrl = "https://app.powerbi.com/reportEmbed?reportId=cd692a37-cab7-4970-8af4-c844c67298e1&$filter=Sensors/SensorGroupId eq";
-        //$scope.historyUrl = "https://app.powerbi.com/reportEmbed?reportId=b8170f6b-9429-4509-b4ee-4fdc10657766&$filter=Sensors/SensorGroupId eq";
 
 
         function getPowerBiUrls() {

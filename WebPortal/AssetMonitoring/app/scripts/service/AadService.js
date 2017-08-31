@@ -7,7 +7,7 @@
     *  Service to handle signIn and sign Up of user uising B2C 
     */
 angular.module('assetmonitoringApp')
-    .factory('aadService', function ($http, config) {
+    .factory('aadService', function ($http, config, applicationInsightsService) {
         var responseType = 'token id_token';
         var redirectURI = './redirect.html';
         var loginDisplayType = {
@@ -57,12 +57,10 @@ angular.module('assetmonitoringApp')
                     adB2CSignInSignUp: applicationId,
                     adB2CEditProfile: applicationId
                 }, {
-                        post_logout_redirect_uri:'http://mobiliya.com',
                         redirect_uri: '/redirect.html',
                         scope: 'openid ' + applicationId,
                         response_type: 'token id_token'
                     });
-                console.log("Hereeee");
                 this.policyLogout(helloNetwork.adB2CSignIn, config.signInPolicyName);
             },
             policyLogin: function (network, displayType) {
@@ -85,6 +83,7 @@ angular.module('assetmonitoringApp')
                         return;
                     }
                     bootbox.alert('Signin error: ' + e.error.message);
+                    applicationInsightsService.trackException(e.error);
                 });
             },
             policyLogout: function (network, policy) {
@@ -92,6 +91,7 @@ angular.module('assetmonitoringApp')
                     console.log("auth :", auth);
                 }, function (e) {
                     console.log("Erorr :", e);
+                    applicationInsightsService.trackException(e.error);
                 });
             },
             online: function (session) {

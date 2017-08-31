@@ -9,18 +9,12 @@
  */
 angular.module('assetmonitoringApp')
     .controller('assetCtrl', function ($scope, Restservice, $filter, DTOptionsBuilder, $modal, Alertify) {
-        //$scope.loader = 'block';
-        //$scope.dtOptions = DTOptionsBuilder.newOptions()
-        //    .withPaginationType('full_numbers')
-        //    .withDisplayLength(5)
-        //    .withOption('order', [2, 'desc']);
         $scope.assets_loading_label = false;
         var myEl = angular.element(document.querySelector('#assets-datatable-loader'));
         myEl.css('display', 'block');
         $scope.getAllAssets = function () {
             Restservice.get('api/Asset', function (err, response) {
                 if (!err) {
-                   // $scope.loader = 'none';
                     console.log("[Info]:: Get Assets list response", response);
                     $scope.assetList = [];
                     $scope.assetObj = response;
@@ -84,7 +78,6 @@ angular.module('assetmonitoringApp')
 
         $scope.detachSensor = function (asset) {
 
-
             Alertify.confirm('Are you sure to detach this sensor ?').then(
                 function onOk() {
                     Restservice.put('api/DetachAssetSensor', asset, function (err, response) {
@@ -146,7 +139,7 @@ angular.module('assetmonitoringApp').controller('SensorGroupModalCtrl', function
                     $modalInstance.close();
                 }
                 else {
-                    console.log("[Error] :: Add SensorGroup ", err);                    
+                    console.log("[Error] :: Add SensorGroup ", err);       
                     $modalInstance.dismiss('cancel');
                 }                
                 $scope.loader = 'none';
