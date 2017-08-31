@@ -21,7 +21,8 @@ angular
       'datatables',
       'ngMap',
       'Alertify',
-      'ngDragDrop'
+      'ngDragDrop',
+      'ApplicationInsightsModule'
 
   ])
     .config(function ($stateProvider, $routeProvider, $urlRouterProvider) {
@@ -142,3 +143,10 @@ angular
         //config.update(data)
 
     })
+    /**
+     * Application Insight Configuration
+     **/
+    .config(function (applicationInsightsServiceProvider) {
+        var options = { applicationName: 'AssetMonitoringWebApp' };
+        applicationInsightsServiceProvider.configure('5870db32-0326-4d38-b83c-aa048ee1f0d7', options);
+    });

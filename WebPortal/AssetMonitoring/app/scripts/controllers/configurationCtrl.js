@@ -8,7 +8,7 @@
  * Controller of the assetmonitoringApp
  */
 angular.module('assetmonitoringApp')
-    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state, Token, $location, Restservice, $filter, $rootScope) {
+    .controller('configurationCtrl', function ($http, Alertify, config, $scope, $state, Token, $location, Restservice, $filter, $rootScope, applicationInsightsService) {
         $scope.powerbiUrls = {
             'data': []
         }
@@ -82,6 +82,7 @@ angular.module('assetmonitoringApp')
                 Token.update(function () { });
             }).catch(function (data) {
                 console.log('[Error] :: Credentials Updated', data);
+                applicationInsightsService.trackException(data);
                 Alertify.error("Credentials Not Updated ");
             });
         }

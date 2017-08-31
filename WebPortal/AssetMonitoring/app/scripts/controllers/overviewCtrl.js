@@ -80,22 +80,7 @@ angular.module('assetmonitoringApp')
                 if (!err) {
                     console.log("[Info]::  GetAllGroupStartEndLocation ", response);
                     $scope.groupList = response;
-                    //$scope.groupList = [];
-                    //$scope.groupList.push({
-                    //    'GroupName':'group1',
-                    //    'Gps': [
-                    //        { 'Latitude': 18.556696, 'Longitude': 73.793173 },
-                    //        { 'Latitude': 18.58155, 'Longitude': 73.919875 }
-                    //    ]
-                    //});
-                    //$scope.groupList.push({
-                    //    'GroupName': 'group2',
-                    //    'Gps': [
-                    //        { 'Latitude': 18.556696, 'Longitude': 73.793173 },
-                    //        { 'Latitude': 18.58155, 'Longitude': 73.949875 }
-                    //    ]
-                    //});
-                  
+                                   
 
                     if ($scope.groupList.length>0) { 
                         $scope.selectedGroup = $scope.groupList[0];

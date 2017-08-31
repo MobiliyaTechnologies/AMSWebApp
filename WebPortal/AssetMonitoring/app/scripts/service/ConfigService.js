@@ -88,7 +88,7 @@ angular.module('assetmonitoringApp')
    *
    * Factory to store and get access token require for Power BI 
    */
-    .factory('Token', function ($http, $location) {
+    .factory('Token', function ($http, $location, applicationInsightsService) {
         var data = {
             accesstoken: ''
         };
@@ -116,6 +116,7 @@ angular.module('assetmonitoringApp')
                 })
                     .catch(function (error) {
                         console.log("Token Error :: " + error);
+                        applicationInsightsService.trackException(error);
                     });
             }
 

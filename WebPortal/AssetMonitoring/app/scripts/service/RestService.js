@@ -7,7 +7,7 @@
     * A common service to make rest call 
     */
 angular.module('assetmonitoringApp')
-    .factory('Restservice', function ($http, $state,config) {
+    .factory('Restservice', function ($http, $state, config, applicationInsightsService) {
         return {
             get: function (urlpath, callback) {
                 var authResponse = hello('adB2CSignIn').getAuthResponse();
@@ -26,6 +26,9 @@ angular.module('assetmonitoringApp')
 
                     })
                         .catch(function (error) {
+                            error.name = error.statusText;
+                            error.message = error.data;
+                            applicationInsightsService.trackException(error);
                             callback(error, null);
                         });
                 }
@@ -51,6 +54,9 @@ angular.module('assetmonitoringApp')
 
                     })
                         .catch(function (error) {
+                            error.name = error.statusText;
+                            error.message = error.data;
+                            applicationInsightsService.trackException(error);
                             callback(error, null);
                         });
                 }
@@ -76,6 +82,9 @@ angular.module('assetmonitoringApp')
 
                     })
                         .catch(function (error) {
+                            error.name = error.statusText;
+                            error.message = error.data;
+                            applicationInsightsService.trackException(error);
                             callback(error, null);
                         });
                 }
@@ -99,6 +108,9 @@ angular.module('assetmonitoringApp')
 
                     })
                         .catch(function (error) {
+                            error.name = error.statusText;
+                            error.message = error.data;
+                            applicationInsightsService.trackException(error);
                             callback(error, null);
                         });
                 }
@@ -124,6 +136,9 @@ angular.module('assetmonitoringApp')
 
                     })
                         .catch(function (error) {
+                            error.name = error.statusText;
+                            error.message = error.data;
+                            applicationInsightsService.trackException(error);
                             callback(error, null);
                         });
                 }
