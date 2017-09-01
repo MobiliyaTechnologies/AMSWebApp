@@ -29,7 +29,8 @@
     "angular-ui-grid": "^4.0.4",
     "ngmap": "^1.18.4",
     "ng-onload": "^0.7.0",
-    "ng-alertify": "^1.0.2"
+    "ng-alertify": "^1.0.2",
+    "angular-applicationinsights": "^0.2.8"
   },
   "resolutions": {
     "angular": "1.6.4"
