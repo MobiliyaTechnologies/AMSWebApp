@@ -90,8 +90,9 @@ angular.module('assetmonitoringApp')
                     $("#" + $scope.capabilityList[i].Filters[j].Name+"-slider-range").slider({
                     orientation: "vertical",
                     range: true,
-                    max: 200,
-                    values: [0, 33],
+                    min: parseInt($scope.capabilityList[i].Filters[j].MinValue),
+                    max: parseInt($scope.capabilityList[i].Filters[j].MaxValue),
+                    values: [0, 5],
                     slide: function (event, ui) {
 
                         var name = event.target.id.substring(0, event.target.id.indexOf("-"));
@@ -138,7 +139,7 @@ angular.module('assetmonitoringApp')
                         }
                         else {
                             var val = $("#" + $scope.capabilityList[i].Filters[j].Name + "-slider-range").slider("option", "values");
-                            if (val[0] != 0 || val[1] != 33) {
+                            if (val[0] != 0 || val[1] != 5) {
                                 console.log("$scope.capabilityList[i]", $scope.capabilityList[i]);
                                 var obj = {
                                     'MinThreshold': val[0],
