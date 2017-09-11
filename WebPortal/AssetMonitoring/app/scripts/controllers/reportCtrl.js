@@ -232,30 +232,32 @@ angular.module('assetmonitoringApp')
                     var object_by_id = $filter('filter')($scope.capabilityList, { Id: obj.CapabilityId })[0];
                    
                     if (object_by_id.Name == 'Accelerometer' || object_by_id.Name == 'Gyroscope' || object_by_id.Name == 'Magnetometer') {
-                        console.log("object_by_id.Name", object_by_id.Name);
-                        console.log("XYZ obj", obj);
-                        $scope.chartXYZdata[obj.CapabilityId].x.push(obj.x);
-                        $scope.chartXYZdata[obj.CapabilityId].y.push(obj.y);
-                        $scope.chartXYZdata[obj.CapabilityId].z.push(obj.z);
-                        $scope.capibilityXYZValue[obj.CapabilityId] = {
-                            'x': '',
-                            'y': '',
-                            'z':''
+                        if (obj.x != null && obj.y != null && obj.z != null) {
+                            console.log("object_by_id.Name", object_by_id.Name);
+                            console.log("XYZ obj", obj);
+                            $scope.chartXYZdata[obj.CapabilityId].x.push(obj.x);
+                            $scope.chartXYZdata[obj.CapabilityId].y.push(obj.y);
+                            $scope.chartXYZdata[obj.CapabilityId].z.push(obj.z);
+                            $scope.capibilityXYZValue[obj.CapabilityId] = {
+                                'x': '',
+                                'y': '',
+                                'z': ''
+                            }
+                            $scope.capibilityXYZValue[obj.CapabilityId].x = obj.x.toFixed(2);
+                            $scope.capibilityXYZValue[obj.CapabilityId].y = obj.y.toFixed(2);
+                            $scope.capibilityXYZValue[obj.CapabilityId].z = obj.z.toFixed(2);
+                            $scope.$apply();
+                            $scope.timeData[obj.CapabilityId].push(new Date(obj.Timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+                            const maxLen = 50;
+                            var len = $scope.chartXYZdata[obj.CapabilityId].x.length;
+                            if (len > maxLen) {
+                                $scope.timeData[obj.CapabilityId].shift();
+                                $scope.chartXYZdata[obj.CapabilityId].x.shift();
+                                $scope.chartXYZdata[obj.CapabilityId].y.shift();
+                                $scope.chartXYZdata[obj.CapabilityId].z.shift();
+                            }
+                            $scope.chartObj[obj.CapabilityId].update();
                         }
-                        $scope.capibilityXYZValue[obj.CapabilityId].x = obj.x.toFixed(2);
-                        $scope.capibilityXYZValue[obj.CapabilityId].y = obj.y.toFixed(2);
-                        $scope.capibilityXYZValue[obj.CapabilityId].z = obj.z.toFixed(2);
-                        $scope.$apply();
-                        $scope.timeData[obj.CapabilityId].push(new Date(obj.Timestamp).toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-                        const maxLen = 50;
-                        var len = $scope.chartXYZdata[obj.CapabilityId].x.length;
-                        if (len > maxLen) {
-                            $scope.timeData[obj.CapabilityId].shift();
-                            $scope.chartXYZdata[obj.CapabilityId].x.shift();
-                            $scope.chartXYZdata[obj.CapabilityId].y.shift();
-                            $scope.chartXYZdata[obj.CapabilityId].z.shift();
-                        }
-                        $scope.chartObj[obj.CapabilityId].update();
                     }
                     else {
                         //console.log(obj[object_by_id.Name]);
