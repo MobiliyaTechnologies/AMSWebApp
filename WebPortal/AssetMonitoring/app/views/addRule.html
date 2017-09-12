@@ -1,0 +1,147 @@
+﻿<section class="content-header" style="margin-top: 4%;"> </section>
+  <div class="col-lg-12 page-title" style=" font-size: 22px;margin-left:10px;">Create Rule</div>
+  <br><br>
+
+  <div id="rtabs">
+  
+    <div class="col-lg-12" id="grouplist" style=" text-align: center;">
+      <div >
+        <div style=" float: left;display: inline;font-size: 14px;margin-top:10px;">Select Group &nbsp; </div> 
+        <select class="form-control" id="shipment" name="shipment" style="width: 183px; height: 41px;margin-bottom:10px;margin-top:5px;" ng-model="groupSelected" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList" ng-change="groupChange()">          
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-offset-1 col-lg-11" id="rparameter" name="parameter" >
+      <div class="col-lg-12">
+        <div ng-repeat="capability in capabilityList">
+            <div ng-if="capability.Name!='Gateway'">
+                <div id={{capability.Name}} value={{capability.Name}} class="col-lg-3 newruleicon background-img disabledbutton">
+                    <input type="text" id="{{capability.Name}}value" readonly class="newinputforslider"> <label style="color:#3eb493;">{{capability.Filters[0].FilterDataType}}</label>
+                    <div class="col-lg-12"  ng-if="capability.Name=='Accelerometer'||capability.Name=='Magnetometer'||capability.Name=='Gyroscope'"">
+                        <div ng-repeat="filter in capability.Filters">
+                            <input type="checkbox" ng-model="filter.check" ng-checked="all">&nbsp; &nbsp;{{filter.Name}}<br>
+                        </div>
+                        <div class="newrulesubtitle" style="margin-top:{{50-capability.Filters.length*10}}px">{{capability.Name}}</div>
+                    </div>
+                    <div ng-if="capability.Name!='Accelerometer'&&capability.Name!='Magnetometer'&&capability.Name!='Gyroscope'">
+                        <div ng-repeat="filter in capability.Filters">
+                            <div id="{{filter.Name}}-slider-range" class="newruleslider"></div>
+                        </div>
+                        <div class="newrulesubtitle">{{capability.Name}}</div>
+                    </div>
+                    <!--<div ng-if="capability.Filters.length>1">
+                        
+                    </div>
+                    <div ng-if="capability.Filters.length<2">-->
+                       
+                    <!--</div>-->
+                </div>
+            </div>
+            <div ng-if="capability.Name=='Gateway'">
+                <div ng-repeat="filter in capability.Filters">
+                    <div ng-if="filter.Name=='Gateway'">
+                        <div id={{filter.Name}} value={{filter.Name}} class="col-lg-3 newruleicon background-img disabledbutton ">
+                            <select class="form-control" style="width: 126px; height: 41px;margin-top:20%;margin-left:25%" ng-model="selectedGatewayRule" ng-options="gateway.GatewayKey as gateway.Name for gateway in gatewayList" ng-change="gatewayChange(selectedGatewayRule)"></select>
+                            <div class="newrulesubtitle">{{filter.Name}}</div>
+                        </div>
+                    </div>
+                    <div ng-if="filter.Name=='GatewayRange'">
+                        <div id={{filter.Name}} value={{filter.Name}} class="col-lg-3 newruleicon background-img disabledbutton ">
+                            <select class="form-control" style="width: 126px; height: 41px;margin-top:10%;margin-left:25%" ng-model="selectedGatewayRange" ng-options="gateway.GatewayKey as gateway.Name for gateway in gatewayList" ng-change="gatewayRangeChange(selectedGatewayRange)"></select>
+                            <input type="radio" ng-model="selected.range" value="Close"> Close
+                            <input type="radio" ng-model="selected.range" value="Far"> Far
+                            <input type="radio" ng-model="selected.range" value="TooFar">Too Far
+                            <div class="newrulesubtitle">{{filter.Name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!--<div id="Temperature" value="Temperature" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Temperature != true}" >
+            <input type="text" id="Tvalue" readonly class="newinputforslider">
+            <div id="T-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Temperature</div>
+          </div>
+
+
+          <div id="Humidity" value="Humidity" disable class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Humidity != true}">
+            <input type="text" id="Hvalue" readonly class="newinputforslider">
+            <div id="H-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Humidity</div>
+          </div>
+          <div id="Pressure" value="Pressure" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Pressure != true}">
+            <input type="text" id="Pvalue" readonly class="newinputforslider">
+            <div id="P-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Pressure</div>
+          </div>
+          <div id="Accelerometer" value="Accelerometer" class="col-lg-3 newruleicon  background-img" ng-class="{'disabledbutton': Accelerometer != true}">
+            <input type="text" id="Avalue" readonly class="newinputforslider">
+
+            <div class="col-lg-12" style="display:-webkit-inline-box;">
+
+              <div id="Ax-slider-range" class="newruleslider" style="margin-left:30%;"><span>X</span></div>
+              <div id="Ay-slider-range" class="newruleslider" style="margin-left:10%;"><span>Y</span></div>
+              <div id="Az-slider-range" class="newruleslider"style="margin-left:10%;"><span>Z</span></div>
+
+            </div>
+
+            <div class="newrulesubtitle" style="margin-top:73px;">Accelerometer</div>
+          </div>
+          <div id="Magnetometer" value="Magnetometer" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Magnetometer != true}">
+            <input type="text" id="Mvalue" readonly class="newinputforslider">
+            <div id="M-slider-range" class="newruleslider"></div> <div class="newrulesubtitle">Magnetometer</div>
+          </div>
+          <div id="Luminescence" value="Luxometer Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Luxometer != true}">
+                <input type="text" id="Lvalue" readonly class="newinputforslider">
+                <div id="L-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Luxometer</div>
+              </div>
+
+          <div id="UVIndex" value="UVIndex Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': UVIndex != true}">
+            <input type="text" id="UVvalue" readonly class="newinputforslider">
+            <div id="UV-slider-range" class="newruleslider"></div><div class="newrulesubtitle">UVIndex</div>
+          </div>
+          <div id="Light" value="Light Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': Light != true}">
+            <input type="text" id="Lightvalue" readonly class="newinputforslider">
+            <div id="Light-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Light</div>
+          </div>
+          <div id="AmbientLight" value="AmbientLight Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': AmbientLight != true}">
+            <input type="text" id="AmbientLightvalue" readonly class="newinputforslider">
+            <div id="AmbientLight-slider-range" class="newruleslider"></div><div class="newrulesubtitle">Ambient Light</div>
+          </div>
+          <div id="NoiseLevel" value="NoiseLevel Data" class="col-lg-3 newruleicon background-img" ng-class="{'disabledbutton': NoiseLevel != true}">
+            <input type="text" id="NoiseLevelvalue" readonly class="newinputforslider">
+            <div id="NoiseLevel-slider-range" class="newruleslider"></div><div class="newrulesubtitle">NoiseLevel</div>
+          </div>
+        </div>-->
+
+            </div>
+   
+    <!-- </div> -->
+    <!-- <div id="fragment-3" class="ui-tabs-panel ui-tabs-hide">
+    <div style="    text-align: center;" >
+    <div for="Sensor" style=" color: black;    margin-left: 7%; font-size: 22px;">Choose the Condition </div>
+    </div><br>
+      <div class="col-lg-12" id ="rcondition" style="    text-align: center;    margin-top: 5%;    margin-left: 28%;">
+        <div value=">" class="col-lg-3 connewruleicon"><img class="newruleimage" width="53px" style="margin-top: 13%;margin: 18px 33% 10%;" src="/img/Greater_than.svg"><div class="newrulesubtitle">Greater Than</div></div>
+        <div value="<" class="col-lg-3 connewruleicon"><img class="newruleimage" width="53px" style="margin-top: 13%;margin: 18px 33% 10%;" src="/img/Lesser_than.svg"><div class="newrulesubtitle">Less Than</div></div>
+
+      </div>
+    </div> -->
+    <!-- <div id="fragment-4" class="ui-tabs-panel ui-tabs-hide">
+    <div style="    text-align: center;" >
+    <div for="Sensor" style=" color: black;    margin-left: 7%; font-size: 22px;">Choose the Threshold </div>
+    </div><br>
+    <p></p>
+    <div style=" border: 2px solid #EBEBEB;  width: 103px;    height: 52px;    text-align: center;    margin: 15px 47%;"><div style="    transform: translateY(36%); font-size: 22px;">{{getthreshold}}</div></div>
+    <input id="ext1" data-slider-id="ex1Slider"  type="text"  data-slider-min="0" data-slider-max="500" data-slider-value="100"    data-slider-handle="round"/>
+    Value:<input id="ext1" data-slider-id="ex1Slider"  type="text"  data-slider-min="0" data-slider-max="255" data-slider-step="1"  data-slider-ticks="[0, 100, 200, 300, 400]" data-slider-value="128"     data-slider-handle="round"/>
+    <a style="  padding: 6px 12px;    position: absolute;right:0px; bottom:0px">
+      <div id="submitRule" class="btn btn-success">Done</div>
+    </a>
+    </div> -->
+
+
+  </div>
+    <div class="col-lg-offset-6 col-lg-2">
+      <div id="submitRule" class="btn btn-success" ng-click="createRule()">Done</div>
+    </div>
+ </div>
+      <!--<div class="loading style-2 ng-scope" style="display:{{loader}};">
+          <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+      </div>-->

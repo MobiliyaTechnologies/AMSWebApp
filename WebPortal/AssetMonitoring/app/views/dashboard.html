@@ -1,0 +1,100 @@
+﻿
+<div class="sidebar-mini skin-green" style="height: 540px;">
+  <div class="wrapper" style="height: auto;">
+    <header class="main-header" style="position: fixed;width: 100%;background-color:white;height:70px;">
+      <!-- Logo -->
+      <a  target="_blank" class="logo" style="background-color:rgba(243, 117, 88, 1);width:230px;height:70px;">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <!-- <span class="logo-mini"><b>A</b>LT</span> -->
+        <!-- logo for regular state and mobile devices -->
+        <!--<img src="/img/Logo_New.png">-->
+          <img id="logourl" class="logo-image" src="{{logourl}}"  />
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top" style="background-color:white;height: 70px;">
+        <!-- Sidebar toggle button-->
+        <!-- <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a> -->
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu open">
+              <a href="#" class="dropdown-toggle user-name" data-toggle="dropdown" aria-expanded="true" style=" background-color: white;height:70px;    padding: 25px;border-right: 1px solid rgba(233, 233, 233, 1);">
+                  <i class="fa fa-user-circle-o fa-1x"></i>
+                <span class="hidden-xs" style="color: black;">{{username}}</span>
+              </a>
+
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+            <li>
+              <a  data-toggle="control-sidebar"><i class="fa fa-sign-out" style="color: grey;font-size: 25px;padding: 10px;" ng-click="logoutb2c()"></i></a>
+            </li>
+          </ul>
+        </div>
+
+      </nav>
+    </header>
+    <aside class="main-sidebar" style="position: fixed;margin-top:20px;">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar" style="height: auto;">
+        <!-- Sidebar user panel -->
+        <!-- <div class="user-panel">
+          <div class="pull-left image">
+            <img src="/img/avatar04.png" class="img-circle" alt="User Image">
+          </div>
+          <div class="pull-left info">
+            <p>Richard</p>
+
+          </div>
+        </div> -->
+
+        <ul class="sidebar-menu" >
+          <!-- <li class="header">MAIN NAVIGATION</li> -->
+
+          <li ng-class="{ active: isActive('/dashboard/overview')}" class="active treeview" style="height:55px;" id="Dashboardli" ng-click="changeState('overview')">
+            <a href="" >
+              <img src="/img/Dashboard.svg" class="sideimage"> &nbsp; &nbsp; <span class="sidetitle">DASHBOARD</span>
+            </a>
+          </li>
+          <li ng-class="{ active: isActive('/dashboard/inventory')}" class="treeview" style="height:55px;" id="inventoryli" ng-click="changeState('inventory')">
+            <a href="" >
+              <img src="/img/Inventory.svg" class="sideimage">   &nbsp; &nbsp; <span class="sidetitle">INVENTORY</span>
+            </a>
+          </li>
+          <li ng-class="{ active: isActive('/dashboard/alerts')}" class="treeview" style="height:55px;" id="alertsli" ng-click="changeState('alerts')">
+            <a href="" >
+              <img src="/img/Alerts.svg" class="sideimage">   &nbsp; &nbsp; <span class="sidetitle">ALERTS</span>
+                <span ng-if="shownewtilte" class="new-title">New</span>
+              <span class="pull-right-container">
+                <small class="label pull-right " style="background-color: #fc2d3f; font-size: 10pt;">{{getAlertCount}}</small>
+              </span>
+            </a>
+          </li>
+          <li ng-class="{ active: isActive('/dashboard/rules')}" class="treeview" style="height:55px;" id="rulesdli" ng-click="changeState('rules')">
+            <a href="" >
+              <img src="/img/Rules.svg" class="sideimage">   &nbsp; &nbsp; <span class="sidetitle">RULES</span>
+            </a>
+          </li>
+          <li ng-class="{ active: isActive('/dashboard/assets')}" style="height:55px;" id="assetsli" ng-click="changeState('assets')">
+            <a href="" >
+              <img src="/img/Assets.svg" class="sideimage" style="color:red;">   &nbsp; &nbsp; <span class="sidetitle">ASSETS</span>
+            </a>
+          </li>
+          <li ng-class="{ active: isActive('/dashboard/reports')}" class="treeview" style="height:55px;" id="assetsli" ng-click="changeState('reports')">
+            <a href="" >
+              <img src="/img/Reports.svg" class="sideimage">   &nbsp; &nbsp; <span class="sidetitle">REPORTS</span>
+            </a>
+          </li>
+          <li ng-class="{ active: isActive('/dashboard/configuration')}" class="treeview" style="height:55px;" id="assetsli" ng-click="changeState('configuration')">
+            <a href="" >
+              <img src="/img/Configuration.svg" class="sideimage">   &nbsp; &nbsp; <span class="sidetitle">CONFIGURATION</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+    
+  </div>
+  <div class="content-wrapper"  ui-view autoscroll="true"></div>

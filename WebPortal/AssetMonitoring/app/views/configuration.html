@@ -1,0 +1,177 @@
+﻿<section class="content-header" style="margin-top: 1%;"> </section>
+<section class="content" style=" padding: 0px 4% !important; !important">
+    <!-- Small boxes (Stat box) -->
+
+    <div class="row">
+        <div class="col-lg-12 page-title" style="height: 2em; font-size: 22px;   ">
+            Configuration
+
+        </div>
+    </div>
+    <br>
+    <div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapseone" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Logo Configuration</h3>
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
+        </div>
+        <div id="collapseone" class="panel-collapse collapse out">
+            <div class="panel-body">
+                
+                <input id="application_logo" type="file" accept="image/*" style="margin-top:20px;text-align:center;margin-left:40%;" />
+                <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="addApplicationLogo()">Add</div>
+                <br /><br/>
+                <label>Note : Please upload logo of size 117 x 30</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapsetwo" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Power BI Credentials</h3>
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
+        </div>
+        <div id="collapsetwo" class="panel-collapse collapse out">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="Name">Client Id</label>
+                    <input type="text" class="form-control" id="gname" placeholder="Enter ClientId" required ng-model="powerbi.ClientId" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Client Secret</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter ClientSecret" required ng-model="powerbi.ClientSecret" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Username</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Username" required ng-model="powerbi.Username" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Password</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Password" required ng-model="powerbi.Password" />
+                </div>
+                <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="updatePowerBiCredentials()">Submit</div>
+                <br /><br />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapsethree" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Power BI Urls</h3>
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
+        </div>
+        
+
+        <div id="collapsethree" class="panel-collapse collapse out">
+            <div class="panel-body">
+                <!--<div class="form-group" ng-repeat="capability in capabilityList">
+                    <div ng-if="capability.Name!='Gateway'">
+                        <label for="Name">{{capability.Name}}</label>
+                        <input type="text" class="form-control" id="gname" placeholder="Enter {{capability.Name}} Url" required ng-model="powerbiUrls.data[capability.Name]" />
+                    </div>
+                 </div>-->
+                <div class="form-group">
+                    <label for="Serial">History</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter History Report Url" required ng-model="powerbiUrls.data.History" />
+                </div>
+                <!--<div class="form-group">
+                    <label for="Name">Accelerometer</label>
+                    <input type="text" class="form-control" id="gname" placeholder="Enter Accelerometer Url" required ng-model="powerbiUrls.data.Accelerometer" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Temperature</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Temperature Url" required ng-model="powerbiUrls.data.Temperature" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Humidity</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Humidity Url" required ng-model="powerbiUrls.data.Humidity" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">UVIndex</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter UVIndex Url" required ng-model="powerbiUrls.data.UVIndex" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">Luminescence</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter Luminescence Url" required ng-model="powerbiUrls.data.Luminescence" />
+                </div>
+                <div class="form-group">
+                    <label for="Serial">History</label>
+                    <input type="text" class="form-control" id="gserialno" placeholder="Enter History Report Url" required ng-model="powerbiUrls.data.History" />
+                </div>-->
+                <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="updatePowerBiUrls()">Submit</div>
+                <br/><br/>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapseFour" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Indoor Map Configuration</h3>
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
+        </div>
+
+
+        <div id="collapseFour" class="panel-collapse collapse out">
+            <div class="panel-body">
+                <div ng-if="!layout_uploaded">
+                    <input id="indoor_map" type="file" accept="image/*" style="margin-top:20px;text-align:center;margin-left:40%;" />
+                    <div class="btn btn-success" style="margin-top:20px;text-align:center;margin-left:45%;" ng-click="addIndoorLayout()">Add</div>
+                    <br /><br />
+                </div>
+                <div ng-if="layout_uploaded">
+                    <div id="container">
+                        <div id="layout" class="layout">
+                            <img id="dashboard-layout" src="{{layout.FileUrl}}" style="height:100%;width:100%;" />
+                            <select class="form-control" style="width:100px;float:right;position:absolute;right:0;margin-top:10px;top:0;z-index:100;" ng-model="gateway.selected" ng-options=" gateway.Name for gateway in gatewayList" ng-change="gatewayChange(gateway.Name)"></select>
+                            <div ng-if="gateway.selected" id="gateway" class="gateway-circle" data-drag="true" jqyoui-draggable="{onStop:'dropped()'}">
+                            </div>
+                            <div class="btn btn-success" style="width:100px;text-align:center;left:40%;position:absolute;margin-top:10px;z-index:100;" ng-click="updateCordinates()">Update</div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+           
+
+        </div>
+
+    </div>
+    <!--<div class="col-lg-offset-1 col-lg-10 box box-success">
+        <div class="box-header with-border" href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapseFive" style="cursor: pointer; background-color: {{checkUser}}">
+            <h3 class="box-title">Gateway Mapping</h3>
+            <img src="/img/ExpandAccordion.svg" style="float:right;height:15px;width:15px;">
+        </div>
+
+
+        <div id="collapseFive" class="panel-collapse collapse out">
+            <div class="panel-body">
+                <div id="container">
+                    <div id="layout" class="layout">
+                        <select class="form-control" style="width:100px;float:right;position:absolute;right:0;margin-top:10px;z-index:100;" ng-model="selectedGateway" ng-options=" gateway.Name     for gateway in gatewayList" ng-change="gatewayChange()"></select>
+                        <div id="gateway" class="gateway-circle" data-drag="true" jqyoui-draggable="{onStop:'dropped()'}">
+                        </div>
+                </div>
+            </div>-->
+            
+
+            <!--<div id="circle" class="orange-cirlce">
+                <div id="medium-circle">
+
+                    <div id="small-circle">
+                    </div>
+                </div>
+                <div id="sensor-circle" data-drag="true" jqyoui-draggable>
+                </div>
+            </div>-->
+
+        <!--</div>
+
+    </div>-->
+    <div class="loading style-2 ng-scope" style="display:{{loader}};">
+        <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+    </div>
+    </section>
+

@@ -1,0 +1,15 @@
+﻿.modal-body .form-horizontal .col-sm-2,
+.modal-body .form-horizontal .col-sm-10 {
+    width: 100%
+}
+
+.inventory>li.active>a, .inventory>li.active>a:hover {
+  border-top: 2px solid #726ab4
+}
+.reactive-table-filter .input-group{
+ right: -2.5% !important
+}
+.popup-link{
+  float:right;
+  cursor:pointer;
+}

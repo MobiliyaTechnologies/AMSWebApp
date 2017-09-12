@@ -1,0 +1,99 @@
+﻿<section class="content-header" style="margin-top: 1%;"></section>
+<section class="content" style=" padding: 0px 4% !important">
+    <!-- Small boxes (Stat box) -->
+
+    <div class="row">
+        <div class="col-lg-12 page-title" style="height: 2em; font-size: 22px;   ">
+            Reports
+
+        </div>
+    </div>
+        <br>
+        <div class="col-lg-12" id="grouplist" style=" padding: 0px 1% !important; !important;text-align: center;display: table;">
+            <div>
+                <div style=" float: left;font-size: 18px;display:table-cell;margin-top:5px;">Select Group &nbsp; </div>
+                <select class="form-control" id="shipment" name="shipment"  ng-model="groupSelected" ng-options="sensorGroup.Id as sensorGroup.Name for sensorGroup in sensorGroupList" ng-change="groupChange()">Loading Groups
+                </select>
+                <div style="float: left;font-size: 18px;display:table-cell;margin-right:20px;margin-top:5px;">Select Sensor  &nbsp;</div>
+                <select ng-disabled="loadingsensor" class="form-control" id="shipment" name="shipment"  ng-model="sensorSelected" ng-options="sensor as sensor.Name for sensor in sensorList" ng-change="sensorChange()"></select>
+                <div class="history-icon">
+                    <img src="../../img/history.png" style="margin-top:3px;" ng-click="toggleHistory()">
+                </div>
+                    
+            </div>
+            <br>
+        </div>
+        <div class="row" ng-show="!historic">
+
+            <div ng-repeat="capability in capabilityList" class="col-md-10" style="margin-left:70px;margin-top:20px;width:68vw;">
+                <!-- USERS LIST -->
+                <div ng-if="capability.Name!='Gateway'">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{capability.Name}}</h3>
+                        <div class="box-tools pull-right">
+                            <!--<span class="label label-danger">8 New Members</span>-->
+
+                            <!--<button type="button" class="btn btn-box-tool" data-widget="remove">
+                                <i class="fa fa-expand"></i>
+                            </button>-->
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <!--<div ng-if="capability.Name!='Accelerometer'&&capability.Name!='Magnetometer'&&capability.Name!='Gyroscope'" class="box-body no-padding" style="height:200px;">
+                        <div id="{{capability.Name}}-container" style="height:100%;width:100%;"></div>
+                    </div>
+                    <div ng-if="capability.Name=='Accelerometer'||capability.Name=='Magnetometer'||capability.Name=='Gyroscope'" class="box-body no-padding" style="height:600px;">
+                        <div id="{{capability.Name}}-container" style="height:100%;width:100%;"></div>
+                    </div>-->
+                    <div class="box-body no-padding" style="height:400px;"  >
+                        <div class="col-lg-9">
+                            <canvas id="{{capability.Name}}-Chart" ></canvas>
+                        </div>
+                        <div ng-if="capability.Name!='Accelerometer'&&capability.Name!='Magnetometer'&&capability.Name!='Gyroscope'" class="col-lg-2 report-value" style="border:solid 1px;height:200px;margin-top:100px;">
+                            <label class="report-value-label">{{capibilityValue[capability.Id]}}</label>
+                        </div>
+                        <div ng-if="capability.Name=='Accelerometer'||capability.Name=='Magnetometer'||capability.Name=='Gyroscope'" class="col-lg-2 report-value" style="border:solid 1px;height:200px;margin-top:85px;">
+                            <!--<label class="report-value--xyz-label" >X : {{capibilityXYZValue[capability.Id].x}}343</label>
+                            <label class="report-value--xyz-label" >Y : {{capibilityXYZValue[capability.Id].y}}343</label>
+                            <label class="report-value--xyz-label">Z : {{capibilityXYZValue[capability.Id].z}}343</label>-->
+                 
+                            <p class="report-value--xyz-label" >X : {{capibilityXYZValue[capability.Id].x}}</p>
+                            <p class="report-value--xyz-label" >Y : {{capibilityXYZValue[capability.Id].y}}</p>
+                            <p class="report-value--xyz-label" >Z : {{capibilityXYZValue[capability.Id].z}}</p>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+                <!--/.box -->
+            </div>
+        </div>
+            </div>
+        <div class="row" ng-show="historic">
+
+            <div class="box box-success col-md-10" style="margin-left:70px;margin-top:20px;">
+                <div class="box-header with-border">
+                    <h3 class="box-title">History   Report</h3>
+                    <div class="box-tools pull-right">
+                        <!--<span class="label label-danger">8 New Members</span>-->
+
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding" style="height:600px;">
+                    <!-- /.users-list -->
+
+                    <iframe id="historic-container" src="" class="iframe-class-report-page" frameborder="1" seamless style="height:100%;width:100%;"></iframe>
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+        </div>
+        <div class="loading style-2 ng-scope" style="display:{{loader}};">
+            <i class="fa fa-refresh fa-spin loader" style="font-size:40px;"></i>
+        </div>
+    </section>
+

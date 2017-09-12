@@ -1,0 +1,1 @@
+{"restServer":"https://assetmonitoring.azurewebsites.net/","restServerAnalytics":"https://assetmonitoringanalytics.azurewebsites.net/","b2cApplicationId":"a2ecd455-5f2a-4329-adae-fe8eb438f53e","tenantName":"AssetMonitoringB2C.onmicrosoft.com","signInPolicyName":"B2C_1_SiUpIn","redirect_uri":"https://assetmonitoringwebapp.azurewebsites.net/"}
