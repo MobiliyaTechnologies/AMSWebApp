@@ -295,12 +295,14 @@ angular.module('assetmonitoringApp')
                         d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 
                     var index = $scope.assetCapabilities.indexOf(filterObj);
-                    if ($scope.assetCapabilities[index].Name == 'Accelerometer' || $scope.assetCapabilities[index].Name == 'Gyroscope' || $scope.assetCapabilities[index].Name == 'Magnetometer') {
-                        $scope.assetCapabilities[index].value = 'X : ' + obj.x.toFixed(2) + ' Y: ' + obj.y.toFixed(2) + ' Z:' + obj.z.toFixed(2);
-                        
-                    }                   
-                    else {
-                        $scope.assetCapabilities[index].value = obj[$scope.assetCapabilities[index].Name];
+                    if (index != -1) {
+                        if ($scope.assetCapabilities[index].Name == 'Accelerometer' || $scope.assetCapabilities[index].Name == 'Gyroscope' || $scope.assetCapabilities[index].Name == 'Magnetometer') {
+                            $scope.assetCapabilities[index].value = 'X : ' + obj.x.toFixed(2) + ' Y: ' + obj.y.toFixed(2) + ' Z:' + obj.z.toFixed(2);
+
+                        }
+                        else {
+                            $scope.assetCapabilities[index].value = obj[$scope.assetCapabilities[index].Name];
+                        }
                     }
                     console.log("$scope.gatewayCapabilityIndex", $scope.gatewayCapabilityIndex);
                     $scope.assetCapabilities[$scope.gatewayCapabilityIndex].value = obj.Gatewaykey;

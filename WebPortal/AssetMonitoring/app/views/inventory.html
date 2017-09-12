@@ -80,11 +80,12 @@
         <table  id="entry-grid" class="table-responsive" datatable="ng" width="100%" dt-options="dtOptions">
           <thead class="table-blue-border">
             <tr>
-              <th style="font-weight:100;width:15%;">Sensor Name</th>
-              <th style="font-weight:100;width:15%">Sensor Group</th>
-              <th style="font-weight:100;width:15%">View Details</th>
-              <th style="font-weight:100;width:15%">Edit</th>
-              <th style="font-weight:100;width:15%">Delete</th>
+              <th style="font-weight:100;width:20%;">Sensor Name</th>
+              <th style="font-weight:100;width:20%">Sensor Group</th>
+              <th style="font-weight:100;width:5%">View Details</th>
+              <th style="font-weight:100;width:5%">Edit</th>
+              <th style="font-weight:100;width:5%">Delete</th>
+              <th style="font-weight:100;width:5%">Detach</th>
             </tr>
           </thead>
           
@@ -92,11 +93,12 @@
             <img id="sensor-datatable-loader" src="../../img/Loading.gif" class="datatable-loader" />
             <label class="data-table-no-data" ng-show="sensor_loading_label">No data available</label>
             <tr ng-repeat="sensor in sensorList">
-              <td style="width:15%;">{{sensor.Name}}</td>
-              <td style="width:15%;">{{sensor.SensorGroupName}}</td>
-              <td style="width:15%;"><a ng-click="viewSensorDetail(sensor)" title="view Details"><i class="fa fa-eye"></i></a></td>
-              <td style="width:15%;"><a ng-click="editSensor(sensor)" title="Edit Details"><i class="fa fa-edit"></i></a></td>
-              <td style="width:15%;"><a ng-click="deleteSensor(sensor)" title="Delete Sensor"><i class="fa fa-trash"></i></a></td>
+              <td style="width:20%;">{{sensor.Name}}</td>
+              <td style="width:20%;">{{sensor.SensorGroupName}}</td>
+              <td style="width:5%;"><a ng-click="viewSensorDetail(sensor)" title="View Details"><i class="fa fa-eye"></i></a></td>
+              <td style="width:5%;"><a ng-click="editSensor(sensor)" title="Edit Details"><i class="fa fa-edit"></i></a></td>
+              <td style="width:5%;"><a ng-click="deleteSensor(sensor)" title="Delete Sensor"><i class="fa fa-trash"></i></a></td>
+              <td  style="width:5%;"><a ng-if="sensor.AssetBarcode" ng-click="detachSensor(sensor)" title="Delete Sensor"><i class="fa fa-times"></i></a></td>
             </tr>
           </tbody>
         </table>
@@ -396,18 +398,30 @@
                   <!-- /.box-header -->
                   <!-- form start -->
                   <form role="form" style="color:black">
-                      <div class="form-group">
-                          <label for="Name">Sensor Key *</label>
-                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.SensorKey" />
+                      <div class="row">
+                          <div class="col-lg-4">
+                              <div class="col-lg-offset-3 col-lg-6" style="margin-top:20%;">
+                                  <qrcode data="{{sensor.SensorKey}}"></qrcode>
+                              </div>
+                             
+
+                          </div>
+                          <div class="col-lg-8">
+                              <div class="form-group">
+                                  <label for="Name">Sensor Key *</label>
+                                  <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.SensorKey" />
+                              </div>
+                              <div class="form-group">
+                                  <label for="Name">Name *</label>
+                                  <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.Name" />
+                              </div>
+                              <div class="form-group">
+                                  <label for="Name">Description *</label>
+                                  <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Description" required ng-model="sensor.Description" />
+                              </div>
+                          </div>
                       </div>
-                      <div class="form-group">
-                          <label for="Name">Name *</label>
-                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Name" required ng-model="sensor.Name" />
-                      </div>
-                      <div class="form-group">
-                          <label for="Name">Description *</label>
-                          <input ng-disabled="true" type="text" class="form-control" id="Sname" placeholder="Enter Sensor Description" required ng-model="sensor.Description" />
-                      </div>
+                    
 
 
                       <div class="box-footer">                          

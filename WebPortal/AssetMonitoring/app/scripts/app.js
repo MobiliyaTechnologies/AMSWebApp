@@ -22,7 +22,9 @@ angular
       'ngMap',
       'Alertify',
       'ngDragDrop',
-      'ApplicationInsightsModule'
+      'ApplicationInsightsModule',
+      'monospaced.qrcode',
+      'barcode'
 
   ])
     .config(function ($stateProvider, $routeProvider, $urlRouterProvider) {

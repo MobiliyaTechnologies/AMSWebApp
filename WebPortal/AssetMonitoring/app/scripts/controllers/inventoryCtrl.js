@@ -89,10 +89,8 @@ angular.module('assetmonitoringApp')
 
 
             }).result.then(function (result) {
-                //$scope.getAllSensor();
                 if (result) {
-                    $scope.sensorList.push(result);
-                    $scope.sensorCount = $scope.sensorList.length;
+                    $scope.getAllSensor();
                 }
                     }, function () {
                 // Cancel
@@ -148,6 +146,29 @@ angular.module('assetmonitoringApp')
             );
         }
 
+        $scope.detachSensor = function (sensor) {
+
+            Alertify.confirm('Are you sure to detach this sensor ?').then(
+                function onOk() {
+                    console.log("Sensor ::",sensor)
+                    Restservice.put('api/DetachAssetSensor',sensor, function (err, response) {
+                        if (!err) {
+                            console.log("[Info]:: Detach Sensor  response ", response);
+                            Alertify.success("Sensor Detached successfully");
+                            $scope.getAllSensor();
+                        }
+                        else {
+                            console.log("[Error]:: Detach Sensor response ", err);
+                            Alertify.error("Error in Detaching sensor");
+                        }
+                    });
+                },
+                function onCancel() {
+
+                }
+            );
+        }
+
 
         $scope.addGateway = function () {
             if ($scope.gatewayCount > 0) {
@@ -155,10 +176,8 @@ angular.module('assetmonitoringApp')
                     templateUrl: 'GatewayModal.html',
                     controller: 'GatewayModalCtrl',
                 }).result.then(function (result) {
-                    //$scope.getAllGateway();
                     if (result) {
-                        $scope.gatewayList.push(result);
-                        $scope.gatewayCount = $scope.gatewayList.length;
+                        $scope.getAllGateway();
                     }
                 }, function () {
                 });
@@ -173,10 +192,9 @@ angular.module('assetmonitoringApp')
                         templateUrl: 'GatewayModal.html',
                         controller: 'GatewayModalCtrl',
                     }).result.then(function (result) {
-                        //$scope.getAllGateway();
+                        //
                         if (result) {
-                            $scope.gatewayList.push(result);
-                            $scope.gatewayCount = $scope.gatewayList.length;
+                            $scope.getAllGateway();
                         }
                     }, function () {
                     });
@@ -216,27 +234,28 @@ angular.module('assetmonitoringApp')
             });
         }
         $scope.deleteGateway = function (gateway) {
-            Alertify.confirm('Are you sure to delete this gateway ?').then(
-                function onOk() {
-                    Restservice.delete('api/Gateway/' + gateway.Id, function (err, response) {
-                        if (!err) {
-                            console.log("[Info]:: Delete Gateway  response ", response);
-                            Alertify.success("Gateway Deleted successfully");
-                            $scope.getAllGateway();
-                        }
-                        else {
-                            console.log("[Error]:: Delete Gateway response ", err);
-                            Alertify.error("Error in deleting gateway");
-                        }
-                    });
-                },
-                function onCancel() {
+            if (gateway) {
+                Alertify.confirm('Are you sure to delete this gateway ?').then(
+                    function onOk() {
+                        Restservice.delete('api/Gateway/' + gateway.Id, function (err, response) {
+                            if (!err) {
+                                console.log("[Info]:: Delete Gateway  response ", response);
+                                Alertify.success("Gateway Deleted successfully");
+                                $scope.getAllGateway();
+                            }
+                            else {
+                                console.log("[Error]:: Delete Gateway response ", err);
+                                Alertify.error("Error in deleting gateway");
+                            }
+                        });
+                    },
+                    function onCancel() {
 
-                }
-            );
+                    }
+                );
 
 
-            
+            }
         }
         $scope.addSensorGroup = function () {
             var modalInstance = $modal.open({
