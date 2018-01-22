@@ -31,7 +31,8 @@
     "ng-onload": "^0.7.0",
     "ng-alertify": "^1.0.2",
     "angular-qrcode": "^7.2.0",
-    "angular-barcode": "^0.0.4"
+    "angular-barcode": "^0.0.4",
+    "angular-applicationinsights": "^0.2.8"
   },
   "resolutions": {
     "angular": "1.6.4"
